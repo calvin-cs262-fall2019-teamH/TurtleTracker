@@ -6,7 +6,7 @@ This project will consist of a front-end app (Typescript with React Native) that
 ---
 
 # Running the App
-To run the front-end app, run `npm start`.
+To run the front-end app, run `expo start`.
 Note you may need to run `npm install` the first time you run the app.
 
 ---
