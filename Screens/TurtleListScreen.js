@@ -7,10 +7,6 @@ export default class TurtleListScreen extends React.Component {
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>TurtleList Screen</Text>
                 <Button
-                    title="Go to TurtleList... again"
-                    onPress={() => this.props.navigation.push('TurtleList')}
-                />
-                <Button
                     title="Go to Map"
                     onPress={() => this.props.navigation.navigate('Map')}
                 />

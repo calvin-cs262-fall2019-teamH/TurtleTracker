@@ -1,18 +1,51 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 // Import Screens
 import TurtleListScreen from './Screens/TurtleListScreen';
 import MapScreen from './Screens/MapScreen';
 
-  const AppNavigator = createStackNavigator(
+const MapStack = createStackNavigator(
     {
-      Map: MapScreen,
-      TurtleList: TurtleListScreen,
-    },
-    {
-      initialRouteName: 'Map',
+      Map: {
+        screen: MapScreen,
+      },
     }
   );
 
-export default createAppContainer(AppNavigator);
+const TurtleListStack = createStackNavigator(
+    {
+        TurtleList: {
+          screen: TurtleListScreen,
+        },
+      }
+);
+
+const MainNavigator = createBottomTabNavigator({
+    MapTab: {
+      navigationOptions: {
+        tabBarLabel: 'Map',
+      },
+      screen: MapStack,
+    },
+    TurtleTab: {
+        navigationOptions: {
+            tabBarLabel: 'Turtle List',
+        },
+        screen: TurtleListStack,
+    }
+  }
+);
+
+const AppNavigator = createStackNavigator(
+    {
+        Map: {screen: MapScreen},
+        TurtleList: TurtleListScreen,
+    },
+    {
+        initialRouteName: 'Map',
+    }
+);
+
+export default createAppContainer(MainNavigator);
