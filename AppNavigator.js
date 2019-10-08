@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 // Import Screens
 import TurtleListScreen from './Screens/TurtleListScreen';
+import TurtleProfileScreen from './Screens/TurtleProfileScreen';
 import MapScreen from './Screens/MapScreen';
 
 const MapStack = createStackNavigator(

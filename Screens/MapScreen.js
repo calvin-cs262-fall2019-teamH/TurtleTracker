@@ -6,10 +6,6 @@ export default class MapScreen extends React.Component {
       return (
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <Text>Map Screen</Text>
-              <Button
-              title="Go to TurtleList"
-              onPress={() => this.props.navigation.navigate('TurtleList')}
-              />
           </View>
       );
     }

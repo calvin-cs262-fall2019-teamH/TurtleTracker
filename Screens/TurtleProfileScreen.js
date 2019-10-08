@@ -5,10 +5,10 @@ export default class TurtleListScreen extends React.Component {
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>TurtleList Screen</Text>
+                <Text>Turtle Detail Screen</Text>
                 <Button
-                    title="Go to TurtleProfile"
-                    onPress={() => this.props.navigation.navigate('TurtleProfile')}
+                    title="Go to TurtleList"
+                    onPress={() => this.props.navigation.navigate('TurtleList')}
                 />
             </View>
         );
