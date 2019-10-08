@@ -11,6 +11,7 @@ const MapStack = createStackNavigator(
     {
       Map: {
         screen: MapScreen,
+        navigationOptions: { title: 'Turtle Tracker' }
       },
     }
   );
@@ -19,7 +20,12 @@ const TurtleListStack = createStackNavigator(
     {
         TurtleList: {
           screen: TurtleListScreen,
+          navigationOptions: { title: 'Turtle Tracker' }
         },
+        TurtleProfile: {
+          screen: TurtleProfileScreen,
+          navigationOptions: { title: 'Turtle Tracker' }
+        }
       }
 );
 
@@ -39,14 +45,14 @@ const MainNavigator = createBottomTabNavigator({
   }
 );
 
-const AppNavigator = createStackNavigator(
-    {
-        Map: {screen: MapScreen},
-        TurtleList: TurtleListScreen,
-    },
-    {
-        initialRouteName: 'Map',
-    }
-);
+// const AppNavigator = createStackNavigator(
+//     {
+//         Map: {screen: MapScreen},
+//         TurtleList: TurtleListScreen,
+//     },
+//     {
+//         initialRouteName: 'Map',
+//     }
+// );
 
 export default createAppContainer(MainNavigator);
