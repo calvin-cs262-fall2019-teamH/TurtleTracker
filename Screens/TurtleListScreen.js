@@ -10,6 +10,14 @@ export default class TurtleListScreen extends React.Component {
                     title="Go to TurtleProfile"
                     onPress={() => this.props.navigation.navigate('TurtleProfile')}
                 />
+                <Button
+                    title="Add new Turtle"
+                    onPress={() => this.props.navigation.navigate('TurtleAddProfile')}
+                />
+                <Button
+                    title="Go to User Settings"
+                    onPress={() => this.props.navigation.navigate('Settings')}
+                />
             </View>
         );
     }
