@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import TurtleListItem from './TurtleListItem'
-import { ListItem } from 'react-native-elements';
 
 const turtleList = [
     {
@@ -27,6 +26,7 @@ export default class TurtleList extends Component {
                         <TurtleListItem
                             key={index}
                             item={item}
+                            navigation={this.props.navigation}
                         />
                     ))
                 }
