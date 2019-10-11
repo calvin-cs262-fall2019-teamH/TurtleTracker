@@ -5,6 +5,9 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 // Import Screens
 import TurtleListScreen from './Screens/TurtleListScreen';
 import TurtleProfileScreen from './Screens/TurtleProfileScreen';
+import TurtleEditProfileScreen from './Screens/TurtleEditProfileScreen';
+import TurtleAddProfileScreen from './Screens/TurtleAddProfileScreen';
+import SettingsScreen from './Screens/SettingsScreen';
 import MapScreen from './Screens/MapScreen';
 
 const MapStack = createStackNavigator(
@@ -24,6 +27,18 @@ const TurtleListStack = createStackNavigator(
         },
         TurtleProfile: {
           screen: TurtleProfileScreen,
+          navigationOptions: { title: 'Turtle Tracker' }
+        },
+        TurtleEditProfile: {
+          screen: TurtleEditProfileScreen,
+          navigationOptions: { title: 'Turtle Tracker' }
+        },
+        TurtleAddProfile: {
+          screen: TurtleAddProfileScreen,
+          navigationOptions: { title: 'Turtle Tracker' }
+        },
+        Settings: {
+          screen: SettingsScreen,
           navigationOptions: { title: 'Turtle Tracker' }
         }
       }
