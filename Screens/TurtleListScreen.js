@@ -15,7 +15,7 @@ export default class TurtleListScreen extends React.Component {
                 <Button
                     title="Turtle 2"
                     onPress={() => this.props.navigation.navigate('TurtleProfile', {
-                        name:'Turtle 2'
+                        name:'Turtle 2',
                     })}
                 />
                 <Button
