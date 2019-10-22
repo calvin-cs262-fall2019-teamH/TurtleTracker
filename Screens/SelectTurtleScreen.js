@@ -10,14 +10,6 @@ export default class SelectTurtleScreen extends React.Component {
                     navigation={this.props.navigation}
                     onPressPage="TurtleAddProfile"
                 />  
-                <Button
-                    title="Add New Turtle"
-                    onPress={() => this.props.navigation.navigate('TurtleAddProfile')}
-                />
-                <Button
-                    title="Go to User Settings"
-                    onPress={() => this.props.navigation.navigate('Settings')}
-                />
             </View>
         );
     }

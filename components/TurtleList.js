@@ -20,18 +20,25 @@ const turtleList = [
 export default class TurtleList extends Component {
     render() {
         return (
-            <View style = {this.props.style}>
-                {
-                    turtleList.map((item, index) => (
-                        <TurtleListItem
-                            key={index}
-                            item={item}
-                            onPressPage = {this.props.onPressPage}
-                            navigation={this.props.navigation}
-                        />
-                    ))
-                }
+          <View style = {this.props.style}>
+          { this.props.navigation.state.routeName == "SelectTurtle" ? 
+            <TurtleListItem
+              key={0}
+              item={{name: "New Turtle"}}
+              onPressPage={this.props.onPressPage}
+              navigation={this.props.navigation}
+            /> : null }
+            {
+              turtleList.map((item, index) => (
+                <TurtleListItem
+                  key={index+1}
+                  item={item}
+                  onPressPage={this.props.onPressPage}
+                  navigation={this.props.navigation}
+                />
+              ))
+            }
             </View>
-        );
+        )
     }
 }
