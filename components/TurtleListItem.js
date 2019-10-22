@@ -9,7 +9,7 @@ export default class TurtleListItem extends Component {
           title={this.props.item.name}
           chevron
           bottomDivider
-          onPress={() => this.props.navigation.navigate('TurtleProfile', {name: this.props.item.name})}
+          onPress={() => {this.props.navigation.navigate(this.props.onPressPage, {name: this.props.item.name})}}
         />
       );
   }

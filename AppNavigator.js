@@ -7,6 +7,7 @@ import TurtleListScreen from './Screens/TurtleListScreen';
 import TurtleProfileScreen from './Screens/TurtleProfileScreen';
 import TurtleEditProfileScreen from './Screens/TurtleEditProfileScreen';
 import TurtleAddProfileScreen from './Screens/TurtleAddProfileScreen';
+import SelectTurtleScreen from './Screens/SelectTurtleScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 import MapScreen from './Screens/MapScreen';
 
@@ -35,6 +36,10 @@ const TurtleListStack = createStackNavigator(
         },
         TurtleAddProfile: {
           screen: TurtleAddProfileScreen,
+          navigationOptions: { title: 'Turtle Tracker' }
+        },
+        SelectTurtle: {
+          screen: SelectTurtleScreen,
           navigationOptions: { title: 'Turtle Tracker' }
         },
         Settings: {

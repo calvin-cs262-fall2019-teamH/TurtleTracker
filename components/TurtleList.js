@@ -26,6 +26,7 @@ export default class TurtleList extends Component {
                         <TurtleListItem
                             key={index}
                             item={item}
+                            onPressPage = {this.props.onPressPage}
                             navigation={this.props.navigation}
                         />
                     ))
