@@ -25,6 +25,8 @@ export default class MapScreen extends React.Component {
     },]
 
     this.state = {
+      latitude: 0,
+      longitude: 0,
       // Eventaully this will be an API call to the backend.
       markers: dummyTurtles
     }
@@ -45,18 +47,34 @@ export default class MapScreen extends React.Component {
     })
   }
 
-  // builds the actual map (which initializes to the Eco-preserve)
+  // accesses the user's location
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+         latitude: position.coords.latitude,
+         longitude: position.coords.longitude
+        });
+      },
+    { enableHighAccuracy: true, timeout: 30000, maximumAge: 2000 }
+  );
+ } 
+
+  // builds the map to the user's location
   render() {
     return (
       <MapView style={{flex: 1}}
-            initialRegion={{
-              latitude: 42.931870,
-              longitude: -85.582130,
+            region={{
+              latitude: this.state.latitude,
+              longitude: this.state.longitude,
               latitudeDelta: 0.0025,
               longitudeDelta: 0.0025
             }}
             onLongPress={this.handlePress}
             provider="google"
+            showsUserLocation= {true}
+            followsUserLocation= {true}
+            showsMyLocationButton= {true}
           
         >
           {this.state.markers.map((marker, i) => {
@@ -68,3 +86,6 @@ export default class MapScreen extends React.Component {
     );
   }
 } 
+
+
+// Reference/Source for Location: https://www.youtube.com/watch?v=bV7cLu7WL78 
