@@ -8,7 +8,7 @@ export default class TurtleListScreen extends React.Component {
             <View style={{justifyContent: 'center' }}>
                 <TurtleList 
                     navigation={this.props.navigation}
-                    onPressPage="TurtleProfile"
+                    onPressPage="TurtleView"
                 />  
                 <Button
                     title="Add new Sighting"

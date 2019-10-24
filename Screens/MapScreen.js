@@ -12,7 +12,7 @@ export default class MapScreen extends React.Component {
         "longitude": -85.58243000000002,
       },
       "cost": "a",
-      "onPress": () => this.props.navigation.navigate('TurtleProfile', {name: 'Yertle'}),
+      "onPress": () => this.props.navigation.navigate('TurtleView', {name: 'Yertle'}),
 
     },
     {
@@ -21,7 +21,7 @@ export default class MapScreen extends React.Component {
         "longitude": -85.58205666666666,
       },
       "cost": "a",
-      "onPress": () => this.props.navigation.navigate('TurtleProfile', {name: 'Yertle'}),
+      "onPress": () => this.props.navigation.navigate('TurtleView', {name: 'Yertle'}),
     },]
 
     this.state = {
@@ -39,7 +39,7 @@ export default class MapScreen extends React.Component {
         {
           coordinate: event.nativeEvent.coordinate,
           cost: "a",
-          onPress: () => this.props.navigation.navigate('TurtleProfile')
+          onPress: () => this.props.navigation.navigate('TurtleView')
         }
       ]
     })

@@ -6,8 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Import Screens
 import TurtleListScreen from './Screens/TurtleListScreen';
-import TurtleProfileScreen from './Screens/TurtleProfileScreen';
-import TurtleEditProfileScreen from './Screens/TurtleEditProfileScreen';
+import TurtleViewScreen from './Screens/Turtle/TurtleViewScreen';
+import TurtleEditScreen from './Screens/Turtle/TurtleEditScreen';
 import TurtleAddProfileScreen from './Screens/TurtleAddProfileScreen';
 import SelectTurtleScreen from './Screens/SelectTurtleScreen';
 import SettingsScreen from './Screens/SettingsScreen';
@@ -19,11 +19,11 @@ const MapStack = createStackNavigator(
         screen: MapScreen,
         navigationOptions: { title: 'Tracker' }
       },
-      TurtleProfile: {
-        screen: TurtleProfileScreen,
+      TurtleView: {
+        screen: TurtleViewScreen,
       },
-      TurtleEditProfile: {
-        screen: TurtleEditProfileScreen,
+      TurtleEditScreen: {
+        screen: TurtleEditScreen,
         navigationOptions: { title: 'Turtle Tracker' }
       },
     }
@@ -35,12 +35,12 @@ const TurtleListStack = createStackNavigator(
           screen: TurtleListScreen,
           navigationOptions: { title: 'Turtles' }
         },
-        TurtleProfile: {
-          screen: TurtleProfileScreen,
+        TurtleView: {
+          screen: TurtleViewScreen,
           navigationOptions: { title: 'Turtle Tracker' }
         },
-        TurtleEditProfile: {
-          screen: TurtleEditProfileScreen,
+        TurtleEdit: {
+          screen: TurtleEditScreen,
           navigationOptions: { title: 'Turtle Tracker' }
         },
         TurtleAddProfile: {
