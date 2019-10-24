@@ -18,6 +18,7 @@ export default class TurtleSearchBar extends React.Component {
         placeholder="Type Here..."
         onChangeText={this.updateSearch}
         value={search}
+        lightTheme={true}
       />
     );
   }
