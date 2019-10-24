@@ -16,6 +16,13 @@ const MapStack = createStackNavigator(
     {
       Map: {
         screen: MapScreen,
+        navigationOptions: { title: 'Tracker' }
+      },
+      TurtleProfile: {
+        screen: TurtleProfileScreen,
+      },
+      TurtleEditProfile: {
+        screen: TurtleEditProfileScreen,
         navigationOptions: { title: 'Turtle Tracker' }
       },
     }
@@ -25,7 +32,7 @@ const TurtleListStack = createStackNavigator(
     {
         TurtleList: {
           screen: TurtleListScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+          navigationOptions: { title: 'Turtles' }
         },
         TurtleProfile: {
           screen: TurtleProfileScreen,
@@ -56,13 +63,15 @@ const MainNavigator = createBottomTabNavigator(
     },
     TurtleTab: {
         navigationOptions: {
-            tabBarLabel: 'Turtle List',
+            tabBarLabel: 'Turtles',
         },
         screen: TurtleListStack,
     }
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
+
+      // Icon for tab bar.
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
         let IconComponent = Ionicons;
@@ -72,7 +81,6 @@ const MainNavigator = createBottomTabNavigator(
         } else if (routeName === 'TurtleTab') {
           iconName = `ios-list`;
         }
-
         return <IconComponent name={iconName} size={25} color={tintColor} />;
       },
     }),
