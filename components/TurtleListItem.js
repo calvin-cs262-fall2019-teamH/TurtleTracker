@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ListItem } from 'react-native-elements';
 
-export default class TurtleListItem extends Component {
+export default class TurtleListItem extends React.Component {
   render() {
       return (
         <ListItem
