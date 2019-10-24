@@ -35,10 +35,11 @@ export default class MapScreen extends React.Component {
               longitudeDelta: 0.0025
             }}
             onLongPress={this.handlePress}
+            provider="google"
           
         >
-          {this.state.markers.map((marker) => {
-            return <Marker {...marker} />
+          {this.state.markers.map((marker, i) => {
+            return <Marker key={i} {...marker} />
           })}
 
         </MapView>
