@@ -15,9 +15,13 @@ export default class TurtleSearchBar extends React.Component {
 
     return (
       <SearchBar
-        placeholder="Type Here..."
+        placeholder="Search Here..."
         onChangeText={this.updateSearch}
         value={search}
+        inputStyle={{backgroundColor: 'white'}}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        containerStyle={{backgroundColor: 'white'}}
+        placeholderTextColor={'black'}
         lightTheme={true}
       />
     );
