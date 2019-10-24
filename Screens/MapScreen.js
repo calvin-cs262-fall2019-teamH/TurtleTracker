@@ -1,12 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 
 export default class MapScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    // Test data
+    dummyTurtles = [{
+      "coordinate":  {
+        "latitude": 42.9313086715985,
+        "longitude": -85.58243000000002,
+      },
+      "cost": "a",
+      "onPress": () => this.props.navigation.navigate('TurtleView', {name: 'Yertle'}),
+
+    },
+    {
+      "coordinate": {
+        "latitude": 42.93150391684017,
+        "longitude": -85.58205666666666,
+      },
+      "cost": "a",
+      "onPress": () => this.props.navigation.navigate('TurtleView', {name: 'Yertle'}),
+    },]
+
     this.state = {
-      markers: []
+      // Eventaully this will be an API call to the backend.
+      markers: dummyTurtles
     }
     this.handlePress = this.handlePress.bind(this);
   }
@@ -18,7 +38,8 @@ export default class MapScreen extends React.Component {
         ...this.state.markers,
         {
           coordinate: event.nativeEvent.coordinate,
-          cost: "a"
+          cost: "a",
+          onPress: () => this.props.navigation.navigate('TurtleView')
         }
       ]
     })
@@ -35,10 +56,11 @@ export default class MapScreen extends React.Component {
               longitudeDelta: 0.0025
             }}
             onLongPress={this.handlePress}
+            provider="google"
           
         >
-          {this.state.markers.map((marker) => {
-            return <Marker {...marker} />
+          {this.state.markers.map((marker, i) => {
+            return <Marker key={i} {...marker} />
           })}
 
         </MapView>
