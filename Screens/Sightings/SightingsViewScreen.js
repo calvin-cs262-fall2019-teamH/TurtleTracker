@@ -10,6 +10,7 @@ export default function SightingViewScreen() {
                 {/* <Text>Turtle Carapace Mark - {navigation.getParam('mark')}</Text>
                 <Text>Sex - {navigation.getParam('sex')}</Text> */}
                 {/* location */}
+                <Text>Date - </Text>
                 <Text>Length - </Text>
                 <Text>Notes - </Text>
                 <Button
