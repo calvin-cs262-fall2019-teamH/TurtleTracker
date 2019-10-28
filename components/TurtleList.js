@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import TurtleListItem from './TurtleListItem'
+import { ListItem } from 'react-native-elements';
 
 const turtleList = [
     {
@@ -78,17 +79,26 @@ const turtleList = [
 export default class TurtleList extends Component {
     render() {
         return (
-            <View style = {this.props.style}>
-                {
-                    turtleList.map((item, index) => (
-                        <TurtleListItem
-                            key={index}
-                            item={item}
-                            navigation={this.props.navigation}
-                        />
-                    ))
-                }
+          <View style = {this.props.style}>
+          { this.props.navigation.state.routeName == "SelectTurtle" ? 
+            <ListItem
+              leftAvatar
+              title="New Turtle"
+              chevron
+              bottomDivider
+              onPress={() => {this.props.navigation.navigate(this.props.onPressPage)}}
+            /> : null }
+            {
+              turtleList.map((item, index) => (
+                <TurtleListItem
+                  key={index+1}
+                  item={item}
+                  onPressPage={this.props.onPressPage}
+                  navigation={this.props.navigation}
+                />
+              ))
+            }
             </View>
-        );
+        )
     }
 }

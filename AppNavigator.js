@@ -6,9 +6,10 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Import Screens
 import TurtleListScreen from './Screens/TurtleListScreen';
-import TurtleProfileScreen from './Screens/TurtleProfileScreen';
-import TurtleEditProfileScreen from './Screens/TurtleEditProfileScreen';
+import TurtleViewScreen from './Screens/Turtle/TurtleViewScreen';
+import TurtleEditScreen from './Screens/Turtle/TurtleEditScreen';
 import TurtleAddProfileScreen from './Screens/TurtleAddProfileScreen';
+import SelectTurtleScreen from './Screens/SelectTurtleScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 import MapScreen from './Screens/MapScreen';
 
@@ -16,6 +17,13 @@ const MapStack = createStackNavigator(
     {
       Map: {
         screen: MapScreen,
+        navigationOptions: { title: 'Tracker' }
+      },
+      TurtleView: {
+        screen: TurtleViewScreen,
+      },
+      TurtleEditScreen: {
+        screen: TurtleEditScreen,
         navigationOptions: { title: 'Turtle Tracker' }
       },
     }
@@ -25,18 +33,22 @@ const TurtleListStack = createStackNavigator(
     {
         TurtleList: {
           screen: TurtleListScreen,
+          navigationOptions: { title: 'Turtles' }
+        },
+        TurtleView: {
+          screen: TurtleViewScreen,
           navigationOptions: { title: 'Turtle Tracker' }
         },
-        TurtleProfile: {
-          screen: TurtleProfileScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
-        },
-        TurtleEditProfile: {
-          screen: TurtleEditProfileScreen,
+        TurtleEdit: {
+          screen: TurtleEditScreen,
           navigationOptions: { title: 'Turtle Tracker' }
         },
         TurtleAddProfile: {
           screen: TurtleAddProfileScreen,
+          navigationOptions: { title: 'Turtle Tracker' }
+        },
+        SelectTurtle: {
+          screen: SelectTurtleScreen,
           navigationOptions: { title: 'Turtle Tracker' }
         },
         Settings: {
@@ -56,13 +68,15 @@ const MainNavigator = createBottomTabNavigator(
     },
     TurtleTab: {
         navigationOptions: {
-            tabBarLabel: 'Turtle List',
+            tabBarLabel: 'Turtles',
         },
         screen: TurtleListStack,
     }
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
+
+      // Icon for tab bar.
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
         let IconComponent = Ionicons;
@@ -72,7 +86,6 @@ const MainNavigator = createBottomTabNavigator(
         } else if (routeName === 'TurtleTab') {
           iconName = `ios-list`;
         }
-
         return <IconComponent name={iconName} size={25} color={tintColor} />;
       },
     }),

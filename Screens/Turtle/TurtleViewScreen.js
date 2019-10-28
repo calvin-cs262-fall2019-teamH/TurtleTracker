@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 
-export default class TurtleProfileScreen extends React.Component {
+export default class TurtleViewScreen extends React.Component {
     render() {
         const { navigation } = this.props;
         return (
@@ -10,8 +10,8 @@ export default class TurtleProfileScreen extends React.Component {
                 <Text>Turtle Carapace Mark - {navigation.getParam('mark')}</Text>
                 <Text>Sex - {navigation.getParam('sex')}</Text>
                 <Button
-                    title="Edit Turtle Profile"
-                    onPress={() => navigation.navigate('TurtleEditProfile')}
+                    title="Edit Turtle"
+                    onPress={() => navigation.navigate('TurtleEdit')}
                 />
             </View>
         );
