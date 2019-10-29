@@ -14,7 +14,7 @@ export default function TurtleEditScreen(){
                 />
                 <Text>Turtle sex: </Text><TextInput 
                     style={{ height: 40, width: 100, borderColor: 'gray', borderWidth: 1, borderRadius:3, textAlign:'center' }}
-                    onChangeText={sex => setSex(sex)}f
+                    onChangeText={sex => setSex(sex)}
                     value={sex}
                 />
             </View>
