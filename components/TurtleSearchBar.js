@@ -21,8 +21,8 @@ export default class TurtleSearchBar extends React.Component {
         inputStyle={{backgroundColor: 'white'}}
         inputContainerStyle={{backgroundColor: 'white'}}
         containerStyle={{backgroundColor: 'white'}}
-        placeholderTextColor={'black'}
-        lightTheme={true}
+        placeholderTextColor={'gray'}
+        lightTheme round
       />
     );
   }
