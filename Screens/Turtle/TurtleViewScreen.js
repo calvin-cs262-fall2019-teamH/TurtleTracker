@@ -7,7 +7,8 @@ export default class TurtleViewScreen extends React.Component {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Turtle View Screen</Text>
-                <Text>Turtle Name - {navigation.getParam('name')}</Text>
+                <Text>Turtle Carapace Mark - {navigation.getParam('mark')}</Text>
+                <Text>Sex - {navigation.getParam('sex')}</Text>
                 <Button
                     title="Edit Turtle"
                     onPress={() => navigation.navigate('TurtleEdit')}
