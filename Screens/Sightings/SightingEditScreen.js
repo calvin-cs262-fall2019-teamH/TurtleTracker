@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Button } from 'react-native';
 
 export default function SightingEditScreen({navigation}){
     const [length, setLength] = useState('length');
@@ -24,6 +24,7 @@ export default function SightingEditScreen({navigation}){
                 {/* date picker has android and ios versions on reacts website, but someone combined them here. 
                 will spend time later setting this up
                 https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker */}
+                <Button title="Submit" onPress={() => navigation.goBack()}/>
             </View>
         );
 

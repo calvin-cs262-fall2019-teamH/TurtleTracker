@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Button } from 'react-native';
 
 export default function TurtleEditScreen({navigation}){
     const [carapaceMark, setCarapaceMark] = useState('mark');
@@ -17,6 +17,8 @@ export default function TurtleEditScreen({navigation}){
                     onChangeText={sex => setSex(sex)}
                     value={sex}
                 />
+                { navigation.state.params.edit == "true" ? 
+                   <Button title="Submit" onPress={() => navigation.goBack()}/>  : <Button title="Submit" onPress={() => navigation.navigate("TurtleView")}/> }
             </View>
         );
 

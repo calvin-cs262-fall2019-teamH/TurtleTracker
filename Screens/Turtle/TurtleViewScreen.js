@@ -11,7 +11,7 @@ export default class TurtleViewScreen extends React.Component {
                 <Text>Sex - {navigation.getParam('sex')}</Text>
                 <Button
                     title="Edit Turtle"
-                    onPress={() => navigation.navigate('TurtleEdit')}
+                    onPress={() => navigation.navigate('TurtleEdit', {edit: "true"})}
                 />
                 <Button
                     title="View Sighting"
