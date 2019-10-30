@@ -7,8 +7,8 @@ export default class TurtleViewScreen extends React.Component {
         const { navigation } = this.props;
         turtleProps = navigation.getParam('turtle');
         return (
-            <ScrollView>
-                <View style={{flexDirection: 'row'}}>
+            <ScrollView style={{padding: 5}}>
+                <View style={{flexDirection: 'row', padding: 5}}>
                     { turtleProps.pictures.length > 0 ?
                         <Image style={{width: 150, height: 150}} source={{uri: turtleProps.pictures[0]}}/>
                         : null
@@ -18,7 +18,7 @@ export default class TurtleViewScreen extends React.Component {
                         <TurtleProfileText titleText='Date Found: ' baseText={turtleProps.date}/>
                         <TurtleProfileText titleText='Mark: ' baseText={turtleProps.mark}/>
                         <TurtleProfileText titleText='Sex: ' baseText={turtleProps.sex}/>
-                        <TurtleProfileText titleText='Carapace Length: ' baseText={turtleProps.length}/>
+                        <TurtleProfileText titleText='Carapace Length: ' baseText={`${turtleProps.length} cm`}/>
                     </View>
                 </View>
                 <TurtleProfileText titleText='Notes: ' baseText={turtleProps.notes}/>
