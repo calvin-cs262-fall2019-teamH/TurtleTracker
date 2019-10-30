@@ -10,8 +10,12 @@ export default function SightingViewScreen({navigation}) {
                 {/* <Text>Turtle Carapace Mark - {navigation.getParam('mark')}</Text>
                 <Text>Sex - {navigation.getParam('sex')}</Text> */}
                 {/* location */}
-                <Text>Date - </Text>
+                <Text>Turtle Number</Text>
+                <Text>Turtle Mark</Text>
+                <Text>DateTime - </Text>
                 <Text>Length - </Text>
+                <Text>Location - </Text>
+                {/* map */}
                 <Text>Notes - </Text>
                 <Button
                     title="Edit Sighting"
