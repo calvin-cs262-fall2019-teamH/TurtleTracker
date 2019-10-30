@@ -8,7 +8,7 @@ export default class SelectTurtleScreen extends React.Component {
             <View style={{justifyContent: 'center' }}>
                 <TurtleList 
                     navigation={this.props.navigation}
-                    onPressPage="TurtleAddProfile"
+                    onPressPage="TurtleEdit"
                 />  
             </View>
         );

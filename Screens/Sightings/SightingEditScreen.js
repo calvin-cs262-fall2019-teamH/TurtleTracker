@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput } from 'react-native';
 
-export default function SightingEditScreen(){
+export default function SightingEditScreen({navigation}){
     const [length, setLength] = useState('length');
     const [date, setDate] = useState('date');
     const [notes, setNotes] = useState('notes');

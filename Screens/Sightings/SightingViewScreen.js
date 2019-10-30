@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, Image } from 'react-native';
 
-export default function SightingViewScreen() {
+export default function SightingViewScreen({navigation}) {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Sighting View Screen</Text>
@@ -14,8 +14,8 @@ export default function SightingViewScreen() {
                 <Text>Length - </Text>
                 <Text>Notes - </Text>
                 <Button
-                    title="Edit Turtle"
-                    onPress={() => navigation.navigate('TurtleEdit')}
+                    title="Edit Sighting"
+                    onPress={() => navigation.navigate('SightingEdit')}
                 />
             </View>
         );

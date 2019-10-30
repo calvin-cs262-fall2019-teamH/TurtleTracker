@@ -6,11 +6,13 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Import Screens
 import TurtleListScreen from './Screens/TurtleListScreen';
+import SelectTurtleScreen from './Screens/SelectTurtleScreen';
 import TurtleViewScreen from './Screens/Turtle/TurtleViewScreen';
 import TurtleEditScreen from './Screens/Turtle/TurtleEditScreen';
-import SelectTurtleScreen from './Screens/SelectTurtleScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 import MapScreen from './Screens/MapScreen';
+import SightingEditScreen from './Screens/Sightings/SightingEditScreen';
+import SightingViewScreen from './Screens/Sightings/SightingViewScreen';
 
 const MapStack = createStackNavigator(
     {
@@ -49,7 +51,15 @@ const TurtleListStack = createStackNavigator(
         Settings: {
           screen: SettingsScreen,
           navigationOptions: { title: 'Settings' }
-        }
+        },
+        SightingView:
+        {
+          screen: SightingViewScreen
+        },
+        SightingEdit:
+        {
+          screen: SightingEditScreen
+        },
       }
 );
 
