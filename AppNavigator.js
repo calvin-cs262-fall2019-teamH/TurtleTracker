@@ -17,14 +17,14 @@ const MapStack = createStackNavigator(
     {
       Map: {
         screen: MapScreen,
-        navigationOptions: { title: 'Tracker' }
+        navigationOptions: { title: 'Turtle Tracker' }
       },
       TurtleView: {
         screen: TurtleViewScreen,
       },
       TurtleEditScreen: {
         screen: TurtleEditScreen,
-        navigationOptions: { title: 'Turtle Tracker' }
+        navigationOptions: { title: 'Turtle View' }
       },
     }
   );
@@ -37,23 +37,23 @@ const TurtleListStack = createStackNavigator(
         },
         TurtleView: {
           screen: TurtleViewScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+          navigationOptions: { title: 'Turtle View' }
         },
         TurtleEdit: {
           screen: TurtleEditScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+          navigationOptions: { title: 'Edit Turtle' }
         },
         TurtleAddProfile: {
           screen: TurtleAddProfileScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+          navigationOptions: { title: 'Enter Info' }
         },
         SelectTurtle: {
           screen: SelectTurtleScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+          navigationOptions: { title: 'Select Turtle' }
         },
         Settings: {
           screen: SettingsScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+          navigationOptions: { title: 'Settings' }
         }
       }
 );
