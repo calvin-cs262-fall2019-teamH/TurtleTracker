@@ -6,18 +6,19 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Import Screens
 import TurtleListScreen from './Screens/TurtleListScreen';
+import SelectTurtleScreen from './Screens/SelectTurtleScreen';
 import TurtleViewScreen from './Screens/Turtle/TurtleViewScreen';
 import TurtleEditScreen from './Screens/Turtle/TurtleEditScreen';
-import TurtleAddProfileScreen from './Screens/TurtleAddProfileScreen';
-import SelectTurtleScreen from './Screens/SelectTurtleScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 import MapScreen from './Screens/MapScreen';
+import SightingEditScreen from './Screens/Sightings/SightingEditScreen';
+import SightingViewScreen from './Screens/Sightings/SightingViewScreen';
 
 const MapStack = createStackNavigator(
     {
       Map: {
         screen: MapScreen,
-        navigationOptions: { title: 'Turtle Tracker' }
+        navigationOptions: { title: 'Tracker' }
       },
       TurtleView: {
         screen: TurtleViewScreen,
@@ -43,10 +44,6 @@ const TurtleListStack = createStackNavigator(
           screen: TurtleEditScreen,
           navigationOptions: { title: 'Edit Turtle' }
         },
-        TurtleAddProfile: {
-          screen: TurtleAddProfileScreen,
-          navigationOptions: { title: 'Enter Info' }
-        },
         SelectTurtle: {
           screen: SelectTurtleScreen,
           navigationOptions: { title: 'Select Turtle' }
@@ -54,7 +51,15 @@ const TurtleListStack = createStackNavigator(
         Settings: {
           screen: SettingsScreen,
           navigationOptions: { title: 'Settings' }
-        }
+        },
+        SightingView:
+        {
+          screen: SightingViewScreen
+        },
+        SightingEdit:
+        {
+          screen: SightingEditScreen
+        },
       }
 );
 
