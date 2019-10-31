@@ -10,6 +10,7 @@ export default class TurtleViewScreen extends React.Component {
                 title="Edit"
             />
         ),
+        title: navigation.getParam('turtle').mark
     });
 
     render() {
@@ -32,8 +33,8 @@ export default class TurtleViewScreen extends React.Component {
                 </View>
                 <TurtleText titleText='Notes: ' baseText={turtleProps.notes} />
                 <Button
-                    title="View Sighting"
-                    onPress={() => navigation.navigate('SightingView')}
+                    title="View Sighting #1"
+                    onPress={() => navigation.navigate('SightingView', {turtle: turtleProps})}
                 />
             </ScrollView>
         );
