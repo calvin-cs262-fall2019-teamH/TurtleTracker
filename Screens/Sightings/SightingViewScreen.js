@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, Text, Button, Image } from 'react-native';
 
+/*
+Turtle Sighting Screen for information on one particular sighting
+*/
 export default function SightingViewScreen({navigation}) {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View>
                 <Text>Sighting View Screen</Text>
                 <Text>Image of sighting</Text>
                 <Image />
@@ -24,3 +27,8 @@ export default function SightingViewScreen({navigation}) {
             </View>
         );
     }
+
+    // Sets the navigation options.
+    SightingViewScreen.navigationOptions = {
+        title: 'Sighting',
+    };
