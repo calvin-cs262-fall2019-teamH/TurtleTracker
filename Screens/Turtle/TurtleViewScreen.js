@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Button, Image, ScrollView } from 'react-native';
-import TurtleProfileText from '../../components/TurtleProfileText'
+import TurtleText from '../../components/TurtleText'
 
 export default class TurtleViewScreen extends React.Component {
     render() {
@@ -15,13 +15,13 @@ export default class TurtleViewScreen extends React.Component {
                     }
                     <View style={{justifyContent: 'space-evenly'}}>
                         <Text style={{fontSize: 16, fontWeight: 'bold'}}>Turtle #{turtleProps.number}</Text>
-                        <TurtleProfileText titleText='Date Found: ' baseText={turtleProps.date}/>
-                        <TurtleProfileText titleText='Mark: ' baseText={turtleProps.mark}/>
-                        <TurtleProfileText titleText='Sex: ' baseText={turtleProps.sex}/>
-                        <TurtleProfileText titleText='Carapace Length: ' baseText={turtleProps.length}/>
+                        <TurtleText titleText='Date Found: ' baseText={turtleProps.date}/>
+                        <TurtleText titleText='Mark: ' baseText={turtleProps.mark}/>
+                        <TurtleText titleText='Sex: ' baseText={turtleProps.sex}/>
+                        <TurtleText titleText='Carapace Length: ' baseText={turtleProps.length}/>
                     </View>
                 </View>
-                <TurtleProfileText titleText='Notes: ' baseText={turtleProps.notes}/>
+                <TurtleText titleText='Notes: ' baseText={turtleProps.notes}/>
                 <Button
                     title="Edit Turtle"
                     onPress={() => navigation.navigate('TurtleEdit', {edit: "true"})}
