@@ -17,7 +17,7 @@ export default function TurtleEditScreen({navigation}){
                     onChangeText={sex => setSex(sex)}
                     value={sex}
                 />
-                { navigation.state.params.edit == "true" ? 
+                { navigation.getParam('edit') != undefined && navigation.getParam('edit') == "true" ? 
                    <Button title="Submit" onPress={() => navigation.goBack()}/>  : <Button title="Submit" onPress={() => navigation.navigate("TurtleView")}/> }
             </View>
         );
