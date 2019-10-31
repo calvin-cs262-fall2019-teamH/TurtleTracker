@@ -1,34 +1,36 @@
 import React from 'react';
-import { View, Text, Button, Image } from 'react-native';
+import { View, Text, Button, Image, ScrollView } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import TurtleText from '../../components/TurtleText';
 
 /*
 Turtle Sighting Screen for information on one particular sighting
 */
 export default function SightingViewScreen({navigation}) {
         return (
-            <View>
-                <Text>Sighting View Screen</Text>
-                <Text>Image of sighting</Text>
+            <ScrollView style={{padding: 10}}>
                 <Image />
-                {/* <Text>Turtle Carapace Mark - {navigation.getParam('mark')}</Text>
-                <Text>Sex - {navigation.getParam('sex')}</Text> */}
-                {/* location */}
-                <Text>Turtle Number</Text>
-                <Text>Turtle Mark</Text>
-                <Text>DateTime - </Text>
-                <Text>Length - </Text>
-                <Text>Location - </Text>
+                <TurtleText titleText="Turtle Number #X"/>
+                <TurtleText titleText="Mark: " baseText="MARK"/>
+                <TurtleText titleText="Date: " baseText="DATETIME"/>
+                <TurtleText titleText="Length: " baseText="LENGTH cm"/>
+                <TurtleText titleText="Location: " baseText="LOCATION"/>
                 {/* map */}
-                <Text>Notes - </Text>
-                <Button
-                    title="Edit Sighting"
-                    onPress={() => navigation.navigate('SightingEdit')}
-                />
-            </View>
+                <View style={{width: '100%', height: 200}}>
+                    <MapView style={{flex: 1}}/>
+                </View>
+                <TurtleText titleText="Notes: " baseText="SIGHTING NOTES"/>
+            </ScrollView>
         );
     }
 
     // Sets the navigation options.
-    SightingViewScreen.navigationOptions = {
+    SightingViewScreen.navigationOptions = ({navigation}) => ({
         title: 'Sighting',
-    };
+        headerRight: () => (
+            <Button
+                onPress={() => navigation.navigate('SightingEdit')}
+              title="Edit"
+            />
+          ),
+    });
