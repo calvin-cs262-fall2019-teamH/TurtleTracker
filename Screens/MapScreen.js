@@ -1,5 +1,7 @@
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
+import { Button, View, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 export default class MapScreen extends React.Component {
   constructor(props) {
@@ -63,25 +65,53 @@ export default class MapScreen extends React.Component {
   // builds the map to the user's location
   render() {
     return (
-      <MapView style={{flex: 1}}
-            region={{
-              latitude: this.state.latitude,
-              longitude: this.state.longitude,
-              latitudeDelta: 0.0025,
-              longitudeDelta: 0.0025
-            }}
-            onLongPress={this.handlePress}
-            provider="google"
-            showsUserLocation= {true}
-            followsUserLocation= {true}
-            showsMyLocationButton= {true}
+      <View style={{ flex: 1 }}>
+        <MapView style={{flex: 1}}
+              region={{
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
+                latitudeDelta: 0.0025,
+                longitudeDelta: 0.0025
+                }}
+              onLongPress={this.handlePress}
+              provider="google"
+              showsUserLocation= {true}
+              followsUserLocation= {true}
+              showsMyLocationButton= {true}
           
-        >
-          {this.state.markers.map((marker, i) => {
-            return <Marker key={i} {...marker} />
-          })}
+          >
+            {this.state.markers.map((marker, i) => {
+              return <Marker key={i} {...marker} />
+              })}
 
         </MapView>
+        <View
+          style={{
+              position: 'absolute',
+              top: '10%',
+              flexDirection: 'row', 
+            }}
+          >
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Settings')}>
+              <Icon name="settings" size={40} color="black" style={{ marginLeft: 15 }}/>
+            </TouchableOpacity>
+
+        </View>
+        <View
+          style={{
+              position: 'absolute',
+              top: '10%',
+              right: '10%',
+              flexDirection: 'row', 
+            }}
+          >
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('TurtleAddProfile')}>
+              <Icon name="plus-circle" size={40} color="black" style={{}} />
+            </TouchableOpacity>
+        </View>
+        
+
+      </View>
       
     );
   }
