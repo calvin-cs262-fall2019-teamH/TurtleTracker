@@ -105,7 +105,7 @@ export default class MapScreen extends React.Component {
               flexDirection: 'row', 
             }}
           >
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('TurtleAddProfile')}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('SelectTurtle')}>
               <Icon name="plus-circle" size={40} color="black" style={{}} />
             </TouchableOpacity>
         </View>
