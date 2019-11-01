@@ -14,10 +14,10 @@ export default class TurtleProfileText extends Component {
 
 const styles = StyleSheet.create({
     baseText: {
-        fontSize: 16,
+        fontSize: 15,
     },
     titleText: {
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: 'bold',
     },
 });
