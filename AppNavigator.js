@@ -1,3 +1,7 @@
+/*
+  AppNavigator.js handels the basic tab and stack navigation for the app.
+*/
+
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -14,6 +18,7 @@ import MapScreen from './Screens/MapScreen';
 import SightingEditScreen from './Screens/Sightings/SightingEditScreen';
 import SightingViewScreen from './Screens/Sightings/SightingViewScreen';
 
+// Stack of screens for the Map Tab.
 const MapStack = createStackNavigator(
     {
       Map: {
@@ -30,6 +35,7 @@ const MapStack = createStackNavigator(
     }
   );
 
+// Stacks of Screens for the Turtles Lab
 const TurtleListStack = createStackNavigator(
     {
         TurtleList: {
@@ -62,6 +68,7 @@ const TurtleListStack = createStackNavigator(
       }
 );
 
+// Combine the two stakcs together under their own tabs.
 const MainNavigator = createBottomTabNavigator(
   {
     MapTab: {

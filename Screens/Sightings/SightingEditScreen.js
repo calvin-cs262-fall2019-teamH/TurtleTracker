@@ -3,6 +3,9 @@ import { View, Text, TextInput, Button, ScrollView } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleProfileTextInput from '../../components/TurtleProfileTextInput';
 
+/*
+SightingEditScreen is for editing the information of a specific citing.
+*/
 export default function SightingEditScreen({navigation}){
     const [length, setLength] = useState('length');
     const [date, setDate] = useState('date');

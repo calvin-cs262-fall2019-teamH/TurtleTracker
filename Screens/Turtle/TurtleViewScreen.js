@@ -2,6 +2,9 @@ import React from 'react';
 import { View, Text, Button, Image, ScrollView } from 'react-native';
 import TurtleText from '../../components/TurtleText'
 
+/*
+    TurtleViewScreen views the contents of one turtle
+*/
 export default class TurtleViewScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
         headerRight: () => (

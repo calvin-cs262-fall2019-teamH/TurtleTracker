@@ -3,6 +3,9 @@ import MapView, { Marker } from 'react-native-maps';
 import { Button, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
+/*
+MapScreen.js contains the basic map screen with turtle sightings.
+*/
 export default class MapScreen extends React.Component {
   constructor(props) {
     super(props);
