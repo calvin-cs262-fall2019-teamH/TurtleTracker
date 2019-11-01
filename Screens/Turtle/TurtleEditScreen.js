@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { View, ScrollView, Text, Image, Button } from 'react-native';
-import TurtleProfileText from '../../components/TurtleProfileText';
+import TurtleText from '../../components/TurtleText';
 import TurtleProfileTextInput from '../../components/TurtleProfileTextInput';
 
 
@@ -17,14 +17,14 @@ export default function TurtleEditScreen({navigation}){
                     }
                     <View style={{justifyContent: 'space-evenly', paddingLeft: 5}}>
                         <Text style={{fontSize: 16, fontWeight: 'bold'}}>Turtle #{turtleProps.number}</Text>
-                        <TurtleProfileText titleText='Date Found: ' baseText={turtleProps.date}/>
+                        <TurtleText titleText='Date Found: ' baseText={turtleProps.date}/>
                         <TurtleProfileTextInput titleText='Mark: ' onChangeText={newMark => setCarapaceMark(newMark)} value={carapaceMark} placeholder={turtleProps.mark}/>
                         <TurtleProfileTextInput titleText='Sex: ' onChangeText={sex => setSex(sex)} value={sex} placeholder={turtleProps.sex}/>
-                        <TurtleProfileText titleText='Carapace Length: ' baseText={`${turtleProps.length} cm`}/>
+                        <TurtleText titleText='Carapace Length: ' baseText={`${turtleProps.length} cm`}/>
                     </View>
                 </View>
-                <TurtleProfileText titleText='Notes: ' baseText={turtleProps.notes}/>
-                { navigation.state.params.edit == "true" ? 
+                <TurtleText titleText='Notes: ' baseText={turtleProps.notes}/>
+                { navigation.getParam('edit') != undefined && navigation.getParam('edit') == "true" ? 
                    <Button title="Submit" onPress={() => navigation.goBack()}/>  : <Button title="Submit" onPress={() => navigation.navigate("TurtleView")}/> }
             </ScrollView>
 

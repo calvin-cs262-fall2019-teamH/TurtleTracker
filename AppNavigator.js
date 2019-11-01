@@ -25,7 +25,7 @@ const MapStack = createStackNavigator(
       },
       TurtleEditScreen: {
         screen: TurtleEditScreen,
-        navigationOptions: { title: 'Turtle View' }
+        navigationOptions: { title: 'Edit' }
       },
     }
   );
@@ -38,7 +38,6 @@ const TurtleListStack = createStackNavigator(
         },
         TurtleView: {
           screen: TurtleViewScreen,
-          navigationOptions: { title: 'Turtle View' }
         },
         TurtleEdit: {
           screen: TurtleEditScreen,
