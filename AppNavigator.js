@@ -6,12 +6,13 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Import Screens
 import TurtleListScreen from './Screens/TurtleListScreen';
+import SelectTurtleScreen from './Screens/SelectTurtleScreen';
 import TurtleViewScreen from './Screens/Turtle/TurtleViewScreen';
 import TurtleEditScreen from './Screens/Turtle/TurtleEditScreen';
-import TurtleAddProfileScreen from './Screens/TurtleAddProfileScreen';
-import SelectTurtleScreen from './Screens/SelectTurtleScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 import MapScreen from './Screens/MapScreen';
+import SightingEditScreen from './Screens/Sightings/SightingEditScreen';
+import SightingViewScreen from './Screens/Sightings/SightingViewScreen';
 
 const MapStack = createStackNavigator(
     {
@@ -24,7 +25,7 @@ const MapStack = createStackNavigator(
       },
       TurtleEditScreen: {
         screen: TurtleEditScreen,
-        navigationOptions: { title: 'Turtle Tracker' }
+        navigationOptions: { title: 'Turtle View' }
       },
     }
   );
@@ -37,24 +38,28 @@ const TurtleListStack = createStackNavigator(
         },
         TurtleView: {
           screen: TurtleViewScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+          navigationOptions: { title: 'Turtle View' }
         },
         TurtleEdit: {
           screen: TurtleEditScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
-        },
-        TurtleAddProfile: {
-          screen: TurtleAddProfileScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+          navigationOptions: { title: 'Edit Turtle' }
         },
         SelectTurtle: {
           screen: SelectTurtleScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+          navigationOptions: { title: 'Select Turtle' }
         },
         Settings: {
           screen: SettingsScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
-        }
+          navigationOptions: { title: 'Settings' }
+        },
+        SightingView:
+        {
+          screen: SightingViewScreen
+        },
+        SightingEdit:
+        {
+          screen: SightingEditScreen
+        },
       }
 );
 

@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
-import { View, ScrollView, Text, Image } from 'react-native';
+import { View, ScrollView, Text, Image, Button } from 'react-native';
 import TurtleProfileText from '../../components/TurtleProfileText';
 import TurtleProfileTextInput from '../../components/TurtleProfileTextInput';
 
-export default function TurtleEditScreen(){
+
+export default function TurtleEditScreen({navigation}){
     const [carapaceMark, setCarapaceMark] = useState('mark');
     const [sex, setSex] = useState('sex');
         return (
+
             <ScrollView style={{padding: 5}}>
                 <View style={{flexDirection: 'row', padding: 5}}>
                     { turtleProps.pictures.length > 0 ?
@@ -22,7 +24,10 @@ export default function TurtleEditScreen(){
                     </View>
                 </View>
                 <TurtleProfileText titleText='Notes: ' baseText={turtleProps.notes}/>
+                { navigation.state.params.edit == "true" ? 
+                   <Button title="Submit" onPress={() => navigation.goBack()}/>  : <Button title="Submit" onPress={() => navigation.navigate("TurtleView")}/> }
             </ScrollView>
+
         );
 
 }

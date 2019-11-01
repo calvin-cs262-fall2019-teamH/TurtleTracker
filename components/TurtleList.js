@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 import TurtleListItem from './TurtleListItem'
 import { ListItem } from 'react-native-elements';
 
@@ -79,7 +79,7 @@ const turtleList = [
 export default class TurtleList extends Component {
     render() {
         return (
-          <View style = {this.props.style}>
+          <ScrollView style = {this.props.style}>
           { this.props.navigation.state.routeName == "SelectTurtle" ? 
             <ListItem
               leftAvatar
@@ -98,7 +98,7 @@ export default class TurtleList extends Component {
                 />
               ))
             }
-            </View>
+            </ScrollView>
         )
     }
 }

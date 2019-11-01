@@ -24,7 +24,11 @@ export default class TurtleViewScreen extends React.Component {
                 <TurtleProfileText titleText='Notes: ' baseText={turtleProps.notes}/>
                 <Button
                     title="Edit Turtle"
-                    onPress={() => navigation.navigate('TurtleEdit', {turtle: turtleProps})}
+                    onPress={() => navigation.navigate('TurtleEdit', {turtle: turtleProps}, {edit: "true})}
+                />
+                <Button
+                    title="View Sighting"
+                    onPress={() => navigation.navigate('SightingView')}
                 />
             </ScrollView>
         );
