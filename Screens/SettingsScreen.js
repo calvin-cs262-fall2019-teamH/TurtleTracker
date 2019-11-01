@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
+/*
+    SettingsScreen will be used to toggle the specific user settings.
+*/
 export default class SettingsScreen extends React.Component {
     render() {
         return (

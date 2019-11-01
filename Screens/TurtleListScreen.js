@@ -3,18 +3,27 @@ import { View, Text, Button } from 'react-native';
 import TurtleList from '../components/TurtleList';
 
 export default class TurtleListScreen extends React.Component {
+    static navigationOptions = ({navigation}) => ({
+        headerRight: () => (
+            <Button
+                title="Add"
+                onPress={() => navigation.navigate('SelectTurtle')}
+            />
+        ),
+        headerLeft: () => (
+            <Button
+                title="Settings"
+                onPress={() => navigation.navigate('Settings')}
+            />
+        ),
+    });
+
     render() {
         return (
-            <View style={{justifyContent: 'center' }}>
-                <Text>TurtleList Screen</Text>
-                <TurtleList navigation={this.props.navigation}/>  
-                <Button
-                    title="Add new Turtle"
-                    onPress={() => this.props.navigation.navigate('TurtleAddProfile')}
-                />
-                <Button
-                    title="Go to User Settings"
-                    onPress={() => this.props.navigation.navigate('Settings')}
+            <View>
+                <TurtleList 
+                    navigation={this.props.navigation}
+                    onPressPage="TurtleView"
                 />
             </View>
         );
