@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Button, Image, ScrollView } from 'react-native';
-import TurtleProfileText from '../../components/TurtleProfileText'
+import TurtleProfileText from '../../components/TurtleProfileText';
 
 export default class TurtleViewScreen extends React.Component {
     render() {
@@ -24,7 +24,7 @@ export default class TurtleViewScreen extends React.Component {
                 <TurtleProfileText titleText='Notes: ' baseText={turtleProps.notes}/>
                 <Button
                     title="Edit Turtle"
-                    onPress={() => navigation.navigate('TurtleEdit')}
+                    onPress={() => navigation.navigate('TurtleEdit', {turtle: turtleProps})}
                 />
             </ScrollView>
         );
