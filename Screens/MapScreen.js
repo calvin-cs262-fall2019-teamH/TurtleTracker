@@ -96,11 +96,20 @@ export default class MapScreen extends React.Component {
               <Icon name="settings" size={40} color="black" style={{ marginLeft: 15 }}/>
             </TouchableOpacity>
 
+        </View>
+        <View
+          style={{
+              position: 'absolute',
+              top: '10%',
+              right: '10%',
+              flexDirection: 'row', 
+            }}
+          >
             <TouchableOpacity onPress={() => this.props.navigation.navigate('TurtleAddProfile')}>
               <Icon name="plus-circle" size={40} color="black" style={{}} />
             </TouchableOpacity>
-
         </View>
+        
 
       </View>
       
