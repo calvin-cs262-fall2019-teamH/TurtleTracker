@@ -3,6 +3,9 @@ import MapView, { Marker } from 'react-native-maps';
 import { Button, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
+/*
+MapScreen.js contains the basic map screen with turtle sightings.
+*/
 export default class MapScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -105,7 +108,7 @@ export default class MapScreen extends React.Component {
               flexDirection: 'row', 
             }}
           >
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('TurtleAddProfile')}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('SelectTurtle')}>
               <Icon name="plus-circle" size={40} color="black" style={{}} />
             </TouchableOpacity>
         </View>

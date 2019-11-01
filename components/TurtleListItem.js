@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { ListItem } from 'react-native-elements';
 
+/*
+  Component used for displaying one element on the turtle list.
+*/
 export default class TurtleListItem extends Component {
   render() {
       return (

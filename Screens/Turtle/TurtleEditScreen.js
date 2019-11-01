@@ -3,7 +3,9 @@ import { View, ScrollView, Text, Image, Button } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleProfileTextInput from '../../components/TurtleProfileTextInput';
 
-
+/*
+    TurtleEditScreen allows for editing content of one turtle
+*/
 export default function TurtleEditScreen({navigation}){
     const [carapaceMark, setCarapaceMark] = useState('mark');
     const [sex, setSex] = useState('sex');
