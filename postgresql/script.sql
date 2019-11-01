@@ -43,7 +43,7 @@ FROM turtle;
 SELECT sighting.latitude, sighting.longitude
 FROM turtle, sighting
 WHERE turtle.id = sighting.turtle_id
-AND turtle.id = :id;
+AND turtle.id = 0;
 
 -- retrieve the coordinates of all the most recent turtle sightings of all turtles (Points on MapView component)
 SELECT DISTINCT turtle.id, s1.latitude, s1.longitude
