@@ -9,7 +9,7 @@ export default class TurtleViewScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
         headerRight: () => (
             <Button
-                onPress={() => navigation.navigate('TurtleEdit', { edit: "true" })}
+                onPress={() => navigation.navigate('TurtleEdit', { edit: "true", turtle: turtleProps })}
                 title="Edit"
             />
         ),

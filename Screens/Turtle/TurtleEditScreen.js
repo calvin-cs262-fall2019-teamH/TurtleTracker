@@ -1,14 +1,18 @@
 import React, {useState} from 'react';
 import { View, ScrollView, Text, Image, Button } from 'react-native';
 import TurtleText from '../../components/TurtleText';
-import TurtleProfileTextInput from '../../components/TurtleProfileTextInput';
+import TurtleTextInput from '../../components/TurtleTextInput';
 
 /*
     TurtleEditScreen allows for editing content of one turtle
 */
 export default function TurtleEditScreen({navigation}){
-    const [carapaceMark, setCarapaceMark] = useState('mark');
-    const [sex, setSex] = useState('sex');
+    turtleProps = navigation.getParam('turtle');
+    const [date, setDate] = useState(turtleProps.date);
+    const [carapaceMark, setCarapaceMark] = useState(turtleProps.mark);
+    const [sex, setSex] = useState(turtleProps.sex);
+    const [length, setLength] = useState(turtleProps.length.toString());
+    const [notes, setNotes] = useState(turtleProps.notes);
         return (
 
             <ScrollView style={{padding: 5}}>
@@ -19,13 +23,13 @@ export default function TurtleEditScreen({navigation}){
                     }
                     <View style={{justifyContent: 'space-evenly', paddingLeft: 5}}>
                         <Text style={{fontSize: 16, fontWeight: 'bold'}}>Turtle #{turtleProps.number}</Text>
-                        <TurtleText titleText='Date Found: ' baseText={turtleProps.date}/>
-                        <TurtleProfileTextInput titleText='Mark: ' onChangeText={newMark => setCarapaceMark(newMark)} value={carapaceMark} placeholder={turtleProps.mark}/>
-                        <TurtleProfileTextInput titleText='Sex: ' onChangeText={sex => setSex(sex)} value={sex} placeholder={turtleProps.sex}/>
-                        <TurtleText titleText='Carapace Length: ' baseText={`${turtleProps.length} cm`}/>
+                        <TurtleTextInput titleText='Date Found: ' onChangeText={date => setDate(date)} value={date} placeholder="Turtle Date Found"/>
+                        <TurtleTextInput titleText='Mark: ' onChangeText={newMark => setCarapaceMark(newMark)} value={carapaceMark} placeholder="Turtle Mark"/>
+                        <TurtleTextInput titleText='Sex: ' onChangeText={sex => setSex(sex)} value={sex} placeholder="Turtle Sex"/>
+                        <TurtleTextInput titleText='Carapace Length: ' onChangeText={length => setLength(length)} value={length} placeholder="Turtle Carapace Length"/>
                     </View>
                 </View>
-                <TurtleText titleText='Notes: ' baseText={turtleProps.notes}/>
+                <TurtleTextInput titleText='Notes: ' onChangeText={notes => setNotes(notes)} value={notes} placeholder="Turtle Notes" baseStyle={{height: 200, borderColor: 'gray', borderWidth: 1}} numberOfLines={20} multiline={true}/>
                 { navigation.getParam('edit') != undefined && navigation.getParam('edit') == "true" ? 
                    <Button title="Submit" onPress={() => navigation.goBack()}/>  : <Button title="Submit" onPress={() => navigation.navigate("TurtleView")}/> }
             </ScrollView>
