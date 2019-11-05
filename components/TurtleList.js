@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View, Text } from 'react-native';
 import TurtleListItem from './TurtleListItem'
 import { ListItem } from 'react-native-elements';
 
@@ -81,13 +81,16 @@ export default class TurtleList extends Component {
         return (
           <ScrollView style = {this.props.style}>
           { this.props.navigation.state.routeName == "SelectTurtle" ? 
+          <View>
             <ListItem
               leftAvatar
               title="New Turtle"
               chevron
               bottomDivider
               onPress={() => {this.props.navigation.navigate(this.props.onPressPage)}}
-            /> : null }
+            />
+            <Text style={{fontSize: 18, fontWeight: 'bold', paddingTop: 8, textAlign: 'center'}}>Existing Turtles</Text> 
+          </View>: null }
             {
               turtleList.map((item, index) => (
                 <TurtleListItem

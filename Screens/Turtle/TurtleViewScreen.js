@@ -32,6 +32,7 @@ export default class TurtleViewScreen extends React.Component {
                         <TurtleText titleText='Mark: ' baseText={turtleProps.mark}/>
                         <TurtleText titleText='Sex: ' baseText={turtleProps.sex}/>
                         <TurtleText titleText='Carapace Length: ' baseText={`${turtleProps.length} cm`}/>
+                        <TurtleText titleText='Location: ' baseText={turtleProps.location}/>
                     </View>
                 </View>
                 <TurtleText titleText='Notes: ' baseText={turtleProps.notes}/>

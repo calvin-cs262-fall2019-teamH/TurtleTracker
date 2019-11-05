@@ -12,6 +12,7 @@ export default function TurtleEditScreen({navigation}){
     const [carapaceMark, setCarapaceMark] = useState(turtleProps.mark);
     const [sex, setSex] = useState(turtleProps.sex);
     const [length, setLength] = useState(turtleProps.length.toString());
+    const [location, setLocation] = useState(turtleProps.location);
     const [notes, setNotes] = useState(turtleProps.notes);
         return (
 
@@ -27,6 +28,7 @@ export default function TurtleEditScreen({navigation}){
                         <TurtleTextInput titleText='Mark: ' onChangeText={newMark => setCarapaceMark(newMark)} value={carapaceMark} placeholder="Turtle Mark"/>
                         <TurtleTextInput titleText='Sex: ' onChangeText={sex => setSex(sex)} value={sex} placeholder="Turtle Sex"/>
                         <TurtleTextInput titleText='Carapace Length: ' onChangeText={length => setLength(length)} value={length} placeholder="Turtle Carapace Length"/>
+                        <TurtleTextInput titleText='Location: ' onChangeText={location => setLocation(location)} value={location} placeholder="Turtle Location"/>
                     </View>
                 </View>
                 <TurtleTextInput titleText='Notes: ' onChangeText={notes => setNotes(notes)} value={notes} placeholder="Turtle Notes" baseStyle={{height: 200, borderColor: 'gray', borderWidth: 1}} numberOfLines={20} multiline={true}/>

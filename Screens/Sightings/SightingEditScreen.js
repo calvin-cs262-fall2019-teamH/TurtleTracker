@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, Button, ScrollView } from 'react-native';
 import TurtleText from '../../components/TurtleText';
-import TurtleProfileTextInput from '../../components/TurtleProfileTextInput';
+import TurtleTextInput from '../../components/TurtleTextInput';
 
 /*
 SightingEditScreen is for editing the information of a specific citing.

@@ -27,9 +27,11 @@ export default class TurtleProfileTextInput extends Component {
 
 const styles = StyleSheet.create({
     baseText: {
-        height: 15,
+        height: 18,
         borderColor: 'gray',
-        borderWidth: 1,
+        borderWidth: .25,
+        paddingLeft: 6,
+        paddingRight: 6,
     },
     titleText: {
         fontSize: 15,
