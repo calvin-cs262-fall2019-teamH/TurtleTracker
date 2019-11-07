@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, TextInput, Button, ScrollView } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleTextInput from '../../components/TurtleTextInput';
+import CameraGallery from '../../components/CameraGallery';
 
 /*
 SightingEditScreen is for editing the information of a specific citing.
@@ -13,6 +14,7 @@ export default function SightingEditScreen({navigation}){
     const [img, setImg] = useState('img');
         return (
             <ScrollView>
+                <CameraGallery />
                 <TurtleText titleText="Sighting #1" />
                 <TurtleText titleText={`Turtle #1`} />
                 <TurtleText titleText="Mark: " baseText={`1`} />
