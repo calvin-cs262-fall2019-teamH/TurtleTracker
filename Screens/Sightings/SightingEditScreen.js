@@ -9,9 +9,9 @@ import * as Permissions from 'expo-permissions';
 SightingEditScreen is for editing the information of a specific citing.
 */
 export default function SightingEditScreen({ navigation }) {
-    const [length, setLength] = useState('length');
+    const [length, setLength] = useState('');
     const [date, setDate] = useState('date');
-    const [notes, setNotes] = useState('notes');
+    const [notes, setNotes] = useState('');
     const [img, setImg] = useState('img');
 
     async function getCameraPermission() {
@@ -43,25 +43,26 @@ export default function SightingEditScreen({ navigation }) {
             <TurtleText titleText={`Turtle #1`} />
             <TurtleText titleText="Mark: " baseText={`1`} />
             <TurtleText titleText="Date: " baseText={`${Date.now()}`} />
-            <TurtleText titleText="Length: " baseText={`14 cm`} />
-            <TurtleText titleText="Location: " baseText="42.9313086715985, -85.58243000000002" />
+            <TurtleText titleText="Location: " baseText="42.931220, -85.588794" />
             {/* <TurtleProfileTextInput titleText='Mark: ' onChangeText={newMark => setCarapaceMark(newMark)} value={carapaceMark} placeholder={turtleProps.mark}/> */}
             <Text>Turtle length: </Text><TextInput
                 style={{ height: 40, width: 100, borderColor: 'gray', borderWidth: 1, borderRadius: 3, textAlign: 'center' }}
                 onChangeText={l => setLength(l)}
                 value={length}
+                placeholder='Turtle Length'
             />
             <Text>Notes: </Text><TextInput
                 style={{ height: 40, width: 100, borderColor: 'gray', borderWidth: 1, borderRadius: 3, textAlign: 'center' }}
                 onChangeText={notes => setNotes(notes)}
                 value={notes}
+                placeholder='Sighting Notes'
             />
             {/* for the image:
                 https://facebook.github.io/react-native/docs/cameraroll.html  */}
             {/* date picker has android and ios versions on reacts website, but someone combined them here. 
                 will spend time later setting this up
                 https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker */}
-            <Button title="Submit" onPress={() => navigation.goBack()} />
+            <Button title="Submit" onPress={() => navigation.navigate("TurtleList")} />
         </ScrollView>
     );
 
