@@ -16,25 +16,25 @@ export default function SightingViewScreen({ navigation }) {
             <TurtleText titleText="Mark: " baseText={turtle.mark} />
             <TurtleText titleText="Date: " baseText="10-10-18" />
             <TurtleText titleText="Length: " baseText={`${turtle.length} cm`} />
-            <TurtleText titleText="Location: " baseText="42.9313086715985, -85.58243000000002" />
+            <TurtleText titleText="Location: " baseText="42.931220, -85.588794" />
             {/* map */}
             <View style={{ width: '100%', height: 200 }}>
                 <MapView
                     style={{ flex: 1 }}
                     provider="google"
                     initialRegion={{
-                        latitude: 42.9313086715985,
-                        longitude: -85.58243000000002,
+                        latitude: 42.931220,
+                        longitude: -85.588794,
                         latitudeDelta: 0.0025,
                         longitudeDelta: 0.0025
                     }} >
                     <Marker coordinate={{
-                        latitude: 42.9313086715985,
-                        longitude: -85.58243000000002,
+                        latitude: 42.931220, 
+                        longitude: -85.588794,
                     }} />
                 </MapView>
             </View>
-            <TurtleText titleText="Notes: " baseText="SIGHTING NOTES" />
+            <TurtleText titleText="Notes: " baseText="Saw at presentation" />
         </ScrollView>
     );
 }
