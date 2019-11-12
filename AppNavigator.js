@@ -1,73 +1,110 @@
+/*
+  AppNavigator.js handels the basic tab and stack navigation for the app.
+*/
+
+import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { Ionicons } from '@expo/vector-icons';
 
 // Import Screens
 import TurtleListScreen from './Screens/TurtleListScreen';
-import TurtleProfileScreen from './Screens/TurtleProfileScreen';
-import TurtleEditProfileScreen from './Screens/TurtleEditProfileScreen';
-import TurtleAddProfileScreen from './Screens/TurtleAddProfileScreen';
+import SelectTurtleScreen from './Screens/SelectTurtleScreen';
+import TurtleViewScreen from './Screens/Turtle/TurtleViewScreen';
+import TurtleEditScreen from './Screens/Turtle/TurtleEditScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 import MapScreen from './Screens/MapScreen';
+import SightingEditScreen from './Screens/Sightings/SightingEditScreen';
+import SightingViewScreen from './Screens/Sightings/SightingViewScreen';
 
+// Stack of screens for the Map Tab.
 const MapStack = createStackNavigator(
     {
       Map: {
         screen: MapScreen,
-        navigationOptions: { title: 'Turtle Tracker' }
+        navigationOptions: { title: 'Tracker' }
+      },
+      TurtleView: {
+        screen: TurtleViewScreen,
+      },
+      TurtleEditScreen: {
+        screen: TurtleEditScreen,
+        navigationOptions: { title: 'Edit' }
       },
     }
   );
 
+// Stacks of Screens for the Turtles Lab
 const TurtleListStack = createStackNavigator(
     {
         TurtleList: {
           screen: TurtleListScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+          navigationOptions: { title: 'Turtles' }
         },
-        TurtleProfile: {
-          screen: TurtleProfileScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+        TurtleView: {
+          screen: TurtleViewScreen,
         },
-        TurtleEditProfile: {
-          screen: TurtleEditProfileScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+        TurtleEdit: {
+          screen: TurtleEditScreen,
+          navigationOptions: { title: 'Edit Turtle' }
         },
-        TurtleAddProfile: {
-          screen: TurtleAddProfileScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
+        SelectTurtle: {
+          screen: SelectTurtleScreen,
+          navigationOptions: { title: 'Select Turtle' }
         },
         Settings: {
           screen: SettingsScreen,
-          navigationOptions: { title: 'Turtle Tracker' }
-        }
+          navigationOptions: { title: 'Settings' }
+        },
+        SightingView:
+        {
+          screen: SightingViewScreen
+        },
+        SightingEdit:
+        {
+          screen: SightingEditScreen
+        },
       }
 );
 
-const MainNavigator = createBottomTabNavigator({
+// Combine the two stakcs together under their own tabs.
+const MainNavigator = createBottomTabNavigator(
+  {
     MapTab: {
       navigationOptions: {
-        tabBarLabel: 'Map',
+        tabBarLabel: 'Tracker',
       },
       screen: MapStack,
     },
     TurtleTab: {
         navigationOptions: {
-            tabBarLabel: 'Turtle List',
+            tabBarLabel: 'Turtles',
         },
         screen: TurtleListStack,
     }
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+
+      // Icon for tab bar.
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        let IconComponent = Ionicons;
+        let iconName;
+        if (routeName === 'MapTab') {
+          iconName = `ios-map`;
+        } else if (routeName === 'TurtleTab') {
+          iconName = `ios-list`;
+        }
+        return <IconComponent name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: 'green',
+      inactiveTintColor: 'gray',
+    },
   }
 );
-
-// const AppNavigator = createStackNavigator(
-//     {
-//         Map: {screen: MapScreen},
-//         TurtleList: TurtleListScreen,
-//     },
-//     {
-//         initialRouteName: 'Map',
-//     }
-// );
 
 export default createAppContainer(MainNavigator);
