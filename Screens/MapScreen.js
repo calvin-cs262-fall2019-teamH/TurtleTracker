@@ -70,6 +70,7 @@ export default class MapScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <MapView style={{flex: 1}}
+              mapType="hybrid"
               region={{
                 latitude: this.state.latitude,
                 longitude: this.state.longitude,
