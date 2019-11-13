@@ -30,8 +30,8 @@ export default class MapScreen extends React.Component {
     },]
 
     this.state = {
-      latitude: 0,
-      longitude: 0,
+      latitude: 42.931870,
+      longitude: -85.582130,
       // Eventaully this will be an API call to the backend.
       markers: dummyTurtles
     }
@@ -78,9 +78,9 @@ export default class MapScreen extends React.Component {
                 }}
               onLongPress={this.handlePress}
               provider="google"
-              showsUserLocation= {true}
-              followsUserLocation= {true}
-              showsMyLocationButton= {true}
+              showsUserLocation={true}
+              followsUserLocation={true}
+              showsMyLocationButton={true}
           
           >
             {this.state.markers.map((marker, i) => {
