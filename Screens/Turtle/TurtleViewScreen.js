@@ -37,7 +37,7 @@ export default class TurtleViewScreen extends React.Component {
         turtleProps = navigation.getParam('turtle');
         const state = this.state;
         return (
-            <ScrollView style={{ padding: 5 }}>
+            <ScrollView style={{ padding: 7 }}>
                 <View style={{ flexDirection: 'row', padding: 5 }}>
                     {turtleProps.pictures.length > 0 ?
                         <Image style={{ width: 150, height: 150 }} source={{ uri: turtleProps.pictures[0] }} />
@@ -75,17 +75,18 @@ export default class TurtleViewScreen extends React.Component {
                         </Marker>
                     </MapView>
                 </View>
-                <Table borderStyle={{ borderWidth: 1 }}>
+                {/* Make the row clickable and add an arrow. Add margin*/}
+                <Table borderStyle={{ borderWidth: 1}}>
                     <Row data={state.tableHead} flexArr={[1, 2, 1, 1]} style={styles.head} textStyle={styles.text} />
                     <TableWrapper style={styles.wrapper}>
                         <Col data={state.tableTitle} style={styles.title} heightArr={[28, 28]} textStyle={styles.text} />
                         <Rows data={state.tableData} flexArr={[2, 1, 1]} style={styles.row} textStyle={styles.text} />
                     </TableWrapper>
                 </Table>
-                <Button
+                {/* <Button
                     title="View Sighting #1"
                     onPress={() => navigation.navigate('SightingView', { turtle: turtleProps })}
-                />
+                /> */}
             </ScrollView>
         );
     }
