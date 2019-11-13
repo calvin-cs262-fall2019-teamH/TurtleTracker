@@ -22,7 +22,7 @@ export default class TurtleListItem extends Component {
           }
           chevron
           bottomDivider
-          onPress={() => {this.props.navigation.navigate(this.props.onPressPage, {turtle: this.props.item})}}
+          onPress={() => {this.props.navigation.navigate(this.props.onPressPage, {turtleId: this.props.item.id})}}
         />
       );
   }
