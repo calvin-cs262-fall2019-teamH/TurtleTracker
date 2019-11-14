@@ -4,6 +4,9 @@ import { Button, View, TouchableOpacity } from 'react-native';
 import IconButton from '../components/IconButton';
 import * as Haptics from 'expo-haptics';
 
+/*
+MapScreen.js contains the basic map screen with turtle sightings.
+*/
 export default class MapScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -45,7 +48,7 @@ export default class MapScreen extends React.Component {
         {
           coordinate: event.nativeEvent.coordinate,
           cost: "a",
-          onPress: () => this.props.navigation.navigate('TurtleView')
+          onPress: () => this.props.navigation.navigate('SelectTurtle')
         }
       ]
     })
@@ -94,7 +97,7 @@ export default class MapScreen extends React.Component {
 
         <IconButton 
         navigation = {this.props.navigation}
-        navigationPage = {'TurtleAddProfile'} 
+        navigationPage = {'TurtleList'} 
         name = {'add-location'} 
         styles = {{right: '10%'}} />
         

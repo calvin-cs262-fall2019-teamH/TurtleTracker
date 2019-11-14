@@ -17,6 +17,7 @@ CREATE TABLE sighting (
 	id integer PRIMARY KEY,
 	turtle_id integer,
 	time_seen timestamp,
+	turtle_location varchar(20), 
 	latitude float8,
 	longitude float8,
 	carapace_length integer,
@@ -27,10 +28,10 @@ INSERT INTO turtle VALUES (0, '3R', 'male');
 INSERT INTO turtle VALUES (1, '2L', 'female');
 INSERT INTO turtle VALUES (2, '1L', 'male');
 
-INSERT INTO sighting VALUES (0, 0, '2019-10-26T02:15:31Z', 42.9313086715985, -85.58243000000002, 29, 'A sample sighting for turtle 0');
-INSERT INTO sighting VALUES (1, 0, '2019-10-26T03:18:09Z', 42.9320937253728, -85.58218392028273, 30, 'A second sample sighting for turtle 0');
-INSERT INTO sighting VALUES (2, 1, '2019-10-26T05:42:26Z', 42.9360273262836, -85.57836352739273, 25, 'A sample sighting for turtle 1');
-INSERT INTO sighting VALUES (3, 2, '2019-10-26T07:36:53Z', 42.9342562436253, -85.58038363535263, 28, 'A sample sighting for turtle 2');
+INSERT INTO sighting VALUES (0, 0, '2019-10-26T02:15:31Z', 'Field A', 42.9313086715985, -85.58243000000002, 29, 'A sample sighting for turtle 0');
+INSERT INTO sighting VALUES (1, 0, '2019-10-26T03:18:09Z', 'Field B', 42.9320937253728, -85.58218392028273, 30, 'A second sample sighting for turtle 0');
+INSERT INTO sighting VALUES (2, 1, '2019-10-26T05:42:26Z', 'Field C', 42.9360273262836, -85.57836352739273, 25, 'A sample sighting for turtle 1');
+INSERT INTO sighting VALUES (3, 2, '2019-10-26T07:36:53Z', 'Field D', 42.9342562436253, -85.58038363535263, 28, 'A sample sighting for turtle 2');
 
 
 -- some example queries
