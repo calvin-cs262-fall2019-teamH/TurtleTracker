@@ -21,7 +21,7 @@ export default class TurtleText extends Component {
             baseText
         } = this.props;
         return (
-            <View style={[{flexDirection: 'row', display: 'flex', flexWrap: 'wrap'}, viewStyle]}>
+            <View style={[styles.container, viewStyle]}>
                 <Text style={[styles.titleText, titleStyle]}>{titleText}</Text>
                 <Text style={[styles.baseText, baseStyle]}>{baseText}</Text>
             </View>
@@ -30,11 +30,19 @@ export default class TurtleText extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        marginTop:4,
+        flexDirection: 'row', 
+        display: 'flex', 
+        flexWrap: 'wrap',
+        borderBottomWidth:0.5,
+        borderColor:'#c2c2c2'
+    },
     baseText: {
-        fontSize: 15,
+        fontSize: 16,
     },
     titleText: {
-        fontSize: 15,
+        fontSize: 16,
         fontWeight: 'bold',
     },
 });
