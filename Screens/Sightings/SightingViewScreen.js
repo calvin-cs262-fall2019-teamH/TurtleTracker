@@ -36,7 +36,6 @@ export default function SightingViewScreen({ navigation }) {
                     }} />
                 </MapView>
             </View>
-            <TurtleText titleText="Notes: " baseText="Saw at presentation" />
         </ScrollView>
     );
 }
