@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, Image, ScrollView } from 'react-native';
+import { View, Text, Button, Image, ScrollView, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import TurtleText from '../../components/TurtleText';
 
@@ -18,7 +18,7 @@ export default function SightingViewScreen({ navigation }) {
             <TurtleText titleText="Length: " baseText={`${turtle.length} cm`} />
             <TurtleText titleText="Location: " baseText="42.931220, -85.588794" />
             {/* map */}
-            <View style={{ width: '100%', height: 200 }}>
+            <View style={styles.map}>
                 <MapView
                     style={{ flex: 1 }}
                     provider="google"
@@ -48,4 +48,13 @@ SightingViewScreen.navigationOptions = ({ navigation }) => ({
             title="Edit"
         />
     ),
+});
+
+const styles = StyleSheet.create({
+    map: {
+        width: '100%', 
+        height: 200,
+        marginTop:12,
+        marginBottom:12
+    },
 });
