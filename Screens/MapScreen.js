@@ -1,7 +1,8 @@
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { Button, View, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import IconButton from '../components/IconButton';
+import * as Haptics from 'expo-haptics';
 
 /*
 MapScreen.js contains the basic map screen with turtle sightings.
@@ -40,13 +41,14 @@ export default class MapScreen extends React.Component {
 
   // when the markers are placed
   handlePress(event) {
+    Haptics.impactAsync('heavy')
     this.setState({
       markers: [
         ...this.state.markers,
         {
           coordinate: event.nativeEvent.coordinate,
           cost: "a",
-          onPress: () => this.props.navigation.navigate('TurtleView')
+          onPress: () => this.props.navigation.navigate('SelectTurtle')
         }
       ]
     })
@@ -89,30 +91,16 @@ export default class MapScreen extends React.Component {
               })}
 
         </MapView>
-        <View
-          style={{
-              position: 'absolute',
-              top: '10%',
-              flexDirection: 'row', 
-            }}
-          >
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Settings')}>
-              <Icon name="settings" size={40} color="black" style={{ marginLeft: 15 }}/>
-            </TouchableOpacity>
+        <IconButton 
+        navigation = {this.props.navigation}
+        navigationPage = {'Settings'} 
+        name = {'settings'} />
 
-        </View>
-        <View
-          style={{
-              position: 'absolute',
-              top: '10%',
-              right: '10%',
-              flexDirection: 'row', 
-            }}
-          >
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('SelectTurtle')}>
-              <Icon name="plus-circle" size={40} color="black" style={{}} />
-            </TouchableOpacity>
-        </View>
+        <IconButton 
+        navigation = {this.props.navigation}
+        navigationPage = {'TurtleList'} 
+        name = {'add-location'} 
+        styles = {{right: '10%'}} />
         
 
       </View>
