@@ -9,7 +9,7 @@ import * as Haptics from 'expo-haptics';
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top: '10%',
+        top: '5%',
         flexDirection: 'row',
     },
     icon: {
@@ -35,7 +35,7 @@ export default class IconButton extends Component {
                 style={styles.opacity} 
                 borderRadius={'100%'} 
                 onPressIn= {() => Haptics.impactAsync('heavy')}>
-                    <Icon name={this.props.name} style= {styles.icon} size = {40}/>
+                    <Icon name={this.props.name} style= {styles.icon} size = {this.props.size}/>
                 </TouchableOpacity>
             </View>
         )

@@ -90,16 +90,18 @@ export default class MapScreen extends React.Component {
               })}
 
         </MapView>
-        <IconButton 
+        <IconButton
+        size = {40} 
         navigation = {this.props.navigation}
         navigationPage = {'Settings'} 
         name = {'settings'} />
 
         <IconButton 
+        size = {40} 
         navigation = {this.props.navigation}
-        navigationPage = {'TurtleList'} 
+        navigationPage = {'SelectTurtle'} 
         name = {'add-location'} 
-        styles = {{right: '10%'}} />
+        styles = {{right: '5%'}} />
         
 
       </View>

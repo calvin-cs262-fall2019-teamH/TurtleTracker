@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Button, Image, ScrollView } from 'react-native';
-import TurtleText from '../../components/TurtleText'
+import TurtleText from '../../components/TurtleText';
+import IconButton from '../../components/IconButton';
 
 /*
     TurtleViewScreen views the contents of one turtle
@@ -8,10 +9,24 @@ import TurtleText from '../../components/TurtleText'
 export default class TurtleViewScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
         headerRight: () => (
+            // <IconButton 
+            // size = {20}
+            // navigation = {navigation}
+            // navigationPage = {'TurtleEdit', { edit: "true", turtle: turtleProps }} 
+            // name = {'edit'} 
+            // styles = {{right: '10%', paddingRight: 15, paddingTop: 2}} />
             <Button
                 onPress={() => navigation.navigate('TurtleEdit', { edit: "true", turtle: turtleProps })}
                 title="Edit"
             />
+        ),
+        headerLeft: () => (
+            <IconButton
+                size = {20} 
+                navigation = {navigation}
+                navigationPage = {'TurtleList'} 
+                name = {'navigate-before'}
+                styles = {{paddingTop: 2}} />
         ),
         title: navigation.getParam('turtle').mark
     });
