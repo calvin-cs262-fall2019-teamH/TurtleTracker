@@ -7,33 +7,45 @@ import TurtleTextInput from '../../components/TurtleTextInput';
     TurtleEditScreen allows for editing content of one turtle
 */
 export default function TurtleEditScreen({navigation}){
+    function editTurtleById(id) {
+        return fetch(`http://153.106.94.2:3000/turtle/${id}`, {method: 'PUT', headers: {'Content-Type':'application/json'}, 
+        body: JSON.stringify({ turtle_number: number,
+                mark: carapaceMark,
+                sex})})
+          .catch((error) => {
+            console.error(error);
+          });
+    }
+
     turtleProps = navigation.getParam('turtle');
-    const [date, setDate] = useState(turtleProps.date);
+    originalDate = navigation.getParam('originalDate');
+    recentDate = navigation.getParam('recentDate');
+    recentLength = navigation.getParam('recentLength');
+    const [number, setNumber] = useState(turtleProps.turtle_number.toString());
+    const [originalDateEdit, setOriginalDate] = useState(originalDate.toLocaleDateString());
+    const [recentDateEdit, setRecentDate] = useState(recentDate.toLocaleDateString());
     const [carapaceMark, setCarapaceMark] = useState(turtleProps.mark);
     const [sex, setSex] = useState(turtleProps.sex);
-    const [length, setLength] = useState(turtleProps.length.toString());
-    const [location, setLocation] = useState(turtleProps.location);
-    const [notes, setNotes] = useState(turtleProps.notes);
+    const [length, setLength] = useState(recentLength.toString());
         return (
 
             <ScrollView style={{padding: 5}}>
                 <View style={{flexDirection: 'row', padding: 5}}>
-                    { turtleProps.pictures.length > 0 ?
+                    {/* { turtleProps.pictures.length > 0 ?
                         <Image style={{width: 150, height: 150}} source={{uri: turtleProps.pictures[0]}}/>
                         : null
-                    }
+                    } */}
                     <View style={{justifyContent: 'space-evenly', paddingLeft: 5}}>
-                        <Text style={{fontSize: 16, fontWeight: 'bold'}}>Turtle #{turtleProps.number}</Text>
-                        <TurtleTextInput titleText='Date Found: ' onChangeText={date => setDate(date)} value={date} placeholder="Turtle Date Found"/>
+                        <TurtleTextInput titleText='Turtle Number: ' onChangeText={number => setNumber(number)} value={number} placeholder="Turtle Number"/>
+                        <TurtleTextInput titleText='Date Found: ' onChangeText={originalDateEdit => setOriginalDate(originalDateEdit)} value={originalDateEdit} placeholder="Original Sighting Date"/>
+                        <TurtleTextInput titleText='Date Last Seen: ' onChangeText={recentDateEdit => setRecentDate(recentDateEdit)} value={recentDateEdit} placeholder="Most Recent Sighting Date"/>
                         <TurtleTextInput titleText='Mark: ' onChangeText={newMark => setCarapaceMark(newMark)} value={carapaceMark} placeholder="Turtle Mark"/>
                         <TurtleTextInput titleText='Sex: ' onChangeText={sex => setSex(sex)} value={sex} placeholder="Turtle Sex"/>
-                        <TurtleTextInput titleText='Carapace Length: ' onChangeText={length => setLength(length)} value={length} placeholder="Turtle Carapace Length"/>
-                        <TurtleTextInput titleText='Location: ' onChangeText={location => setLocation(location)} value={location} placeholder="Turtle Location"/>
+                        <TurtleTextInput titleText='Carapace Length: ' onChangeText={length => setLength(length)} value={length} placeholder="Most Recent Carapace Measurement"/>
                     </View>
                 </View>
-                <TurtleTextInput titleText='Notes: ' onChangeText={notes => setNotes(notes)} value={notes} placeholder="Turtle Notes" baseStyle={{height: 200, borderColor: 'gray', borderWidth: 1}} numberOfLines={20} multiline={true}/>
                 { navigation.getParam('edit') != undefined && navigation.getParam('edit') == "true" ? 
-                   <Button title="Submit" onPress={() => navigation.goBack()}/>  : <Button title="Submit" onPress={() => navigation.navigate("TurtleView")}/> }
+                   <Button title="Submit" onPress={() => {editTurtleById(turtleProps.id), navigation.goBack()}}/>  : <Button title="Submit" onPress={() => navigation.navigate("TurtleView")}/> }
             </ScrollView>
 
         );

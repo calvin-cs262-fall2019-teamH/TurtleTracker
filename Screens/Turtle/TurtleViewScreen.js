@@ -1,16 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button, Image, ScrollView } from 'react-native';
 import TurtleText from '../../components/TurtleText'
 
 /*
     TurtleViewScreen views the contents of one turtle
 */
-export default function TurtleViewScreen(props) {
+export default function TurtleViewScreen({navigation}) {
+    function getDerivedTurtleInfo(sightings) {
+        for (var i = 0; i < sightings.length; i++) {
+            var sightingDate = new Date(Date.parse(sightings[i].time_seen));
+            if (sightingDate.getTime() < originalDate.getTime()) {
+                onOriginalDateChange(sightingDate);
+                navigation.setParams({originalDate: sightingDate});
+            }
+            if (sightingDate.getTime() > recentDate.getTime()) {
+                onRecentDateChange(sightingDate);
+                onRecentLengthChange(sightings[i].carapace_length);
+                navigation.setParams({recentDate: sightingDate, recentLength: sightings[i].carapace_length});
+            }
+        }
+    }
+
+
     function getTurtleById(id) {
-        return fetch(`http://153.106.88.128:3000/turtle/${id}`)
+        return fetch(`http://153.106.94.2:3000/turtle/${id}`)
           .then((response) => response.json())
           .then((responseJson) => {
             onTurtleChange(responseJson[0]);
+            navigation.setParams({turtle: responseJson[0]});
           })
           .catch((error) => {
             console.error(error);
@@ -18,43 +35,25 @@ export default function TurtleViewScreen(props) {
     }
 
     function getSightingByTurtleId(id) {
-        return fetch(`http://153.106.88.128:3000/sighting/turtle/${id}`)
+        return fetch(`http://153.106.94.2:3000/sighting/turtle/${id}`)
           .then((response) => response.json())
           .then((responseJson) => {
             onSightingListChange(responseJson);
+            getDerivedTurtleInfo(responseJson);
           })
           .catch((error) => {
             console.error(error);
           });
     }
 
-    turtleId = props.navigation.getParam('turtleId');
-    const [turtle, onTurtleChange] = useState({})
-    const [sightingList, onSightingListChange] = useState([])
-    getTurtleById(turtleId);
-    getSightingByTurtleId(turtleId);
-
-    navigationOptions = ({navigation}) => ({
-        headerRight: () => (
-            <Button
-                onPress={() => navigation.navigate('TurtleEdit', { edit: "true", turtle })}
-                title="Edit"
-            />
-        ),
-        title: turtle.mark
-    });
-
-    var originalDate = new Date(9999999999), recentDate = new Date(0), recentLength = 0;
-    for (sighting in sightingList) {
-        var sightingDate = new Date(sighting.time_seen);
-        if (sightingDate.getTime() < originalDate.getTime()) {
-            originalDate = sightingDate;
-        }
-        if (sightingDate.getTime() > recentDate.getTime()) {
-            recentDate = sightingDate;
-            recentLength = sighting.carapace_length;
-        }
-    }
+    turtleId = navigation.getParam('turtleId');
+    useEffect(() => {getTurtleById(turtleId)}, []);
+    useEffect(() => {getSightingByTurtleId(turtleId)}, []);
+    const [turtle, onTurtleChange] = useState({});
+    const [sightingList, onSightingListChange] = useState([]);
+    const [originalDate, onOriginalDateChange] = useState(new Date(99999999999999));
+    const [recentDate, onRecentDateChange] = useState(new Date(0));
+    const [recentLength, onRecentLengthChange] = useState(0);
 
     return (
         <ScrollView style={{padding: 5}}>
@@ -64,7 +63,7 @@ export default function TurtleViewScreen(props) {
                     : null
                 } */}
                 <View style={{justifyContent: 'space-evenly', paddingLeft: 5}}>
-                    <Text style={{fontSize: 16, fontWeight: 'bold'}}>Turtle #{turtle.number}</Text>
+                    <Text style={{fontSize: 16, fontWeight: 'bold'}}>Turtle #{turtle.turtle_number}</Text>
                     <TurtleText titleText='Date Found: ' baseText={originalDate.toLocaleDateString()}/>
                     <TurtleText titleText='Date Last Seen: ' baseText={recentDate.toLocaleDateString()}/>
                     <TurtleText titleText='Mark: ' baseText={turtle.mark}/>
@@ -80,3 +79,16 @@ export default function TurtleViewScreen(props) {
         </ScrollView>
     );
 }
+
+// Sets the navigation options.
+TurtleViewScreen.navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam('turtle') == null ? '' : navigation.getParam('turtle').mark,
+    headerRight: () => (
+        <Button
+            onPress={() => navigation.navigate('TurtleEdit', { edit: "true", 
+                turtle: navigation.getParam('turtle'), originalDate: navigation.getParam('originalDate'),
+                recentDate: navigation.getParam('recentDate'), recentLength: navigation.getParam('recentLength')})}
+            title="Edit"
+        />
+    ),
+});

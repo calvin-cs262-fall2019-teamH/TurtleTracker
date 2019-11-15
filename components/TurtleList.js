@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import TurtleListItem from './TurtleListItem'
 import { ListItem } from 'react-native-elements';
@@ -78,7 +78,7 @@ import { ListItem } from 'react-native-elements';
 
 export default function TurtleList(props) {
   function getTurtles() {
-    return fetch(`http://153.106.88.128:3000/turtle`)
+    return fetch(`http://153.106.94.2:3000/turtle`)
       .then((response) => response.json())
       .then((responseJson) => {
         onTurtleListChange(responseJson);
@@ -89,7 +89,7 @@ export default function TurtleList(props) {
     }
 
     const [turtleList, onTurtleListChange] = useState([])
-    getTurtles();
+    useEffect(() => {getTurtles()}, []);
     return (
       <ScrollView style = {props.style}>
       { props.navigation.state.routeName == "SelectTurtle" ? 
