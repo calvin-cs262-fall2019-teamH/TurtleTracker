@@ -31,7 +31,7 @@ export default class IconButton extends Component {
     render() {
         return (
             <View style={[styles.container, this.props.styles]}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate(this.props.navigationPage)} 
+                <TouchableOpacity onPress={() => this.props.navigation.navigate(this.props.navigationPage, this.props.navigationParams)} 
                 style={styles.opacity} 
                 borderRadius={'100%'} 
                 onPressIn= {() => Haptics.impactAsync('heavy')}>

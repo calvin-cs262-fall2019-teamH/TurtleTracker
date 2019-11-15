@@ -9,16 +9,13 @@ import IconButton from '../../components/IconButton';
 export default class TurtleViewScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
         headerRight: () => (
-            // <IconButton 
-            // size = {20}
-            // navigation = {navigation}
-            // navigationPage = {'TurtleEdit', { edit: "true", turtle: turtleProps }} 
-            // name = {'edit'} 
-            // styles = {{right: '10%', paddingRight: 15, paddingTop: 2}} />
-            <Button
-                onPress={() => navigation.navigate('TurtleEdit', { edit: "true", turtle: turtleProps })}
-                title="Edit"
-            />
+            <IconButton 
+            size = {20}
+            navigation = {navigation}
+            navigationPage = {'TurtleEdit'} 
+            navigationParams = {{ edit: "true", turtle: turtleProps }}
+            name = {'edit'} 
+            styles = {{right: '10%', paddingRight: 15, paddingTop: 2}} />
         ),
         headerLeft: () => (
             <IconButton
