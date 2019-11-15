@@ -59,13 +59,13 @@ export default class TurtleViewScreen extends React.Component {
                         <Image style={{ width: 150, height: 150 }} source={{ uri: turtleProps.pictures[0] }} />
                         : null
                     }
-                    <View style={{ justifyContent: 'space-evenly', paddingLeft: 5 }}>
-                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Turtle #{turtleProps.number}</Text>
-                        <TurtleText titleText='Date Found: ' baseText={turtleProps.date} />
-                        <TurtleText titleText='Mark: ' baseText={turtleProps.mark} />
-                        <TurtleText titleText='Sex: ' baseText={turtleProps.sex} />
-                        <TurtleText titleText='Carapace Length: ' baseText={`${turtleProps.length} cm`} />
-                        <TurtleText titleText='Location: ' baseText={turtleProps.location} />
+                    <View style={{justifyContent: 'space-evenly', paddingLeft: 10}}>
+                        <TurtleText titleText='Turtle #' baseText={turtleProps.number} />
+                        <TurtleText titleText='Date Found: ' baseText={turtleProps.date}/>
+                        <TurtleText titleText='Mark: ' baseText={turtleProps.mark}/>
+                        <TurtleText titleText='Sex: ' baseText={turtleProps.sex}/>
+                        <TurtleText titleText='Carapace Length: ' baseText={`${turtleProps.length} cm`}/>
+                        <TurtleText titleText='Location: ' baseText={turtleProps.location}/>
                     </View>
                 </View>
                 <Text>Sightings: </Text>
