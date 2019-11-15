@@ -23,7 +23,11 @@ const MapStack = createStackNavigator(
     {
       Map: {
         screen: MapScreen,
-        navigationOptions: { title: 'Tracker' }
+        navigationOptions: {
+          title: 'Tracker',
+          headerStyle: {
+            backgroundColor: 'white',
+          }}
       },
       TurtleView: {
         screen: TurtleViewScreen,
@@ -32,7 +36,7 @@ const MapStack = createStackNavigator(
         screen: TurtleEditScreen,
         navigationOptions: { title: 'Edit' }
       },
-    }
+    },
   );
 
 // Stacks of Screens for the Turtles Lab
@@ -65,7 +69,8 @@ const TurtleListStack = createStackNavigator(
         {
           screen: SightingEditScreen
         },
-      }
+      },
+
 );
 
 // Combine the two stakcs together under their own tabs.

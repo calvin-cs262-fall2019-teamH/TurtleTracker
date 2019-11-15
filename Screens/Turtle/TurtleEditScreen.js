@@ -8,7 +8,7 @@ import TurtleTextInput from '../../components/TurtleTextInput';
 */
 export default function TurtleEditScreen({navigation}){
     function editTurtleById(id) {
-        return fetch(`http://153.106.94.2:3000/turtle/${id}`, {method: 'PUT', headers: {'Content-Type':'application/json'}, 
+        return fetch(`http://153.106.85.226:3000/turtle/${id}`, {method: 'PUT', headers: {'Content-Type':'application/json'}, 
         body: JSON.stringify({ number,
                 mark: carapaceMark,
                 sex})})
