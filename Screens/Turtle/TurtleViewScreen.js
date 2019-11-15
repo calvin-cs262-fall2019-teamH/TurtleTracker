@@ -1,25 +1,41 @@
 import React from 'react';
-import { View, Text, Button, Image, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import TurtleText from '../../components/TurtleText';
+import { MaterialIcons } from '@expo/vector-icons';
 
 /*
     TurtleViewScreen views the contents of one turtle
 */
 export default class TurtleViewScreen extends React.Component {
+    
     constructor(props) {
         super(props);
+        const elementButton = (value) => (
+            <TouchableOpacity onPress={() => this._navigate_sighting(value)}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+                    <Text>{value}</Text>
+                    <MaterialIcons name="info-outline" size={20} color="green"/>
+                </View>
+            </TouchableOpacity>
+          );
+
+        
         this.state = {
-            tableHead: ['Time', 'Location', 'Length', 'Info'],
-            tableTitle: ['9/20/98', '10/20/98', '11/20/98', '12/20/98'],
+            tableHead: ['Sighting #', 'Time', 'Location', 'Length'],
+            tableTitle: [elementButton(1), elementButton(2), elementButton(3), elementButton(4)],
             tableData: [
-                ['G1', '14', 'click'],
-                ['H2', '12', 'click'],
-                ['M3', '12', 'click'],
-                ['D4', '13', 'click']
+                ['9/20/98', 'G1', '14'],
+                ['10/20/98', 'H2', '12'],
+                ['11/20/98', 'M3', '12'],
+                ['12/20/98', 'D4', '13']
             ]
         }
+    }
+
+    _navigate_sighting(value) {
+        this.props.navigation.navigate('SightingView', { turtle: this.props.navigation.getParam('turtle') })
     }
 
     static navigationOptions = ({ navigation }) => ({
@@ -58,7 +74,7 @@ export default class TurtleViewScreen extends React.Component {
                     <MapView
                         mapType="hybrid"
                         pointerEvents="none"
-                        style={{ flex: 1 }}
+                        style={{ flex: 1, borderRadius: 5 }}
                         provider="google"
                         region={{
                             latitude: 42.931870,
@@ -76,17 +92,13 @@ export default class TurtleViewScreen extends React.Component {
                     </MapView>
                 </View>
                 {/* Make the row clickable and add an arrow. Add margin*/}
-                <Table borderStyle={{ borderWidth: 1}}>
-                    <Row data={state.tableHead} flexArr={[1, 2, 1, 1]} style={styles.head} textStyle={styles.text} />
+                <Table borderStyle={{ borderWidth: 1 }}>
+                    <Row data={state.tableHead} flexArr={[1, 1, 1, 1]} style={styles.head} textStyle={styles.text} />
                     <TableWrapper style={styles.wrapper}>
                         <Col data={state.tableTitle} style={styles.title} heightArr={[28, 28]} textStyle={styles.text} />
-                        <Rows data={state.tableData} flexArr={[2, 1, 1]} style={styles.row} textStyle={styles.text} />
+                        <Rows data={state.tableData} flexArr={[1, 1, 1]} style={styles.row} textStyle={styles.text} />
                     </TableWrapper>
                 </Table>
-                {/* <Button
-                    title="View Sighting #1"
-                    onPress={() => navigation.navigate('SightingView', { turtle: turtleProps })}
-                /> */}
             </ScrollView>
         );
     }
@@ -95,9 +107,11 @@ export default class TurtleViewScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-    head: {  height: 40,  backgroundColor: '#f1f8ff'  },
+    head: {  height: 40,  backgroundColor: '#edffed'  },
     wrapper: { flexDirection: 'row' },
     title: { flex: 1, backgroundColor: '#f6f8fa' },
     row: {  height: 28  },
-    text: { textAlign: 'center' }
+    text: { textAlign: 'center' },
+    btn: { width: 58, height: 18, marginLeft: 15, backgroundColor: '#c8e1ff', borderRadius: 2 },
+    btnText: { textAlign: 'center' }
   });
