@@ -25,14 +25,14 @@ export default function SightingViewScreen({ navigation }) {
                     style={{ flex: 1 }}
                     provider="google"
                     initialRegion={{
-                        latitude: 42.931220,
-                        longitude: -85.588794,
+                        latitude: 42.931870,
+                        longitude: -85.582130,
                         latitudeDelta: 0.0025,
                         longitudeDelta: 0.0025
                     }} >
                     <Marker coordinate={{
-                        latitude: 42.931220, 
-                        longitude: -85.588794,
+                        latitude: 42.931870, 
+                        longitude: -85.582130,
                     }} />
                 </MapView>
             </View>
