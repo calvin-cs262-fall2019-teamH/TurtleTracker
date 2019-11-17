@@ -9,7 +9,7 @@ export default class TurtleListItem extends Component {
   render() {
       return (
         <ListItem
-          leftAvatar={{source: {uri: this.props.item.pictures[0]}}}
+          leftAvatar={{source: {uri: this.props.item.pictures != undefined ? this.props.item.pictures[0]: null}} }
           title={
             <View>
               <Text style={{fontSize: 18, fontWeight: 'bold'}}>{this.props.item.mark}</Text>
@@ -22,7 +22,7 @@ export default class TurtleListItem extends Component {
           }
           chevron
           bottomDivider
-          onPress={() => {this.props.navigation.navigate(this.props.onPressPage, {turtle: this.props.item})}}
+          onPress={() => {this.props.navigation.navigate(this.props.onPressPage, {turtleId: this.props.item.id})}}
         />
       );
   }
