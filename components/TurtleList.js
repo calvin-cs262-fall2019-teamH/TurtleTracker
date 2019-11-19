@@ -78,7 +78,7 @@ import { ListItem } from 'react-native-elements';
 
 export default function TurtleList(props) {
   function getTurtles() {
-    return fetch(`http://153.106.85.226:3000/turtle`)
+    return fetch(`https://turtletrackerbackend.herokuapp.com/turtle`)
       .then((response) => response.json())
       .then((responseJson) => {
         onTurtleListChange(responseJson);
