@@ -49,7 +49,7 @@ export default function TurtleViewScreen({ navigation }) {
     }
 
     function getTurtleById(id) {
-        return fetch(`http://153.106.85.226:3000/turtle/${id}`)
+        return fetch(`https://turtletrackerbackend.herokuapp.com/turtle/${id}`)
             .then((response) => response.json())
             .then((responseJson) => {
                 onTurtleChange(responseJson[0]);
@@ -61,7 +61,7 @@ export default function TurtleViewScreen({ navigation }) {
     }
 
     function getSightingByTurtleId(id) {
-        return fetch(`http://153.106.85.226:3000/sighting/turtle/${id}`)
+        return fetch(`https://turtletrackerbackend.herokuapp.com/sighting/turtle/${id}`)
             .then((response) => response.json())
             .then((responseJson) => {
                 onSightingListChange(responseJson);
