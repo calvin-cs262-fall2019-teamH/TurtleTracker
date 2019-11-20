@@ -9,25 +9,6 @@ MapScreen.js contains the basic map screen with turtle sightings.
 */
 export default function MapScreen(props) {
 
-    // // Test data
-    // dummyTurtles = [{
-    //   "coordinate":  {
-    //     "latitude": 42.9313086715985,
-    //     "longitude": -85.58243000000002,
-    //   },
-    //   "cost": "a",
-    //   "onPress": () => this.props.navigation.navigate('TurtleView', {name: 'Yertle'}),
-
-    // },
-    // {
-    //   "coordinate": {
-    //     "latitude": 42.93150391684017,
-    //     "longitude": -85.58205666666666,
-    //   },
-    //   "cost": "a",
-    //   "onPress": () => this.props.navigation.navigate('TurtleView', {name: 'Yertle'}),
-    // },]
-
     function getMarkers() {
       return fetch(`https://turtletrackerbackend.herokuapp.com/sighting`)
           .then((response) => response.json())
@@ -107,13 +88,14 @@ export default function MapScreen(props) {
         <IconButton 
         navigation = {props.navigation}
         navigationPage = {'Settings'} 
-        name = {'settings'} />
+        name = {'settings'} 
+        styles={{left: 7}}/>
 
         <IconButton 
         navigation = {props.navigation}
         navigationPage = {'TurtleList'} 
         name = {'add-location'} 
-        styles = {{right: '10%'}} />
+        styles = {{right: 7}} />
         
 
       </View>
