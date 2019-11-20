@@ -29,7 +29,7 @@ export default function MapScreen(props) {
     // },]
 
     function getMarkers() {
-      return fetch(`http://192.168.0.13:3000/sighting`)
+      return fetch(`https://turtletrackerbackend.herokuapp.com/sighting`)
           .then((response) => response.json())
           .then((responseJson) => {
             var markers = []
