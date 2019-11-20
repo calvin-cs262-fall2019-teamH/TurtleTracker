@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Button, Image, ScrollView } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import TurtleText from '../../components/TurtleText';
+import TurtleMapView from '../../components/TurtleMapView';
 
 /*
 Turtle Sighting Screen for information on one particular sighting
@@ -21,7 +22,7 @@ export default function SightingViewScreen({ navigation }) {
             </View>
             {/* map */}
             <View style={{ width: '100%', height: 200 }}>
-                <MapView
+                {/* <MapView
                     style={{ flex: 1 }}
                     provider="google"
                     initialRegion={{
@@ -34,7 +35,8 @@ export default function SightingViewScreen({ navigation }) {
                         latitude: 42.931870, 
                         longitude: -85.582130,
                     }} />
-                </MapView>
+                </MapView> */}
+                <TurtleMapView />
             </View>
             <TurtleText titleText="Notes: " baseText="Saw at presentation" />
         </ScrollView>

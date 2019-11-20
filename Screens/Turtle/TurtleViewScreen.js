@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
-import TurtleText from '../../components/TurtleText';
 import { MaterialIcons } from '@expo/vector-icons';
+import TurtleText from '../../components/TurtleText';
+import TurtleMapView from '../../components/TurtleMapView';
 
 /*
     TurtleViewScreen views the contents of one turtle
@@ -30,7 +30,7 @@ export default function TurtleViewScreen({ navigation }) {
     ]);
 
     function _navigate_sighting(value) {
-        this.props.navigation.navigate('SightingView', { turtle: this.props.navigation.getParam('turtle') })
+        navigation.navigate('SightingView', { turtle: navigation.getParam('turtle') })
     }
 
     function getDerivedTurtleInfo(sightings) {
@@ -100,28 +100,15 @@ export default function TurtleViewScreen({ navigation }) {
                 </View>
             </View>
             <Text>Sightings: </Text>
-            {/* Eventually turn the map into a custom component.*/}
-            <View style={{ width: '100%', height: 200 }}>
-                <MapView
-                    mapType="hybrid"
-                    pointerEvents="none"
-                    style={{ flex: 1, borderRadius: 5 }}
-                    provider="google"
-                    region={{
+            <TurtleMapView
+                markers={[{
+                    coordinate: {
                         latitude: 42.931870,
                         longitude: -85.582130,
-                        latitudeDelta: 0.0025,
-                        longitudeDelta: 0.0025
-                    }}>
-                    <Marker
-                        coordinate={{
-                            latitude: 42.931870,
-                            longitude: -85.582130,
-                        }}>
-                        <Image style={{ height: 40, width: 40 }} source={require('../../assets/turtle_outline.png')} />
-                    </Marker>
-                </MapView>
-            </View>
+                    },
+                }]}
+                pointerEvents="none"
+            />
             {/* Make the row clickable and add an arrow. Add margin*/}
             <Table borderStyle={{ borderWidth: 1 }}>
                 <Row data={tableHead} flexArr={[1, 1, 1, 1]} style={styles.head} textStyle={styles.text} />
