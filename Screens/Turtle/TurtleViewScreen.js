@@ -34,18 +34,18 @@ export default function TurtleViewScreen({ navigation }) {
     }
 
     function getDerivedTurtleInfo(sightings) {
-        for (var i = 0; i < sightings.length; i++) {
-            var sightingDate = new Date(Date.parse(sightings[i].time_seen));
-            if (sightingDate.getTime() < originalDate.getTime()) {
-                onOriginalDateChange(sightingDate);
-                navigation.setParams({ originalDate: sightingDate });
-            }
-            if (sightingDate.getTime() > recentDate.getTime()) {
-                onRecentDateChange(sightingDate);
-                onRecentLengthChange(sightings[i].carapace_length);
-                navigation.setParams({ recentDate: sightingDate, recentLength: sightings[i].carapace_length });
-            }
-        }
+        // for (var i = 0; i < sightings.length; i++) {
+        //     var sightingDate = new Date(Date.parse(sightings[i].time_seen));
+        //     if (sightingDate.getTime() < originalDate.getTime()) {
+        //         onOriginalDateChange(sightingDate);
+        //         navigation.setParams({ originalDate: sightingDate });
+        //     }
+        //     if (sightingDate.getTime() > recentDate.getTime()) {
+        //         onRecentDateChange(sightingDate);
+        //         onRecentLengthChange(sightings[i].carapace_length);
+        //         navigation.setParams({ recentDate: sightingDate, recentLength: sightings[i].carapace_length });
+        //     }
+        // }
     }
 
     function getTurtleById(id) {
@@ -77,11 +77,14 @@ export default function TurtleViewScreen({ navigation }) {
     useEffect(() => { getSightingByTurtleId(turtleId) }, []);
     const [turtle, onTurtleChange] = useState({});
     const [sightingList, onSightingListChange] = useState([]);
-    const [originalDate, onOriginalDateChange] = useState(new Date(99999999999999));
-    const [recentDate, onRecentDateChange] = useState(new Date(0));
+    // const [originalDate, onOriginalDateChange] = useState(new Date(99999999999999));
+    // const [recentDate, onRecentDateChange] = useState(new Date(0));
+    const [originalDate, onOriginalDateChange] = useState();
+    const [recentDate, onRecentDateChange] = useState();
     const [recentLength, onRecentLengthChange] = useState(0);
 
     turtleProps = navigation.getParam('turtle');
+
     return (
         <ScrollView style={{ padding: 7 }}>
             <View style={{ flexDirection: 'row', padding: 5 }}>
@@ -91,8 +94,10 @@ export default function TurtleViewScreen({ navigation }) {
                 } */}
                 <View style={{ justifyContent: 'space-evenly', paddingLeft: 5 }}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Turtle #{turtle.turtle_number}</Text>
-                    <TurtleText titleText='Date Found: ' baseText={originalDate.toLocaleDateString()} />
-                    <TurtleText titleText='Date Last Seen: ' baseText={recentDate.toLocaleDateString()} />
+                    {/* <TurtleText titleText='Date Found: ' baseText={originalDate.toLocaleDateString()} />
+                    <TurtleText titleText='Date Last Seen: ' baseText={recentDate.toLocaleDateString()} /> */}
+                    <TurtleText titleText='Date Found: ' baseText={originalDate} />
+                    <TurtleText titleText='Date Last Seen: ' baseText={recentDate} />
                     <TurtleText titleText='Mark: ' baseText={turtle.mark} />
                     <TurtleText titleText='Sex: ' baseText={turtle.sex} />
                     {/* Most Recent Carapace Length Measurement */}
@@ -123,6 +128,7 @@ export default function TurtleViewScreen({ navigation }) {
                 </MapView>
             </View>
             {/* Make the row clickable and add an arrow. Add margin*/}
+            <Button title='sighting' onPress={() => navigation.navigate("SightingView")} />
             <Table borderStyle={{ borderWidth: 1 }}>
                 <Row data={tableHead} flexArr={[1, 1, 1, 1]} style={styles.head} textStyle={styles.text} />
                 <TableWrapper style={styles.wrapper}>
@@ -130,6 +136,7 @@ export default function TurtleViewScreen({ navigation }) {
                     <Rows data={tableData} flexArr={[1, 1, 1]} style={styles.row} textStyle={styles.text} />
                 </TableWrapper>
             </Table>
+
         </ScrollView>
     );
 
