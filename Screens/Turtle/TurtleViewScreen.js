@@ -118,7 +118,7 @@ export default function TurtleViewScreen({ navigation }) {
                             latitude: 42.931870,
                             longitude: -85.582130,
                         }}>
-                        <Image style={{ height: 30, width: 30 }} source={require('../../assets/turtle.png')} />
+                        <Image style={{ height: 40, width: 40 }} source={require('../../assets/turtle_outline.png')} />
                     </Marker>
                 </MapView>
             </View>
