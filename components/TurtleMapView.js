@@ -16,8 +16,8 @@ export default function TurtleMapView(props) {
                 region={{
                     latitude: 42.931870,
                     longitude: -85.582130,
-                    latitudeDelta: 0.0025,
-                    longitudeDelta: 0.0025
+                    latitudeDelta: 0.008,
+                    longitudeDelta: 0.008
                 }}
                 {...props}>
                 {props.markers.map((marker, i) => {
