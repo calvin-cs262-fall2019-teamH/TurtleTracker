@@ -80,7 +80,7 @@ SightingViewScreen.navigationOptions = ({ navigation }) => ({
     title: 'Sighting',
     headerRight: () => (
         <Button
-            onPress={() => navigation.navigate('SightingEdit', {sighting: navigation.getParam('sighting'), markerList: navigation.getParam('markerList')})}
+            onPress={() => navigation.navigate('SightingEdit', {sighting: navigation.getParam('sighting'), markerList: navigation.getParam('markerList'), edit: true})}
             title="Edit"
         />
     ),

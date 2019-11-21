@@ -49,12 +49,37 @@ export default function SightingEditScreen({ navigation }) {
     function editSightingById(id) {
         return fetch(`https://turtletrackerbackend.herokuapp.com/sighting/${id}`, {method: 'PUT', headers: {'Content-Type':'application/json'}, 
         body: JSON.stringify({ 
-            turtle_id: parseInt(turtleNumber),
-            time_seen: date.valueOf(),
-            turtle_location: location,
+            turtleId: parseInt(turtleNumber),
+            time: moment(date).format(),
+            location,
             latitude: sighting.latitude,
             longitude: sighting.longitude,
-            carapace_length: parseInt(length),
+            length: parseInt(length),
+            notes
+        })})
+          .catch((error) => {
+            console.error(error);
+          });
+    }
+
+    function getLocationAndCreateSighting() {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+              createSighting(position.coords.latitude, position.coords.longitude)
+            },
+            { enableHighAccuracy: true, timeout: 30000, maximumAge: 2000 },
+          )
+    }
+
+    function createSighting(latitude, longitude) {
+        return fetch(`https://turtletrackerbackend.herokuapp.com/sighting`, {method: 'POST', headers: {'Content-Type':'application/json'}, 
+        body: JSON.stringify({ 
+            turtleId: parseInt(turtleNumber),
+            time: moment(date).format(),
+            location,
+            latitude,
+            longitude,
+            length: parseInt(length),
             notes
         })})
           .catch((error) => {
@@ -106,7 +131,7 @@ export default function SightingEditScreen({ navigation }) {
                 pointerEvents="none"
             />
             { navigation.getParam('edit') != undefined && navigation.getParam('edit') == "true" ? 
-                   <Button title="Submit" onPress={() => {editSightingById(sighting.id), navigation.goBack()}}/>  : <Button title="Submit" onPress={() => navigation.navigate("TurtleView")}/> }
+                   <Button title="Submit" onPress={() => {editTurtleById(turtleProps.id), navigation.goBack()}}/>  : <Button title="Submit" onPress={() => {getLocationAndCreateSighting(), navigation.navigate("TurtleView", {turtleId: turtle.id})}}/> }
         </ScrollView>
     );
 
