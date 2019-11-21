@@ -30,9 +30,32 @@ const MapStack = createStackNavigator(
             backgroundColor: 'white',
           }}
       },
+      TurtleList: {
+        screen: TurtleListScreen,
+        navigationOptions: { title: 'Turtles' }
+      },
+      TurtleView: {
+        screen: TurtleViewScreen,
+      },
+      TurtleEdit: {
+        screen: TurtleEditScreen,
+        navigationOptions: { title: 'Edit Turtle' }
+      },
+      SelectTurtle: {
+        screen: SelectTurtleScreen,
+        navigationOptions: { title: 'Select Turtle' }
+      },
       Settings: {
         screen: SettingsScreen,
         navigationOptions: { title: 'Settings' }
+      },
+      SightingView:
+      {
+        screen: SightingViewScreen
+      },
+      SightingEdit:
+      {
+        screen: SightingEditScreen
       },
     },
   );
