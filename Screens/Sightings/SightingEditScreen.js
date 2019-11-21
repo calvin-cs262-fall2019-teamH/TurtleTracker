@@ -130,8 +130,8 @@ export default function SightingEditScreen({ navigation }) {
                 markers={markerList}
                 pointerEvents="none"
             />
-            { navigation.getParam('edit') != undefined && navigation.getParam('edit') == "true" ? 
-                   <Button title="Submit" onPress={() => {editTurtleById(turtleProps.id), navigation.goBack()}}/>  : <Button title="Submit" onPress={() => {getLocationAndCreateSighting(), navigation.navigate("TurtleView", {turtleId: turtle.id})}}/> }
+            { navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 
+                   <Button title="Submit" onPress={() => {editSightingById(sighting.id), navigation.goBack()}}/>  : <Button title="Submit" onPress={() => {getLocationAndCreateSighting(), navigation.navigate("TurtleView", {turtleId: turtle.id})}}/> }
         </ScrollView>
     );
 
