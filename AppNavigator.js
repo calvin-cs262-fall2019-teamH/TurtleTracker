@@ -19,6 +19,7 @@ import SightingEditScreen from './Screens/Sightings/SightingEditScreen';
 import SightingViewScreen from './Screens/Sightings/SightingViewScreen';
 
 // Stack of screens for the Map Tab.
+// TODO: Remove the repeated code for the screens.
 const MapStack = createStackNavigator(
     {
       Map: {
@@ -29,12 +30,9 @@ const MapStack = createStackNavigator(
             backgroundColor: 'white',
           }}
       },
-      TurtleView: {
-        screen: TurtleViewScreen,
-      },
-      TurtleEditScreen: {
-        screen: TurtleEditScreen,
-        navigationOptions: { title: 'Edit' }
+      Settings: {
+        screen: SettingsScreen,
+        navigationOptions: { title: 'Settings' }
       },
     },
   );
