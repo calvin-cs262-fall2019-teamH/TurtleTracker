@@ -1,115 +1,72 @@
-import React, { Component } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import GallerySwiper from 'react-native-gallery-swiper';
 
+import React, { Component } from 'react';
+import { Button, Image, StyleSheet, View, ScrollView } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
 export default class CameraGallery extends Component {
 
-  // creates the placeholder question mark photos as well as location counter
+  // creates the image array and question mark placeholder image
   state = {
-    counter: 0,
-    image1: 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg',
-    image2: 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg',
-    image3: 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg',
-    image4: 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg',
-    image5: 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg',
-    image6: 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg',
+    image_array: ['https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg'],
   };
 
-  // takes an image using the camera
+  // takes an image using the camera and appends it to the image_array
   takeImage= async () => {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
     });
-    if  ((result != this.state.testImage) && (this.state.counter == 0)) {
-      this.setState({ image1: result.uri });
-      this.state.counter = 1;
-     }
-    else if ((result != this.state.testImage2) && (this.state.counter == 1)) {
-      this.setState({ image2: result.uri });
-      this.state.counter = 2;
-     }
-     else if ((result != this.state.testImage3) && (this.state.counter == 2)) {
-      this.setState({ image3: result.uri });
-      this.state.counter = 3;
-     }
-     else if ((result != this.state.testImage4) && (this.state.counter == 3)) {
-      this.setState({ image4: result.uri });
-      this.state.counter = 4;
-     }
-     else if ((result != this.state.testImage5) && (this.state.counter == 4)) {
-      this.setState({ image5: result.uri });
-      this.state.counter = 5;
-     }
-     else if ((result != this.state.testImage6) && (this.state.counter == 5)) {
-      this.setState({ image6: result.uri });
-      this.state.counter = 6;
-     }
-  };
+  
+  // replaces the questionmark placeholder image and appends new image to image_array
+  if ((!result.cancelled) && (this.state.image_array[0] == 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg')) {
+    this.state.image_array.splice(0, 1);  
+    this.setState(prevState => ({
+      image_array: [...prevState.image_array, result.uri]
+  }))}
+
+  // appends the new image to the 
+  else if (!result.cancelled) {
+    this.setState(prevState => ({
+      image_array: [...prevState.image_array, result.uri]
+  }))}
+};
 
 // retrieves an image from a gallery
   pickImage= async () => { 
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsEditing: true
      });
-     
-     if  ((result != this.state.testImage) && (this.state.counter == 0)) {
-      this.setState({ image1: result.uri });
-      this.state.counter = 1;
-     }
-    else if ((result != this.state.testImage2) && (this.state.counter == 1)) {
-      this.setState({ image2: result.uri });
-      this.state.counter = 2;
-     }
-     else if ((result != this.state.testImage3) && (this.state.counter == 2)) {
-      this.setState({ image3: result.uri });
-      this.state.counter = 3;
-     }
-     else if ((result != this.state.testImage4) && (this.state.counter == 3)) {
-      this.setState({ image4: result.uri });
-      this.state.counter = 4;
-     }
-     else if ((result != this.state.testImage5) && (this.state.counter == 4)) {
-      this.setState({ image5: result.uri });
-      this.state.counter = 5;
-     }
-     else if ((result != this.state.testImage6) && (this.state.counter == 5)) {
-      this.setState({ image6: result.uri });
-      this.state.counter = 6;
-     }
-  };
-   
-// renders the six images
+
+     // replaces the questionmark placeholder image and appends new image to image_array
+     if ((!result.cancelled) && (this.state.image_array[0] == 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg')) {
+      this.state.image_array.splice(0, 1);  
+        this.setState(prevState => ({
+          image_array: [...prevState.image_array, result.uri]
+      }))}
+
+      // appends the new image to the 
+      else if (!result.cancelled) {
+        this.setState(prevState => ({
+          image_array: [...prevState.image_array, result.uri]
+      }))}
+    };
+
+  
   render() {
-     let { image1 } = this.state;
-     let { image2 } = this.state;
-     let { image3 } = this.state;
-     let { image4 } = this.state;
-     let { image5 } = this.state;
-     let { image6 } = this.state;
-    
+    let { image_array } = this.state;
 
     // creates the buttons and shows the selected images
     return (
       <View>
-      <View style={styles.gallerySwipe}>
-        <GallerySwiper
-          style          
-          images={[
-            { uri: image1, dimensions: { width: 200, height: 200}, style: {flex: 1, width: 200, height: 200,  alignItems: 'center',  backgroundColor: "#FFF"} },
-            { uri: image2, dimensions: { width: 200, height: 200 } },
-            { uri: image3, dimensions: { width: 200, height: 200 } },
-            { uri: image4, dimensions: { width: 200, height: 200 } },
-            { uri: image5, dimensions: { width: 200, height: 200 } },
-            { uri: image6, dimensions: { width: 200, height: 200 } },
-          ]}
-
-          initialNumToRender={6}
-        />  
-      </View>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer}>
+          <Image source={{uri: image_array[0], width: 200, height: 200}} style={styles.imageStyle}/>
+          <Image source={{uri: image_array[1], width: 200, height: 200}} style={styles.imageStyle}/>
+          <Image source={{uri: image_array[2], width: 200, height: 200}} style={styles.imageStyle}/>
+          <Image source={{uri: image_array[3], width: 200, height: 200}} style={styles.imageStyle}/>
+          <Image source={{uri: image_array[4], width: 200, height: 200}} style={styles.imageStyle}/>
+          <Image source={{uri: image_array[5], width: 200, height: 200}} style={styles.imageStyle}/> 
+        </ScrollView>
 
       <View style={styles.takePicButtons}>
         <Button 
@@ -123,7 +80,6 @@ export default class CameraGallery extends Component {
           onPress={this.pickImage}
           color = '#00B300'
         />
-        
       </View>
       </View>
     );
@@ -131,23 +87,29 @@ export default class CameraGallery extends Component {
 }
 
 const styles= StyleSheet.create({
-  gallerySwipe: {
-    height: 200,
-    flex: 0.5,
+
+  contentContainer: {
+    paddingLeft: 65,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    alignSelf: 'center',
+  }, 
+
+  imageStyle: {
+    flex: 1,
+    margin: 15,
   },
 
   takePicButtons: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-
-  spacer: {
-    flex: 1,
-    height: 8,
+    paddingBottom: 5,
   },
 });
 
 // reference/source: https://docs.expo.io/versions/latest/sdk/imagepicker/
-// reference/source: https://github.com/Luehang/react-native-gallery-swiper
+
+
+
 
