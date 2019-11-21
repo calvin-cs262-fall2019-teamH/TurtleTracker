@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import { View, Text, Button, Image, ScrollView } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import React, { useState } from 'react';
+import { View, Button, Image, ScrollView } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleMapView from '../../components/TurtleMapView';
 
@@ -14,20 +13,34 @@ export default function SightingViewScreen({ navigation }) {
     const [date, setDate] = useState();
     const [mark, setMark] = useState();
     const [turtleNumber, setTurtleNumber] = useState();
+    const [marker, setMarker] = useState({
+        "coordinate": {
+            "latitude": 1,
+            "longitude": 1
+        }
+    });
+
+    sightingId = navigation.getParam('sightingId')
+    turtleId = navigation.getParam('turtleId')
 
     //need to update the id's to pass in the turtle and sighiting id once the navigation
     //is all set up 
-    fetch(`https://turtletrackerbackend.herokuapp.com/sighting/1`)
+    fetch(`https://turtletrackerbackend.herokuapp.com/sighting/${sightingId}`)
         .then(response => response.json())
         .then(responseJson => {
             data = responseJson[0]
             setLength(data.carapace_length)
             setLocation(data.turtle_location)
             setDate(data.time_seen)
-
+            setMarker({
+                "coordinate": {
+                    "latitude": data.latitude,
+                    "longitude": data.longitude
+                },
+            })
         })
-    
-    fetch('https://turtletrackerbackend.herokuapp.com/turtle/1')
+
+    fetch(`https://turtletrackerbackend.herokuapp.com/turtle/${turtleId}`)
         .then(response => response.json())
         .then(responseJson => {
             data = responseJson[0]
@@ -38,37 +51,25 @@ export default function SightingViewScreen({ navigation }) {
     return (
         <ScrollView style={{ padding: 10 }}>
             <Image />
-            <View style={{justifyContent:'space-evenly'}}>
-                <TurtleText titleText="Sighting #1" />
+            <View style={{ justifyContent: 'space-evenly' }}>
+                {/* TODO: Replace sightingId with the number sighting for the specific turtle. */}
+                <TurtleText titleText={`Sighting #${sightingId}`} />
                 <TurtleText titleText={`Turtle #${turtleNumber}`} />
-                <TurtleText titleText="Mark: " baseText={mark} /> 
-                <TurtleText titleText="Date: " baseText={date} /> 
+                <TurtleText titleText="Mark: " baseText={mark} />
+                <TurtleText titleText="Date: " baseText={date} />
                 {/* will eventually need to change to correct date format */}
                 <TurtleText titleText="Length: " baseText={`${length} cm`} />
                 <TurtleText titleText="Location: " baseText={location} />
             </View>
             {/* map */}
             <View style={{ width: '100%', height: 200 }}>
-                {/* <MapView
-                    style={{ flex: 1 }}
-                    provider="google"
-                    initialRegion={{
-                        latitude: 42.931870,
-                        longitude: -85.582130,
-                        latitudeDelta: 0.0025,
-                        longitudeDelta: 0.0025
-                    }} >
-                    <Marker coordinate={{
-                        latitude: 42.931870, 
-                        longitude: -85.582130,
-                    }} />
-                </MapView> */}
-                <TurtleMapView />
+                <TurtleMapView
+                    markers={[marker]} />
             </View>
             <TurtleText titleText="Notes: " baseText="Saw at presentation" />
         </ScrollView>
     );
-} 
+}
 
 // Sets the navigation options.
 SightingViewScreen.navigationOptions = ({ navigation }) => ({
