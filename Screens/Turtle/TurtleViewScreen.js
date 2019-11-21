@@ -10,9 +10,9 @@ import moment from 'moment';
     TurtleViewScreen views the contents of one turtle
 */
 export default function TurtleViewScreen({ navigation }) {
-    function elementButton(value, id) {
+    function elementButton(value, navParams) {
         return (
-            <TouchableOpacity onPress={() => _navigate_sighting(id)}>
+            <TouchableOpacity onPress={() => _navigate_sighting(value, navParams)}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <Text>{value}</Text>
                     <MaterialIcons name="info-outline" size={20} color="green" />
@@ -30,8 +30,8 @@ export default function TurtleViewScreen({ navigation }) {
         ['12/20/98', 'D4', '13']
     ]);
 
-    function _navigate_sighting(id) {
-        navigation.navigate('SightingView', { turtle: navigation.getParam('turtle'), sightingId: id, turtleId })
+    function _navigate_sighting(value, navParams) {
+        navigation.navigate('SightingView', navParams)
     }
 
     function getDerivedTurtleInfo(sightings) {
@@ -39,7 +39,7 @@ export default function TurtleViewScreen({ navigation }) {
         for (var i = 0; i < sightings.length; i++) {
             var sightingDate = new Date(Date.parse(sightings[i].time_seen));
             tableRows.push([moment(sightingDate).format('l'), sightings[i].turtle_location, sightings[i].carapace_length]);
-            tableTitles.push(elementButton(i + 1, sightings[i].id));
+            tableTitles.push(elementButton(i+1, {turtleId: sightings[i].turtle_id, sightingId: sightings[i].id}));
             if (sightingDate.getTime() < oDate.getTime()) {
                 oDate = sightingDate;
                 navigation.setParams({ originalDate: sightingDate });
@@ -77,13 +77,14 @@ export default function TurtleViewScreen({ navigation }) {
                 var markers = []
                 for (var i = 0; i < responseJson.length; i++) {
                     turtleId = responseJson[i].turtle_id
+                    sightingId = responseJson[i].id
                     markers.push({
                         "coordinate": {
-                            "latitude": responseJson[i].latitude,
-                            "longitude": responseJson[i].longitude
+                        "latitude": responseJson[i].latitude,
+                        "longitude": responseJson[i].longitude
                         },
                         "cost": "a",
-                        "onPress": () => props.navigation.navigate('TurtleView', { turtleId })
+                        "onPress": () => props.navigation.navigate('SightingView', {turtleId, sightingId})
                     })
                 }
                 onMarkerListChange(markers)
@@ -94,15 +95,13 @@ export default function TurtleViewScreen({ navigation }) {
     }
 
     turtleId = navigation.getParam('turtleId');
-    useEffect(() => { getTurtleById(turtleId) }, []);
-    useEffect(() => { getSightingByTurtleId(turtleId) }, []);
     const [turtle, onTurtleChange] = useState({});
     const [markerList, onMarkerListChange] = useState([]);
     const [originalDate, onOriginalDateChange] = useState(new Date(99999999999999));
     const [recentDate, onRecentDateChange] = useState(new Date(0));
     const [recentLength, onRecentLengthChange] = useState(0);
-
-    turtleProps = navigation.getParam('turtle');
+    useEffect(() => { getTurtleById(turtleId) }, []);
+    useEffect(() => { getSightingByTurtleId(turtleId) }, []);
 
     return (
         <ScrollView style={{ padding: 7 }}>
@@ -121,7 +120,7 @@ export default function TurtleViewScreen({ navigation }) {
                     <TurtleText titleText='Carapace Length: ' baseText={`${recentLength} mm`} />
                 </View>
             </View>
-            <Text>Sightings: </Text>
+            <TurtleText titleText='Sightings: ' baseText='' />
             <TurtleMapView
                 markers={markerList}
                 pointerEvents="none"
@@ -160,7 +159,7 @@ TurtleViewScreen.navigationOptions = ({ navigation }) => ({
             onPress={() => navigation.navigate('TurtleEdit', {
                 edit: "true",
                 turtle: navigation.getParam('turtle'), originalDate: navigation.getParam('originalDate'),
-                recentDate: navigation.getParam('recentDate'), recentLength: navigation.getParam('recentLength')
+                recentDate: navigation.getParam('recentDate'), recentLength: navigation.getParam('recentLength'),
             })}
             title="Edit"
         />

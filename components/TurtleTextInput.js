@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 
-export default class TurtleProfileTextInput extends Component {
+export default class TurtleTextInput extends Component {
     render() {
         return (
-            <View style={[{flexDirection: 'row', display: 'flex', flexWrap: 'wrap'}, this.props.viewStyle]}>
+            <View style={[styles.container, this.props.viewStyle]}>
                 <Text style={[styles.titleText, this.props.titleStyle]}>{this.props.titleText}</Text>
                 { this.props.multiline ?
                     <TextInput style={[styles.baseText, this.props.baseStyle]} 
@@ -26,15 +26,23 @@ export default class TurtleProfileTextInput extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        marginTop:4,
+        flexDirection: 'row', 
+        display: 'flex', 
+        flexWrap: 'wrap',
+        borderBottomWidth:0.5,
+        borderColor:'#c2c2c2'
+    },
     baseText: {
-        height: 18,
+        height: 22,
         borderColor: 'gray',
         borderWidth: .25,
         paddingLeft: 6,
         paddingRight: 6,
     },
     titleText: {
-        fontSize: 15,
+        fontSize: 16,
         fontWeight: 'bold',
     },
 });
