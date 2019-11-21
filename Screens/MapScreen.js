@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
 import * as Haptics from 'expo-haptics';
 import IconButton from '../components/IconButton';
 import TurtleMapView from '../components/TurtleMapView';
@@ -88,7 +87,7 @@ export default function MapScreen(props) {
 
       <IconButton
         navigation={props.navigation}
-        navigationPage={'TurtleList'}
+        navigationPage={'SelectTurtle'}
         name={'add-location'}
         styles={{ right: 7 }} />
 
