@@ -103,6 +103,7 @@ export default function TurtleViewScreen({ navigation }) {
     const [recentLength, onRecentLengthChange] = useState(0);
 
     turtleProps = navigation.getParam('turtle');
+
     return (
         <ScrollView style={{ padding: 7 }}>
             <View style={{ flexDirection: 'row', padding: 5 }}>
@@ -126,6 +127,7 @@ export default function TurtleViewScreen({ navigation }) {
                 pointerEvents="none"
             />
             {/* Make the row clickable and add an arrow. Add margin*/}
+            <Button title='sighting' onPress={() => navigation.navigate("SightingView")} />
             <Table borderStyle={{ borderWidth: 1 }}>
                 <Row data={tableHead} flexArr={[1, 1, 1, 1]} style={styles.head} textStyle={styles.text} />
                 <TableWrapper style={styles.wrapper}>
@@ -133,6 +135,7 @@ export default function TurtleViewScreen({ navigation }) {
                     <Rows data={tableData} flexArr={[1, 1, 1]} style={styles.row} textStyle={styles.text} />
                 </TableWrapper>
             </Table>
+
         </ScrollView>
     );
 
