@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
-import TurtleText from '../../components/TurtleText';
 import { MaterialIcons } from '@expo/vector-icons';
+import TurtleText from '../../components/TurtleText';
+import TurtleMapView from '../../components/TurtleMapView';
 import moment from 'moment';
 
 /*
@@ -120,27 +120,11 @@ export default function TurtleViewScreen({ navigation }) {
                     <TurtleText titleText='Carapace Length: ' baseText={`${recentLength} mm`} />
                 </View>
             </View>
-            <TurtleText titleText='Sightings: ' baseText='' />
-            {/* Eventually turn the map into a custom component.*/}
-            <View style={{ width: '100%', height: 200 }}>
-                <MapView
-                    mapType="hybrid"
-                    pointerEvents="none"
-                    style={{ flex: 1, borderRadius: 5 }}
-                    provider="google"
-                    region={{
-                        latitude: 42.931870,
-                        longitude: -85.582130,
-                        latitudeDelta: 0.0025,
-                        longitudeDelta: 0.0025
-                    }}>
-                    {markerList.map((marker, i) => {
-                        return <Marker key={i} {...marker}>
-                            <Image style={{ height: 30, width: 30 }} source={require('../../assets/turtle.png')} />
-                        </Marker>
-                    })}
-                </MapView>
-            </View>
+            <Text>Sightings: </Text>
+            <TurtleMapView
+                markers={markerList}
+                pointerEvents="none"
+            />
             {/* Make the row clickable and add an arrow. Add margin*/}
             <Table borderStyle={{ borderWidth: 1 }}>
                 <Row data={tableHead} flexArr={[1, 1, 1, 1]} style={styles.head} textStyle={styles.text} />
