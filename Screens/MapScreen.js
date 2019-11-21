@@ -80,16 +80,23 @@ export default function MapScreen(props) {
         //onLongPress={handlePress}
       />
       <IconButton
-        navigation={props.navigation}
-        navigationPage={'Settings'}
+        onPress={() => props.navigation.navigate('Settings')}
         name={'settings'}
         styles={{ left: 7 }} />
 
       <IconButton
+        onPress={() => props.navigation.navigate('SelectTurtle')}
+        name={'add-location'}
+        styles={{ right: 7 }} />
+
+      {/* TODO: In the future, this will be a button the
+        sets to map to the eco preserve. */}
+      {/* <IconButton
+        // onPress={() => }
         navigation={props.navigation}
         navigationPage={'SelectTurtle'}
         name={'add-location'}
-        styles={{ right: 7 }} />
+        styles={{ left: 7, bottom: 7, top: 'auto' }} /> */}
 
 
     </View>
