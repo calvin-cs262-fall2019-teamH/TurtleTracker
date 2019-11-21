@@ -10,9 +10,9 @@ import moment from 'moment';
     TurtleViewScreen views the contents of one turtle
 */
 export default function TurtleViewScreen({ navigation }) {
-    function elementButton(value) {
+    function elementButton(value, id) {
         return (
-            <TouchableOpacity onPress={() => _navigate_sighting(value)}>
+            <TouchableOpacity onPress={() => _navigate_sighting(id)}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <Text>{value}</Text>
                     <MaterialIcons name="info-outline" size={20} color="green" />
@@ -22,7 +22,7 @@ export default function TurtleViewScreen({ navigation }) {
     }
 
     const [tableHead, onTableHeadChange] = useState(['Sighting #', 'Time', 'Location', 'Length']);
-    const [tableTitle, onTableTitleChange] = useState([elementButton(1), elementButton(2), elementButton(3), elementButton(4)]);
+    const [tableTitle, onTableTitleChange] = useState([elementButton(1, 1), elementButton(2, 1), elementButton(3, 1), elementButton(4, 1)]);
     const [tableData, onTableDataChange] = useState([
         ['9/20/98', 'G1', '14'],
         ['10/20/98', 'H2', '12'],
@@ -30,8 +30,8 @@ export default function TurtleViewScreen({ navigation }) {
         ['12/20/98', 'D4', '13']
     ]);
 
-    function _navigate_sighting(value) {
-        navigation.navigate('SightingView', { turtle: navigation.getParam('turtle') })
+    function _navigate_sighting(id) {
+        navigation.navigate('SightingView', { turtle: navigation.getParam('turtle'), sightingId: id, turtleId })
     }
 
     function getDerivedTurtleInfo(sightings) {
@@ -39,7 +39,7 @@ export default function TurtleViewScreen({ navigation }) {
         for (var i = 0; i < sightings.length; i++) {
             var sightingDate = new Date(Date.parse(sightings[i].time_seen));
             tableRows.push([moment(sightingDate).format('l'), sightings[i].turtle_location, sightings[i].carapace_length]);
-            tableTitles.push(elementButton(i+1));
+            tableTitles.push(elementButton(i + 1, sightings[i].id));
             if (sightingDate.getTime() < oDate.getTime()) {
                 oDate = sightingDate;
                 navigation.setParams({ originalDate: sightingDate });
@@ -76,15 +76,15 @@ export default function TurtleViewScreen({ navigation }) {
                 getDerivedTurtleInfo(responseJson);
                 var markers = []
                 for (var i = 0; i < responseJson.length; i++) {
-                turtleId = responseJson[i].turtle_id
-                markers.push({
-                    "coordinate": {
-                    "latitude": responseJson[i].latitude,
-                    "longitude": responseJson[i].longitude
-                    },
-                    "cost": "a",
-                    "onPress": () => props.navigation.navigate('TurtleView', {turtleId})
-                })
+                    turtleId = responseJson[i].turtle_id
+                    markers.push({
+                        "coordinate": {
+                            "latitude": responseJson[i].latitude,
+                            "longitude": responseJson[i].longitude
+                        },
+                        "cost": "a",
+                        "onPress": () => props.navigation.navigate('TurtleView', { turtleId })
+                    })
                 }
                 onMarkerListChange(markers)
             })
@@ -127,7 +127,6 @@ export default function TurtleViewScreen({ navigation }) {
                 pointerEvents="none"
             />
             {/* Make the row clickable and add an arrow. Add margin*/}
-            <Button title='sighting' onPress={() => navigation.navigate("SightingView")} />
             <Table borderStyle={{ borderWidth: 1 }}>
                 <Row data={tableHead} flexArr={[1, 1, 1, 1]} style={styles.head} textStyle={styles.text} />
                 <TableWrapper style={styles.wrapper}>

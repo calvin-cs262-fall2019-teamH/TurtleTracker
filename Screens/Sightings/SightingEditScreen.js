@@ -62,7 +62,8 @@ export default function SightingEditScreen({ navigation }) {
             {/* date picker has android and ios versions on reacts website, but someone combined them here. 
                 will spend time later setting this up
                 https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker */}
-            <Button title="Submit" onPress={() => navigation.navigate("TurtleList")} />
+                {/* TODO: Right now adding a sighting will return to the map so you can see it. */}
+            <Button title="Submit" onPress={() => {navigation.navigate("TurtleList"); navigation.navigate("Map")}} />
         </ScrollView>
     );
 
