@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
-import TurtleText from '../../components/TurtleText';
 import { MaterialIcons } from '@expo/vector-icons';
+import TurtleText from '../../components/TurtleText';
+import TurtleMapView from '../../components/TurtleMapView';
+import moment from 'moment';
 
 /*
     TurtleViewScreen views the contents of one turtle
@@ -30,22 +31,30 @@ export default function TurtleViewScreen({ navigation }) {
     ]);
 
     function _navigate_sighting(value) {
-        this.props.navigation.navigate('SightingView', { turtle: this.props.navigation.getParam('turtle') })
+        navigation.navigate('SightingView', { turtle: navigation.getParam('turtle') })
     }
 
     function getDerivedTurtleInfo(sightings) {
-        // for (var i = 0; i < sightings.length; i++) {
-        //     var sightingDate = new Date(Date.parse(sightings[i].time_seen));
-        //     if (sightingDate.getTime() < originalDate.getTime()) {
-        //         onOriginalDateChange(sightingDate);
-        //         navigation.setParams({ originalDate: sightingDate });
-        //     }
-        //     if (sightingDate.getTime() > recentDate.getTime()) {
-        //         onRecentDateChange(sightingDate);
-        //         onRecentLengthChange(sightings[i].carapace_length);
-        //         navigation.setParams({ recentDate: sightingDate, recentLength: sightings[i].carapace_length });
-        //     }
-        // }
+        var tableRows = [], tableTitles = [], oDate = new Date(99999999999999), rDate = new Date(0), rLength = 0;
+        for (var i = 0; i < sightings.length; i++) {
+            var sightingDate = new Date(Date.parse(sightings[i].time_seen));
+            tableRows.push([moment(sightingDate).format('l'), sightings[i].turtle_location, sightings[i].carapace_length]);
+            tableTitles.push(elementButton(i+1));
+            if (sightingDate.getTime() < oDate.getTime()) {
+                oDate = sightingDate;
+                navigation.setParams({ originalDate: sightingDate });
+            }
+            if (sightingDate.getTime() > rDate.getTime()) {
+                rDate = sightingDate;
+                rLength = sightings[i].carapace_length;
+                navigation.setParams({ recentDate: sightingDate, recentLength: sightings[i].carapace_length });
+            }
+        }
+        onTableDataChange(tableRows);
+        onTableTitleChange(tableTitles);
+        onOriginalDateChange(oDate);
+        onRecentDateChange(rDate);
+        onRecentLengthChange(rLength);
     }
 
     function getTurtleById(id) {
@@ -64,8 +73,20 @@ export default function TurtleViewScreen({ navigation }) {
         return fetch(`https://turtletrackerbackend.herokuapp.com/sighting/turtle/${id}`)
             .then((response) => response.json())
             .then((responseJson) => {
-                onSightingListChange(responseJson);
                 getDerivedTurtleInfo(responseJson);
+                var markers = []
+                for (var i = 0; i < responseJson.length; i++) {
+                turtleId = responseJson[i].turtle_id
+                markers.push({
+                    "coordinate": {
+                    "latitude": responseJson[i].latitude,
+                    "longitude": responseJson[i].longitude
+                    },
+                    "cost": "a",
+                    "onPress": () => props.navigation.navigate('TurtleView', {turtleId})
+                })
+                }
+                onMarkerListChange(markers)
             })
             .catch((error) => {
                 console.error(error);
@@ -76,11 +97,9 @@ export default function TurtleViewScreen({ navigation }) {
     useEffect(() => { getTurtleById(turtleId) }, []);
     useEffect(() => { getSightingByTurtleId(turtleId) }, []);
     const [turtle, onTurtleChange] = useState({});
-    const [sightingList, onSightingListChange] = useState([]);
-    // const [originalDate, onOriginalDateChange] = useState(new Date(99999999999999));
-    // const [recentDate, onRecentDateChange] = useState(new Date(0));
-    const [originalDate, onOriginalDateChange] = useState();
-    const [recentDate, onRecentDateChange] = useState();
+    const [markerList, onMarkerListChange] = useState([]);
+    const [originalDate, onOriginalDateChange] = useState(new Date(99999999999999));
+    const [recentDate, onRecentDateChange] = useState(new Date(0));
     const [recentLength, onRecentLengthChange] = useState(0);
 
     turtleProps = navigation.getParam('turtle');
@@ -94,10 +113,8 @@ export default function TurtleViewScreen({ navigation }) {
                 } */}
                 <View style={{ justifyContent: 'space-evenly', paddingLeft: 5 }}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Turtle #{turtle.turtle_number}</Text>
-                    {/* <TurtleText titleText='Date Found: ' baseText={originalDate.toLocaleDateString()} />
-                    <TurtleText titleText='Date Last Seen: ' baseText={recentDate.toLocaleDateString()} /> */}
-                    <TurtleText titleText='Date Found: ' baseText={originalDate} />
-                    <TurtleText titleText='Date Last Seen: ' baseText={recentDate} />
+                    <TurtleText titleText='Date Found: ' baseText={moment(originalDate).format('l')} />
+                    <TurtleText titleText='Date Last Seen: ' baseText={moment(recentDate).format('l')} />
                     <TurtleText titleText='Mark: ' baseText={turtle.mark} />
                     <TurtleText titleText='Sex: ' baseText={turtle.sex} />
                     {/* Most Recent Carapace Length Measurement */}
@@ -105,28 +122,10 @@ export default function TurtleViewScreen({ navigation }) {
                 </View>
             </View>
             <Text>Sightings: </Text>
-            {/* Eventually turn the map into a custom component.*/}
-            <View style={{ width: '100%', height: 200 }}>
-                <MapView
-                    mapType="hybrid"
-                    pointerEvents="none"
-                    style={{ flex: 1, borderRadius: 5 }}
-                    provider="google"
-                    region={{
-                        latitude: 42.931870,
-                        longitude: -85.582130,
-                        latitudeDelta: 0.0025,
-                        longitudeDelta: 0.0025
-                    }}>
-                    <Marker
-                        coordinate={{
-                            latitude: 42.931870,
-                            longitude: -85.582130,
-                        }}>
-                        <Image style={{ height: 30, width: 30 }} source={require('../../assets/turtle.png')} />
-                    </Marker>
-                </MapView>
-            </View>
+            <TurtleMapView
+                markers={markerList}
+                pointerEvents="none"
+            />
             {/* Make the row clickable and add an arrow. Add margin*/}
             <Button title='sighting' onPress={() => navigation.navigate("SightingView")} />
             <Table borderStyle={{ borderWidth: 1 }}>
