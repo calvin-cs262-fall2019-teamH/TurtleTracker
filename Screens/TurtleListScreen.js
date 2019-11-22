@@ -3,6 +3,9 @@ import { View, Text, Button } from 'react-native';
 import TurtleList from '../components/TurtleList';
 import IconButton from '../components/IconButton';
 
+/*
+    TurtleListScreen displays the list of the turtles.
+*/
 export default class TurtleListScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
         headerRight: () => (

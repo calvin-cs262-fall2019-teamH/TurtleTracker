@@ -1,115 +1,108 @@
-import React from 'react';
-import MapView, { Marker } from 'react-native-maps';
-import { Button, View, TouchableOpacity } from 'react-native';
-import IconButton from '../components/IconButton';
+import React, { useState, useEffect } from 'react';
+import { View, } from 'react-native';
 import * as Haptics from 'expo-haptics';
+import IconButton from '../components/IconButton';
+import TurtleMapView from '../components/TurtleMapView';
 
 /*
 MapScreen.js contains the basic map screen with turtle sightings.
 */
-export default class MapScreen extends React.Component {
-  constructor(props) {
-    super(props);
+export default function MapScreen(props) {
 
-    // Test data
-    dummyTurtles = [{
-      "coordinate":  {
-        "latitude": 42.9313086715985,
-        "longitude": -85.58243000000002,
-      },
-      "cost": "a",
-      "onPress": () => this.props.navigation.navigate('TurtleView', {name: 'Yertle'}),
-
-    },
-    {
-      "coordinate": {
-        "latitude": 42.93150391684017,
-        "longitude": -85.58205666666666,
-      },
-      "cost": "a",
-      "onPress": () => this.props.navigation.navigate('TurtleView', {name: 'Yertle'}),
-    },]
-
-    this.state = {
-      latitude: 42.931870,
-      longitude: -85.582130,
-      // Eventaully this will be an API call to the backend.
-      markers: dummyTurtles
-    }
-    this.handlePress = this.handlePress.bind(this);
+  function getMarkers() {
+    return fetch(`https://turtletrackerbackend.herokuapp.com/sighting`)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        var markers = []
+        for (var i = 0; i < responseJson.length; i++) {
+          turtleId = responseJson[i].turtle_id
+          markers.push({
+            "coordinate": {
+              "latitude": responseJson[i].latitude,
+              "longitude": responseJson[i].longitude
+            },
+            "cost": "a",
+            "onPress": () => props.navigation.navigate('TurtleView', { turtleId })
+          })
+        }
+        onMarkerListChange(markers)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
+  const [latitude, onLatitudeChange] = useState(42.931870);
+  const [longitude, onLongitudeChange] = useState(-85.582130);
+  const [markerList, onMarkerListChange] = useState([]);
+
   // when the markers are placed
-  handlePress(event) {
+  function handlePress(event) {
     Haptics.impactAsync('heavy')
-    this.setState({
-      markers: [
-        ...this.state.markers,
+    onMarkerListChange(
+      [
+        ...markerList,
         {
           coordinate: event.nativeEvent.coordinate,
           cost: "a",
-          onPress: () => this.props.navigation.navigate('SelectTurtle')
+          onPress: () => props.navigation.navigate('SelectTurtle')
         }
-      ]
-    })
+      ])
   }
+
+  useEffect(() => { getMarkers() }, [])
 
   // accesses the user's location
-  componentDidMount() {
+  useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       position => {
-        this.setState({
-         latitude: position.coords.latitude,
-         longitude: position.coords.longitude
-        });
+        onLatitudeChange(position.coords.latitude)
+        onLongitudeChange(position.coords.longitude)
       },
-    { enableHighAccuracy: true, timeout: 30000, maximumAge: 2000 }
-  );
- } 
+      { enableHighAccuracy: true, timeout: 30000, maximumAge: 2000 },
+    )
+  }, [])
 
   // builds the map to the user's location
-  render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <MapView style={{flex: 1}}
-              mapType="hybrid"
-              region={{
-                latitude: this.state.latitude,
-                longitude: this.state.longitude,
-                latitudeDelta: 0.0025,
-                longitudeDelta: 0.0025
-                }}
-              onLongPress={this.handlePress}
-              provider="google"
-              showsUserLocation={true}
-              followsUserLocation={true}
-              showsMyLocationButton={true}
-          
-          >
-            {this.state.markers.map((marker, i) => {
-              return <Marker key={i} {...marker} />
-              })}
+  return (
+    <View style={{ flex: 1 }}>
+      <TurtleMapView
+        markers={markerList}
+        region={{
+          latitude: latitude,
+          longitude: longitude,
+          latitudeDelta: 0.0025,
+          longitudeDelta: 0.0025
+        }}
+        showsUserLocation={true}
+        followsUserLocation={true}
+        showsMyLocationButton={true}
+        //onLongPress={handlePress}
+      />
+      <IconButton
+        onPress={() => props.navigation.navigate('Settings')}
+        name={'settings'}
+        styles={{ left: 7 }} />
 
-        </MapView>
-        <IconButton
-        size = {40} 
-        navigation = {this.props.navigation}
-        navigationPage = {'Settings'} 
-        name = {'settings'} />
+      <IconButton
+        onPress={() => props.navigation.navigate('SelectTurtle')}
+        name={'add-location'}
+        styles={{ right: 7 }} />
 
-        <IconButton 
-        size = {40} 
-        navigation = {this.props.navigation}
-        navigationPage = {'SelectTurtle'} 
-        name = {'add-location'} 
-        styles = {{right: '5%'}} />
-        
+      {/* TODO: In the future, this will be a button the
+        sets to map to the eco preserve. */}
+      {/* <IconButton
+        // onPress={() => }
+        navigation={props.navigation}
+        navigationPage={'SelectTurtle'}
+        name={'add-location'}
+        styles={{ left: 7, bottom: 7, top: 'auto' }} /> */}
 
-      </View>
-      
-    );
-  }
-} 
+
+    </View>
+
+  );
+}
 
 
 // Reference/Source for Location: https://www.youtube.com/watch?v=bV7cLu7WL78 
