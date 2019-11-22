@@ -9,18 +9,6 @@ Turtle Sighting Screen for information on one particular sighting
 */
 export default function SightingViewScreen({ navigation }) {
 
-    sightingId = navigation.getParam('sightingId');
-    turtleId = navigation.getParam('turtleId');
-    const [length, setLength] = useState();
-    const [location, setLocation] = useState();
-    const [date, setDate] = useState();
-    const [mark, setMark] = useState();
-    const [notes, setNotes] = useState();
-    const [turtleNumber, setTurtleNumber] = useState();
-    const [markerList, setMarkerList] = useState([]);
-    useEffect(() => { getSightingById(sightingId) }, []);
-    useEffect(() => { getTurtleById(turtleId) }, []);
-
     function getTurtleById(id) {
         return fetch(`https://turtletrackerbackend.herokuapp.com/turtle/${id}`)
             .then(response => response.json())
@@ -52,7 +40,27 @@ export default function SightingViewScreen({ navigation }) {
             .catch((error) => {
                 console.error(error);
             });
-        }
+    }
+
+    function refresh() {
+        sightingId = navigation.getParam('sightingId');
+        turtleId = navigation.getParam('turtleId');
+        getSightingById(sightingId);
+        getTurtleById(turtleId);
+    }
+
+    sightingId = navigation.getParam('sightingId');
+    turtleId = navigation.getParam('turtleId');
+    const [length, setLength] = useState();
+    const [location, setLocation] = useState();
+    const [date, setDate] = useState();
+    const [mark, setMark] = useState();
+    const [notes, setNotes] = useState();
+    const [turtleNumber, setTurtleNumber] = useState();
+    const [markerList, setMarkerList] = useState([]);
+    useEffect(() => { getSightingById(sightingId) }, []);
+    useEffect(() => { getTurtleById(turtleId) }, []);
+    useEffect(() => { navigation.setParams({refresh}) }, []);
 
     return (
         <ScrollView style={{ padding: 10 }}>
@@ -80,7 +88,12 @@ SightingViewScreen.navigationOptions = ({ navigation }) => ({
     title: 'Sighting',
     headerRight: () => (
         <Button
-            onPress={() => navigation.navigate('SightingEdit', {sighting: navigation.getParam('sighting'), markerList: navigation.getParam('markerList'), edit: true})}
+            onPress={() => navigation.navigate('SightingEdit', 
+                {sighting: navigation.getParam('sighting'), 
+                markerList: navigation.getParam('markerList'), 
+                edit: true,
+                refresh: navigation.getParam('refresh'),
+            })}
             title="Edit"
         />
     ),

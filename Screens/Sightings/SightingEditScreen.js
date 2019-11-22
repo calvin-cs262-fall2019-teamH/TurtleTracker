@@ -131,7 +131,7 @@ export default function SightingEditScreen({ navigation }) {
                 pointerEvents="none"
             />
             { navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 
-                   <Button title="Submit" onPress={() => {editSightingById(sighting.id), navigation.goBack()}}/>  : <Button title="Submit" onPress={() => {getLocationAndCreateSighting(), navigation.navigate("TurtleView", {turtleId: turtle.id})}}/> }
+                   <Button title="Submit" onPress={() => {editSightingById(sighting.id), navigation.state.params.refresh(), navigation.goBack()}}/>  : <Button title="Submit" onPress={() => {getLocationAndCreateSighting(), navigation.navigate("TurtleView", {turtleId: turtle.id})}}/> }
         </ScrollView>
     );
 
@@ -139,5 +139,5 @@ export default function SightingEditScreen({ navigation }) {
 
 // Sets the navigation options.
 SightingEditScreen.navigationOptions = ({ navigation }) => ({
-    title: 'Add Sighting',
+    title: navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 'Edit Sighting' : 'Add Sighting',
 });
