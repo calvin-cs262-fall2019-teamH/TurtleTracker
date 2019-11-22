@@ -82,11 +82,13 @@ export default function MapScreen(props) {
       <IconButton
         onPress={() => props.navigation.navigate('Settings')}
         name={'settings'}
+        size = {40}
         styles={{ left: 7 }} />
 
       <IconButton
         onPress={() => props.navigation.navigate('SelectTurtle')}
         name={'add-location'}
+        size={40}
         styles={{ right: 7 }} />
 
       {/* TODO: In the future, this will be a button the

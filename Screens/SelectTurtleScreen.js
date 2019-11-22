@@ -8,10 +8,9 @@ export default class SelectTurtleScreen extends React.Component {
         headerLeft: () => (
             <IconButton
                 size = {20} 
-                navigation = {navigation}
-                navigationPage = {'TurtleList'} 
+                onPress={() => navigation.goBack()}
                 name = {'navigate-before'}
-                styles = {{paddingTop: 2}} />
+                styles = {{paddingLeft: 7}} />
         ),
     });
     render() {

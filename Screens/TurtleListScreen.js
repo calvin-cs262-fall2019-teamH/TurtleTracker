@@ -11,19 +11,17 @@ export default class TurtleListScreen extends React.Component {
         headerRight: () => (
             <IconButton 
                 size = {20}
-                navigation = {navigation}
-                navigationPage = {'SelectTurtle'} 
+                onPress={() => navigation.navigate('SelectTurtle')}
                 name = {'add-location'} 
-                styles = {{right: '10%', paddingRight: 15, paddingTop: 2}} />
+                styles = {{right: '10%', paddingRight: 10}} />
         ),
 
         headerLeft: () => (
             <IconButton
                 size = {20} 
-                navigation = {navigation}
-                navigationPage = {'Settings'} 
+                onPress={() => navigation.navigate('Settings')} 
                 name = {'settings'}
-                styles = {{paddingTop: 2}} />
+                styles = {{paddingLeft: 7}} />
         ),
     });
 
