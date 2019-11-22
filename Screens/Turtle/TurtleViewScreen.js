@@ -164,30 +164,17 @@ const styles = StyleSheet.create({
 TurtleViewScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('turtle') == null ? '' : navigation.getParam('turtle').mark,
     headerRight: () => (
-        // <IconButton 
-        // size = {20}
-        // navigation = {navigation}
-        // navigationPage = {'TurtleEdit'} 
-        // navigationParams = {{ edit: "true", turtle: turtleProps }}
-        // name = {'edit'} 
-        // styles = {{right: '10%', paddingRight: 15, paddingTop: 2}} />
-        <Button
-            onPress={() => navigation.navigate('TurtleEdit', {
-                edit: "true",
-                turtle: navigation.getParam('turtle'), originalDate: navigation.getParam('originalDate'),
-                recentDate: navigation.getParam('recentDate'), recentLength: navigation.getParam('recentLength'),
-                refresh: navigation.getParam('refresh'),
-            })}
-            title="Edit"
-        />
+        <IconButton
+        size = {20} 
+        onPress={() => navigation.navigate('TurtleEdit', )}
+        name = {'edit'}
+        styles = {{right: '10%', paddingRight: 10}} />
     ),
     headerLeft: () => (
         <IconButton
-            size = {20} 
-            navigation = {navigation}
-            navigationPage = {'TurtleList'} 
-            name = {'navigate-before'}
-            styles = {{paddingTop: 2}} />
+        size = {20} 
+        onPress={() => navigation.goBack()}
+        name = {'navigate-before'}
+        styles = {{paddingLeft: 7}} />
     ),
-    title: navigation.getParam('turtle').mark
 });
