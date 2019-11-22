@@ -46,7 +46,7 @@ export default function TurtleEditScreen({navigation}){
                     </View>
                 </View>
                 { navigation.getParam('edit') != undefined && navigation.getParam('edit') == "true" ? 
-                   <Button title="Submit" onPress={() => {editTurtleById(turtleProps.id), navigation.goBack()}}/>  : <Button title="Submit" onPress={() => navigation.navigate("TurtleView")}/> }
+                   <Button title="Submit" onPress={() => {editTurtleById(turtleProps.id), navigation.state.params.refresh(), navigation.goBack()}}/>  : <Button title="Submit" onPress={() => navigation.navigate("TurtleView")}/> }
             </ScrollView>
 
         );

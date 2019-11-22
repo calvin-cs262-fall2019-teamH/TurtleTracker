@@ -94,6 +94,12 @@ export default function TurtleViewScreen({ navigation }) {
             });
     }
 
+    function refresh() {
+        turtleId = navigation.getParam('turtleId');
+        getTurtleById(turtleId);
+        getSightingByTurtleId(turtleId);
+    }
+
     turtleId = navigation.getParam('turtleId');
     const [turtle, onTurtleChange] = useState({});
     const [markerList, onMarkerListChange] = useState([]);
@@ -102,7 +108,7 @@ export default function TurtleViewScreen({ navigation }) {
     const [recentLength, onRecentLengthChange] = useState(0);
     useEffect(() => { getTurtleById(turtleId) }, []);
     useEffect(() => { getSightingByTurtleId(turtleId) }, []);
-
+    useEffect(() => { navigation.setParams({refresh}) }, []);
     return (
         <ScrollView style={{ padding: 7 }}>
             <View style={{ flexDirection: 'row', padding: 5 }}>
@@ -160,6 +166,7 @@ TurtleViewScreen.navigationOptions = ({ navigation }) => ({
                 edit: "true",
                 turtle: navigation.getParam('turtle'), originalDate: navigation.getParam('originalDate'),
                 recentDate: navigation.getParam('recentDate'), recentLength: navigation.getParam('recentLength'),
+                refresh: navigation.getParam('refresh'),
             })}
             title="Edit"
         />
