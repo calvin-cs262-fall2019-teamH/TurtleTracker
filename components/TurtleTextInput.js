@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 
+/*
+    TurtleTextInput is custom text input.
+    Props:
+        viewStyle,
+        titleStyle,
+        titleText,
+        baseStyle,
+        onChangeText,
+        value,
+        placeholder,
+*/
 export default class TurtleTextInput extends Component {
     render() {
         return (

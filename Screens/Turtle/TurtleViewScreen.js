@@ -34,6 +34,7 @@ export default function TurtleViewScreen({ navigation }) {
         navigation.navigate('SightingView', navParams)
     }
 
+    // Update the sighting table.
     function getDerivedTurtleInfo(sightings) {
         var tableRows = [], tableTitles = [], oDate = new Date(99999999999999), rDate = new Date(0), rLength = 0;
         for (var i = 0; i < sightings.length; i++) {
@@ -94,6 +95,7 @@ export default function TurtleViewScreen({ navigation }) {
             });
     }
 
+    // Update the data
     function refresh() {
         turtleId = navigation.getParam('turtleId');
         getTurtleById(turtleId);
