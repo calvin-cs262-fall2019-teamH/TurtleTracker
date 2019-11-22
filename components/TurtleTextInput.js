@@ -6,19 +6,19 @@ export default class TurtleTextInput extends Component {
         return (
             <View style={[styles.container, this.props.viewStyle]}>
                 <Text style={[styles.titleText, this.props.titleStyle]}>{this.props.titleText}</Text>
-                { this.props.multiline ?
-                    <TextInput style={[styles.baseText, this.props.baseStyle]} 
-                                onChangeText={this.props.onChangeText}
-                                value={this.props.value}
-                                placeholder={this.props.placeholder}
-                                returnKeyType="done"
-                                numberOfLines={this.props.numberOfLines}
-                                multiline={true}/>:
-                    <TextInput style={[styles.baseText, this.props.baseStyle]} 
-                                onChangeText={this.props.onChangeText}
-                                value={this.props.value}
-                                placeholder={this.props.placeholder}
-                                returnKeyType="done"/>
+                {this.props.multiline
+                    ? <TextInput style={[styles.baseText, this.props.baseStyle]}
+                        onChangeText={this.props.onChangeText}
+                        value={this.props.value}
+                        placeholder={this.props.placeholder}
+                        returnKeyType="done"
+                        numberOfLines={this.props.numberOfLines}
+                        multiline={true} />
+                    : <TextInput style={[styles.baseText, this.props.baseStyle]}
+                        onChangeText={this.props.onChangeText}
+                        value={this.props.value}
+                        placeholder={this.props.placeholder}
+                        returnKeyType="done" />
                 }
             </View>
         );
@@ -27,12 +27,12 @@ export default class TurtleTextInput extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop:4,
-        flexDirection: 'row', 
-        display: 'flex', 
+        marginTop: 15,
+        flexDirection: 'row',
+        display: 'flex',
         flexWrap: 'wrap',
-        borderBottomWidth:0.5,
-        borderColor:'#c2c2c2'
+        // borderBottomWidth:0.5,
+        // borderColor:'#c2c2c2',
     },
     baseText: {
         height: 22,
@@ -40,9 +40,12 @@ const styles = StyleSheet.create({
         borderWidth: .25,
         paddingLeft: 6,
         paddingRight: 6,
+        minWidth: 200,
+        borderRadius: 2,
+        fontSize: 20,
     },
     titleText: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: 'bold',
     },
 });

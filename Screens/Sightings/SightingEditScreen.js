@@ -129,8 +129,8 @@ export default function SightingEditScreen({ navigation }) {
                 }
 
                 <TurtleTextInput titleText="Date: " onChangeText={date => setDate(date)} value={moment(date).format('l')} placeholder='Sighting Date' />
-                <TurtleTextInput titleText='Location ' onChangeText={location => setLocation(location)} value={location} placeholder="Turtle Location" />
-                <TurtleTextInput titleText='Length: ' onChangeText={length => setLength(length)} value={length} placeholder="Turtle Length" />
+                <TurtleTextInput titleText='Location: ' onChangeText={location => setLocation(location)} value={location} placeholder="Turtle Location" />
+                <TurtleTextInput titleText='Length: ' onChangeText={length => setLength(length)} value={`${length}`} placeholder="Turtle Length" />
                 <TurtleTextInput titleText='Notes: ' onChangeText={notes => setNotes(notes)} value={notes} placeholder="Sighting Notes" />
             </View>
             {/* for the image:
