@@ -71,8 +71,8 @@ export default function MapScreen(props) {
         region={{
           latitude: latitude,
           longitude: longitude,
-          latitudeDelta: 0.0025,
-          longitudeDelta: 0.0025
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01
         }}
         showsUserLocation={true}
         followsUserLocation={true}

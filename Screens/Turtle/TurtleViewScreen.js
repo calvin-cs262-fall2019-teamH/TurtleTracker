@@ -22,7 +22,7 @@ export default function TurtleViewScreen({ navigation }) {
         )
     }
 
-    const [tableHead, onTableHeadChange] = useState(['Sighting #', 'Time', 'Location', 'Length']);
+    const [tableHead, onTableHeadChange] = useState(['Sighting #', 'Date', 'Location', 'Length']);
     const [tableTitle, onTableTitleChange] = useState([elementButton(1, 1), elementButton(2, 1), elementButton(3, 1), elementButton(4, 1)]);
     const [tableData, onTableDataChange] = useState([
         ['9/20/98', 'G1', '14'],
@@ -35,11 +35,12 @@ export default function TurtleViewScreen({ navigation }) {
         navigation.navigate('SightingView', navParams)
     }
 
+    // Update the sighting table.
     function getDerivedTurtleInfo(sightings) {
         var tableRows = [], tableTitles = [], oDate = new Date(99999999999999), rDate = new Date(0), rLength = 0;
         for (var i = 0; i < sightings.length; i++) {
             var sightingDate = new Date(Date.parse(sightings[i].time_seen));
-            tableRows.push([moment(sightingDate).format('l'), sightings[i].turtle_location, sightings[i].carapace_length]);
+            tableRows.push([moment(sightingDate).format('l'), sightings[i].turtle_location, `${sightings[i].carapace_length} mm`]);
             tableTitles.push(elementButton(i+1, {turtleId: sightings[i].turtle_id, sightingId: sightings[i].id}));
             if (sightingDate.getTime() < oDate.getTime()) {
                 oDate = sightingDate;
@@ -95,6 +96,7 @@ export default function TurtleViewScreen({ navigation }) {
             });
     }
 
+    // Update the data
     function refresh() {
         turtleId = navigation.getParam('turtleId');
         getTurtleById(turtleId);
