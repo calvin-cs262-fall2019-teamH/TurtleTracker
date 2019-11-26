@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Button, Image, ScrollView } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleMapView from '../../components/TurtleMapView';
+import IconButton from '../../components/IconButton';
 import moment from 'moment';
 
 /*
@@ -87,14 +88,23 @@ export default function SightingViewScreen({ navigation }) {
 SightingViewScreen.navigationOptions = ({ navigation }) => ({
     title: 'Sighting',
     headerRight: () => (
-        <Button
+        <IconButton
+            size = {20} 
             onPress={() => navigation.navigate('SightingEdit', 
                 {sighting: navigation.getParam('sighting'), 
                 markerList: navigation.getParam('markerList'), 
                 edit: true,
                 refresh: navigation.getParam('refresh'),
             })}
-            title="Edit"
+            name = {'edit'} 
+            styles = {{right: '10%', paddingRight: 15, paddingTop: 2}}
         />
+    ),
+    headerLeft: () => (
+        <IconButton
+            size = {20} 
+            onPress={() => navigation.goBack()}
+            name = {'navigate-before'}
+            styles = {{paddingTop: 2, paddingLeft: 15}} />
     ),
 });

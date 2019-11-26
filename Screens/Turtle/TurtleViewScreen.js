@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import { MaterialIcons } from '@expo/vector-icons';
+import IconButton from '../../components/IconButton';
 import TurtleText from '../../components/TurtleText';
 import TurtleMapView from '../../components/TurtleMapView';
 import moment from 'moment';
@@ -163,14 +164,23 @@ const styles = StyleSheet.create({
 TurtleViewScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('turtle') == null ? '' : navigation.getParam('turtle').mark,
     headerRight: () => (
-        <Button
+        <IconButton
+            size = {20} 
             onPress={() => navigation.navigate('TurtleEdit', {
                 edit: "true",
                 turtle: navigation.getParam('turtle'), originalDate: navigation.getParam('originalDate'),
                 recentDate: navigation.getParam('recentDate'), recentLength: navigation.getParam('recentLength'),
                 refresh: navigation.getParam('refresh'),
             })}
-            title="Edit"
+            name = {'edit'} 
+            styles = {{right: '10%', paddingRight: 15, paddingTop: 2}}
         />
+    ),
+    headerLeft: () => (
+        <IconButton
+            size = {20} 
+            onPress={() => navigation.goBack()}
+            name = {'navigate-before'}
+            styles = {{paddingTop: 2, paddingLeft: 15}} />
     ),
 });

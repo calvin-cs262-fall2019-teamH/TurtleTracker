@@ -6,6 +6,7 @@ import CameraGallery from '../../components/CameraGallery';
 import TurtleMapView from '../../components/TurtleMapView';
 import * as Permissions from 'expo-permissions';
 import moment from 'moment';
+import IconButton from '../../components/IconButton';
 
 /*
 SightingEditScreen is for editing the information of a specific citing.
@@ -153,5 +154,11 @@ export default function SightingEditScreen({ navigation }) {
 
 // Sets the navigation options.
 SightingEditScreen.navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 'Edit Sighting' : 'Add Sighting',
+    title: navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 'Edit Sighting' : 'Add Sighting', headerLeft: () => (
+        <IconButton
+            size = {20} 
+            onPress={() => navigation.goBack()}
+            name = {'navigate-before'}
+            styles = {{paddingLeft: 7}} />
+    ),
 });
