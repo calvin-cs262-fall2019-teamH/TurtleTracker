@@ -3,6 +3,7 @@ import { View, ScrollView, Text, Image, Button } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleTextInput from '../../components/TurtleTextInput';
 import moment from 'moment';
+import IconButton from '../../components/IconButton';
 
 /*
     TurtleEditScreen allows for editing content of one turtle
@@ -50,5 +51,15 @@ export default function TurtleEditScreen({navigation}){
             </ScrollView>
 
         );
-
 }
+
+// Sets the navigation options.
+TurtleEditScreen.navigationOptions = ({ navigation }) => ({
+    headerLeft: () => (
+        <IconButton
+            size = {20} 
+            onPress={() => navigation.goBack()}
+            name = {'navigate-before'}
+            styles = {{paddingTop: 2, paddingLeft: 15}} />
+    ),
+});
