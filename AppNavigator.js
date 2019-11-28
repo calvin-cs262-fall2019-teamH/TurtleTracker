@@ -114,15 +114,18 @@ const MainNavigator = createBottomTabNavigator(
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarOnPress: ({defaultHandler}) => {
         const { routeName } = navigation.state;
-        if (routeName === 'TurtleTab') {
-          navigation.dispatch(StackActions.reset({
-            index: 0,
-            key: null,
-            actions: [NavigationActions.navigate({ routeName: 'Map' })]
-        }))
-        }
-        console.log(JSON.stringify(navigation));
+
+        // Move screens
         defaultHandler();
+
+        // Then reload the map
+        if (routeName === 'MapTab') {
+          navigation.dispatch(StackActions.reset({
+              index: 0,
+              key: null,
+              actions: [NavigationActions.navigate({ routeName: 'Map' })]
+          }))
+        }
       },
 
       // Icon for tab bar.
