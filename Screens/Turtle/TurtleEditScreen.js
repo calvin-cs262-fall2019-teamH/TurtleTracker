@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Text, Image, Button } from 'react-native';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import RadioForm from 'react-native-simple-radio-button';
 import TurtleText from '../../components/TurtleText';
 import TurtleTextInput from '../../components/TurtleTextInput';
 import moment from 'moment';
@@ -34,8 +34,7 @@ export default function TurtleEditScreen({ navigation }) {
     recentDate = navigation.getParam('recentDate');
     recentLength = navigation.getParam('recentLength');
     const initialSexIsFemale = turtleProps.sex == 'male' ? 0 : 1 // 1 = female
-    console.log(initialSexIsFemale)
-    console.log(turtleProps.sex)
+
     const [number, setNumber] = useState(turtleProps.turtle_number.toString());
     const [originalDateEdit, setOriginalDate] = useState(originalDate.toLocaleDateString());
     const [recentDateEdit, setRecentDate] = useState(recentDate.toLocaleDateString());
@@ -55,13 +54,21 @@ export default function TurtleEditScreen({ navigation }) {
                     {/* <TurtleTextInput titleText='Date Found: ' onChangeText={originalDateEdit => setOriginalDate(originalDateEdit)} value={originalDateEdit} placeholder="Original Sighting Date"/> */}
                     {/* <TurtleTextInput titleText='Date Last Seen: ' onChangeText={recentDateEdit => setRecentDate(recentDateEdit)} value={recentDateEdit} placeholder="Most Recent Sighting Date"/> */}
                     <TurtleTextInput titleText='Mark: ' onChangeText={newMark => setCarapaceMark(newMark)} value={carapaceMark} placeholder="Turtle Mark" />
-                    {/* <TurtleTextInput titleText='Sex: ' onChangeText={sex => setSex(sex)} value={sex} placeholder="Turtle Sex"/> */}
-                    <TurtleText titleText='Sex: ' />
-                    <RadioForm
-                        radio_props={radio_props}
-                        initial={initialSexIsFemale}
-                        onPress={(value) => { setSex(value) }}
-                    />
+                    <Text style={{
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                    }}>
+                        {'Sex: '}
+                    </Text>
+                    <View style={{ width: '100%' }}>
+                        <RadioForm
+                            radio_props={radio_props}
+                            initial={initialSexIsFemale}
+                            onPress={(value) => { setSex(value) }}
+                            buttonColor={'green'}
+                            selectedButtonColor={'green'}
+                        />
+                    </View>
                     {/* <TurtleTextInput titleText='Carapace Length: ' onChangeText={length => setLength(length)} value={length} placeholder="Most Recent Carapace Measurement"/> */}
                 </View>
             </View>
