@@ -11,9 +11,19 @@ import moment from 'moment';
     TurtleViewScreen views the contents of one turtle
 */
 export default function TurtleViewScreen({ navigation }) {
+
+    const tableHead = ['Sighting #', 'Date', 'Location', 'Length']
+    const [tableTitle, onTableTitleChange] = useState(['']);
+    const [tableData, onTableDataChange] = useState([['', 'Loading', '']]);
+    const [turtle, onTurtleChange] = useState({});
+    const [markerList, onMarkerListChange] = useState([]);
+    const [originalDate, onOriginalDateChange] = useState(new Date(99999999999999));
+    const [recentDate, onRecentDateChange] = useState(new Date(0));
+    const [recentLength, onRecentLengthChange] = useState(0);
+
     function elementButton(value, navParams) {
         return (
-            <TouchableOpacity onPress={() => _navigate_sighting(value, navParams)}>
+            <TouchableOpacity onPress={() => _navigate_sighting(navParams)}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <Text>{value}</Text>
                     <MaterialIcons name="info-outline" size={20} color="green" />
@@ -22,16 +32,7 @@ export default function TurtleViewScreen({ navigation }) {
         )
     }
 
-    const [tableHead, onTableHeadChange] = useState(['Sighting #', 'Date', 'Location', 'Length']);
-    const [tableTitle, onTableTitleChange] = useState([elementButton(1, 1), elementButton(2, 1), elementButton(3, 1), elementButton(4, 1)]);
-    const [tableData, onTableDataChange] = useState([
-        ['9/20/98', 'G1', '14'],
-        ['10/20/98', 'H2', '12'],
-        ['11/20/98', 'M3', '12'],
-        ['12/20/98', 'D4', '13']
-    ]);
-
-    function _navigate_sighting(value, navParams) {
+    function _navigate_sighting(navParams) {
         navigation.navigate('SightingView', navParams)
     }
 
@@ -104,14 +105,11 @@ export default function TurtleViewScreen({ navigation }) {
     }
 
     turtleId = navigation.getParam('turtleId');
-    const [turtle, onTurtleChange] = useState({});
-    const [markerList, onMarkerListChange] = useState([]);
-    const [originalDate, onOriginalDateChange] = useState(new Date(99999999999999));
-    const [recentDate, onRecentDateChange] = useState(new Date(0));
-    const [recentLength, onRecentLengthChange] = useState(0);
-    useEffect(() => { getTurtleById(turtleId) }, []);
-    useEffect(() => { getSightingByTurtleId(turtleId) }, []);
-    useEffect(() => { navigation.setParams({refresh}) }, []);
+    useEffect(() => { 
+        getTurtleById(turtleId)
+        getSightingByTurtleId(turtleId)
+        navigation.setParams({refresh})
+     }, []);
     return (
         <ScrollView style={{ padding: 7 }}>
             <View style={{ flexDirection: 'row' }}>
