@@ -114,12 +114,12 @@ export default function TurtleViewScreen({ navigation }) {
     useEffect(() => { navigation.setParams({refresh}) }, []);
     return (
         <ScrollView style={{ padding: 7 }}>
-            <View style={{ flexDirection: 'row', padding: 5 }}>
+            <View style={{ flexDirection: 'row' }}>
                 {/* { turtleProps.pictures.length > 0 ?
                     <Image style={{width: 150, height: 150}} source={{uri: turtleProps.pictures[0]}}/>
                     : null
                 } */}
-                <View style={{ justifyContent: 'space-evenly', paddingLeft: 5 }}>
+                <View style={{ justifyContent: 'space-evenly' }}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Turtle #{turtle.turtle_number}</Text>
                     <TurtleText titleText='Date Found: ' baseText={moment(originalDate).format('l')} />
                     <TurtleText titleText='Date Last Seen: ' baseText={moment(recentDate).format('l')} />
