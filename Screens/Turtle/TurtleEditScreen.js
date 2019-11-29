@@ -36,11 +36,13 @@ export default function TurtleEditScreen({ navigation }) {
     const initialSexIsFemale = turtleProps.sex == 'male' ? 0 : 1 // 1 = female
 
     const [number, setNumber] = useState(turtleProps.turtle_number.toString());
-    const [originalDateEdit, setOriginalDate] = useState(originalDate.toLocaleDateString());
-    const [recentDateEdit, setRecentDate] = useState(recentDate.toLocaleDateString());
+    // TODO: Removed this functionality now because we aren't able to edit the original date currently.
+    // const [originalDateEdit, setOriginalDate] = useState(originalDate.toLocaleDateString());
+    // const [recentDateEdit, setRecentDate] = useState(recentDate.toLocaleDateString());
+    // const [length, setLength] = useState(recentLength.toString());
     const [carapaceMark, setCarapaceMark] = useState(turtleProps.mark);
     const [sex, setSex] = useState(turtleProps.sex);
-    const [length, setLength] = useState(recentLength.toString());
+     
     return (
 
         <ScrollView style={{ padding: 5 }}>
