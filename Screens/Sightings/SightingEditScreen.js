@@ -1,11 +1,11 @@
+import * as Permissions from 'expo-permissions';
+import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, ScrollView } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleTextInput from '../../components/TurtleTextInput';
 import CameraGallery from '../../components/CameraGallery';
 import TurtleMapView from '../../components/TurtleMapView';
-import * as Permissions from 'expo-permissions';
-import moment from 'moment';
 import IconButton from '../../components/IconButton';
 
 /*
@@ -121,7 +121,6 @@ export default function SightingEditScreen({ navigation }) {
 
     return (
         <ScrollView>
-            <CameraGallery />
             <View style={{ padding: 8 }}>
                 <TurtleText titleText="Mark: " baseText={turtle.mark} />
                 {isEdit
@@ -144,6 +143,7 @@ export default function SightingEditScreen({ navigation }) {
                 markers={markerList}
                 pointerEvents="none"
             />
+            <CameraGallery />
             {isEdit
                 ? <Button title="Submit" onPress={() => { editSightingById(sighting.id), navigation.state.params.refresh(), navigation.goBack() }} />
                 : <Button title="Submit" onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }} />}
@@ -156,9 +156,9 @@ export default function SightingEditScreen({ navigation }) {
 SightingEditScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 'Edit Sighting' : 'Add Sighting', headerLeft: () => (
         <IconButton
-            size = {20} 
+            size={20}
             onPress={() => navigation.goBack()}
-            name = {'navigate-before'}
-            styles = {{paddingLeft: 7}} />
+            name={'navigate-before'}
+            styles={{ paddingLeft: 7 }} />
     ),
 });

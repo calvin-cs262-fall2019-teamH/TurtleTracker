@@ -3,12 +3,12 @@ import { View, } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import IconButton from '../components/IconButton';
 import TurtleMapView from '../components/TurtleMapView';
-import {StackActions, NavigationActions} from 'react-navigation';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 /*
 MapScreen.js contains the basic map screen with turtle sightings.
 */
-export default function MapScreen({navigation}) {
+export default function MapScreen({ navigation }) {
 
   function getMarkers() {
     return fetch(`https://turtletrackerbackend.herokuapp.com/sighting`)
@@ -78,19 +78,19 @@ export default function MapScreen({navigation}) {
         showsUserLocation={true}
         followsUserLocation={true}
         showsMyLocationButton={true}
-        //onLongPress={handlePress}
+      //onLongPress={handlePress}
       />
       <IconButton
         onPress={() => navigation.navigate('Settings')}
         name={'settings'}
-        size = {40}
-        styles={{ left: 7 }} />
+        size={45}
+        styles={{ left: 7, top: 7 }} />
 
       <IconButton
         onPress={() => navigation.navigate('SelectTurtle')}
         name={'add-location'}
-        size={40}
-        styles={{ right: 7 }} />
+        size={45}
+        styles={{ right: 7, top: 7 }} />
 
       {/* TODO: In the future, this will be a button the
         sets to map to the eco preserve. */}

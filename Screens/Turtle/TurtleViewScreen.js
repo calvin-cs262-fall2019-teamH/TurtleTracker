@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
-import { MaterialIcons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
+import moment from 'moment';
 import IconButton from '../../components/IconButton';
 import TurtleText from '../../components/TurtleText';
 import TurtleMapView from '../../components/TurtleMapView';
-import moment from 'moment';
+
 
 /*
     TurtleViewScreen views the contents of one turtle
@@ -15,12 +16,23 @@ export default function TurtleViewScreen({ navigation }) {
 
     function elementButton(value, navParams) {
         return (
-            <TouchableOpacity onPress={() => _navigate_sighting(navParams)}>
+            <TouchableOpacity
+                style={{zIndex: 5}}
+                onPress={() => _navigate_sighting(navParams)}
+                onPressIn={() => Haptics.impactAsync('medium')}
+            >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <Text>{value}</Text>
-                    <MaterialIcons name="info-outline" size={20} color="green" />
+                    <IconButton
+                        disabled={true}
+                        size={10}
+                        onPress={() => {} }
+                        name={'info'}
+                        styles={{ position: 'static' }} />
                 </View>
             </TouchableOpacity>
+
+
         )
     }
 
@@ -121,11 +133,11 @@ export default function TurtleViewScreen({ navigation }) {
                     : null
                 } */}
                 <View style={{ justifyContent: 'space-evenly' }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Turtle #{turtle.turtle_number}</Text>
-                    <TurtleText titleText='Date Found: ' baseText={moment(originalDate).format('l')} />
-                    <TurtleText titleText='Date Last Seen: ' baseText={moment(recentDate).format('l')} />
+                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Turtle #{turtle.turtle_number}</Text>
                     <TurtleText titleText='Mark: ' baseText={turtle.mark} />
                     <TurtleText titleText='Sex: ' baseText={turtle.sex} />
+                    <TurtleText titleText='Date Found: ' baseText={moment(originalDate).format('l')} />
+                    <TurtleText titleText='Date Last Seen: ' baseText={moment(recentDate).format('l')} />
                     {/* Most Recent Carapace Length Measurement */}
                     <TurtleText titleText='Carapace Length: ' baseText={`${recentLength} mm`} />
                 </View>
