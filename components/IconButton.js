@@ -1,9 +1,3 @@
-/*
-    IconButton is a customized button component.
-    It will take a onPress function, the icon name,
-    and additional styles.
-*/
-
 import React, { Component } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -13,7 +7,6 @@ import * as Haptics from 'expo-haptics';
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top: 7,
         flexDirection: 'row',
     },
     icon: {
@@ -30,14 +23,21 @@ const styles = StyleSheet.create({
     },
 })
 
+/*
+    IconButton is a customized button component.
+    It will take a onPress function, the icon name,
+    and additional styles.
+*/
 export default class IconButton extends Component {
     render() {
         return (
             <View style={[styles.container, this.props.styles]}>
-                <TouchableOpacity onPress={this.props.onPress}
+                <TouchableOpacity
+                    disabled={this.props.disabled}
+                    onPress={this.props.onPress}
                     style={styles.opacity}
                     borderRadius={'100%'}
-                    onPressIn={() => Haptics.impactAsync('heavy')}>
+                    onPressIn={() => Haptics.impactAsync('medium')}>
                     <Icon name={this.props.name} style={styles.icon} size={this.props.size} />
                 </TouchableOpacity>
             </View>
