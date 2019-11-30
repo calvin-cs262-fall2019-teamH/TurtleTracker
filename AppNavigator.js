@@ -3,7 +3,7 @@
 */
 
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, NavigationActions, StackActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -112,6 +112,28 @@ const MainNavigator = createBottomTabNavigator(
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
+      tabBarOnPress: ({defaultHandler}) => {
+        const { routeName } = navigation.state;
+
+        // Move screens
+        defaultHandler();
+
+        // Then load the screen
+        if (routeName === 'MapTab') {
+          navigation.dispatch(StackActions.reset({
+              index: 0,
+              key: null,
+              actions: [NavigationActions.navigate({ routeName: 'Map' })]
+          }))
+        }
+        else if (routeName === 'TurtleTab') {
+          navigation.dispatch(StackActions.reset({
+              index: 0,
+              key: null,
+              actions: [NavigationActions.navigate({ routeName: 'TurtleList' })]
+          }))
+        }
+      },
 
       // Icon for tab bar.
       tabBarIcon: ({ focused, horizontal, tintColor }) => {

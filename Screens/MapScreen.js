@@ -3,11 +3,12 @@ import { View, } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import IconButton from '../components/IconButton';
 import TurtleMapView from '../components/TurtleMapView';
+import {StackActions, NavigationActions} from 'react-navigation';
 
 /*
 MapScreen.js contains the basic map screen with turtle sightings.
 */
-export default function MapScreen(props) {
+export default function MapScreen({navigation}) {
 
   function getMarkers() {
     return fetch(`https://turtletrackerbackend.herokuapp.com/sighting`)
@@ -22,7 +23,7 @@ export default function MapScreen(props) {
               "longitude": responseJson[i].longitude
             },
             "cost": "a",
-            "onPress": () => props.navigation.navigate('TurtleView', { turtleId })
+            "onPress": () => navigation.navigate('TurtleView', { turtleId })
           })
         }
         onMarkerListChange(markers)
@@ -45,7 +46,7 @@ export default function MapScreen(props) {
         {
           coordinate: event.nativeEvent.coordinate,
           cost: "a",
-          onPress: () => props.navigation.navigate('SelectTurtle')
+          onPress: () => navigation.navigate('SelectTurtle')
         }
       ])
   }
@@ -80,13 +81,13 @@ export default function MapScreen(props) {
         //onLongPress={handlePress}
       />
       <IconButton
-        onPress={() => props.navigation.navigate('Settings')}
+        onPress={() => navigation.navigate('Settings')}
         name={'settings'}
         size = {40}
         styles={{ left: 7 }} />
 
       <IconButton
-        onPress={() => props.navigation.navigate('SelectTurtle')}
+        onPress={() => navigation.navigate('SelectTurtle')}
         name={'add-location'}
         size={40}
         styles={{ right: 7 }} />
