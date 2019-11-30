@@ -118,12 +118,19 @@ const MainNavigator = createBottomTabNavigator(
         // Move screens
         defaultHandler();
 
-        // Then reload the map
+        // Then load the screen
         if (routeName === 'MapTab') {
           navigation.dispatch(StackActions.reset({
               index: 0,
               key: null,
               actions: [NavigationActions.navigate({ routeName: 'Map' })]
+          }))
+        }
+        else if (routeName === 'TurtleTab') {
+          navigation.dispatch(StackActions.reset({
+              index: 0,
+              key: null,
+              actions: [NavigationActions.navigate({ routeName: 'TurtleList' })]
           }))
         }
       },
