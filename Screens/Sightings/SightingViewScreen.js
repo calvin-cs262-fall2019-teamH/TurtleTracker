@@ -64,7 +64,7 @@ export default function SightingViewScreen({ navigation }) {
     useEffect(() => { navigation.setParams({refresh}) }, []);
 
     return (
-        <ScrollView style={{ padding: 10 }}>
+        <ScrollView style={{ padding: 12 }}>
             <Image />
             <View style={{ justifyContent: 'space-evenly' }}>
                 {/* TODO: Replace sightingId with the number sighting for the specific turtle. */}
