@@ -1,20 +1,27 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import TurtleList from '../components/TurtleList';
+import IconButton from '../components/IconButton';
 
+/*
+    TurtleListScreen displays the list of the turtles.
+*/
 export default class TurtleListScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
         headerRight: () => (
-            <Button
-                title="Add"
+            <IconButton 
+                size = {20}
                 onPress={() => navigation.navigate('SelectTurtle')}
-            />
+                name = {'add-location'} 
+                styles = {{right: '10%', paddingRight: 10}} />
         ),
+
         headerLeft: () => (
-            <Button
-                title="Settings"
-                onPress={() => navigation.navigate('Settings')}
-            />
+            <IconButton
+                size = {20} 
+                onPress={() => navigation.navigate('Settings')} 
+                name = {'settings'}
+                styles = {{paddingLeft: 7}} />
         ),
     });
 

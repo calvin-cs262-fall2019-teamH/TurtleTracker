@@ -19,20 +19,45 @@ import SightingEditScreen from './Screens/Sightings/SightingEditScreen';
 import SightingViewScreen from './Screens/Sightings/SightingViewScreen';
 
 // Stack of screens for the Map Tab.
+// TODO: Remove the repeated code for the screens.
 const MapStack = createStackNavigator(
     {
       Map: {
         screen: MapScreen,
-        navigationOptions: { title: 'Tracker' }
+        navigationOptions: {
+          title: 'Tracker',
+          headerStyle: {
+            backgroundColor: 'white',
+          }}
+      },
+      TurtleList: {
+        screen: TurtleListScreen,
+        navigationOptions: { title: 'Turtles' }
       },
       TurtleView: {
         screen: TurtleViewScreen,
       },
-      TurtleEditScreen: {
+      TurtleEdit: {
         screen: TurtleEditScreen,
-        navigationOptions: { title: 'Edit' }
+        navigationOptions: { title: 'Edit Turtle' }
       },
-    }
+      SelectTurtle: {
+        screen: SelectTurtleScreen,
+        navigationOptions: { title: 'Select Turtle' }
+      },
+      Settings: {
+        screen: SettingsScreen,
+        navigationOptions: { title: 'Settings' }
+      },
+      SightingView:
+      {
+        screen: SightingViewScreen
+      },
+      SightingEdit:
+      {
+        screen: SightingEditScreen
+      },
+    },
   );
 
 // Stacks of Screens for the Turtles Lab
@@ -65,7 +90,8 @@ const TurtleListStack = createStackNavigator(
         {
           screen: SightingEditScreen
         },
-      }
+      },
+
 );
 
 // Combine the two stakcs together under their own tabs.
