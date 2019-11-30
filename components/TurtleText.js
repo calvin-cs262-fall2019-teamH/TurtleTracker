@@ -35,14 +35,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         display: 'flex', 
         flexWrap: 'wrap',
-        borderBottomWidth:0.5,
-        borderColor:'#c2c2c2'
+        // borderBottomWidth:0.5,
+        // borderColor:'#c2c2c2'
     },
     baseText: {
-        fontSize: 16,
+        fontSize: 20,
     },
     titleText: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: 'bold',
     },
 });
