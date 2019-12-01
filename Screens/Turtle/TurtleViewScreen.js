@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as Haptics from 'expo-haptics';
 import moment from 'moment';
 import IconButton from '../../components/IconButton';
@@ -21,14 +22,17 @@ export default function TurtleViewScreen({ navigation }) {
                 onPress={() => _navigate_sighting(navParams)}
                 onPressIn={() => Haptics.impactAsync('medium')}
             >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                    <Text>{value}</Text>
-                    <IconButton
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{marginLeft:10}}>{value}</Text>
+                    {/* <IconButton
                         disabled={true}
                         size={10}
                         onPress={() => {} }
-                        name={'info'}
-                        styles={{ position: 'fixed' }} />
+                        name={'info'} /> */}
+                    <View style={styles.iconContainer} >
+                        <Icon name={'info'} size={10}  style={{color:'white'}}/>
+                    </View>
+                    
                 </View>
             </TouchableOpacity>
 
@@ -173,7 +177,18 @@ const styles = StyleSheet.create({
     row: { height: 28 },
     text: { textAlign: 'center' },
     btn: { width: 58, height: 18, marginLeft: 15, backgroundColor: '#c8e1ff', borderRadius: 2 },
-    btnText: { textAlign: 'center' }
+    btnText: { textAlign: 'center' },
+    iconContainer:{
+        marginLeft:'auto',
+        marginRight:10,
+        backgroundColor: "green",
+        borderRadius: 100,
+        padding: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+    }
 });
 
 // Sets the navigation options.
