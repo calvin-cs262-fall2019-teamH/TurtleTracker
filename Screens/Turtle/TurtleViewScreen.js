@@ -28,7 +28,7 @@ export default function TurtleViewScreen({ navigation }) {
                         size={10}
                         onPress={() => {} }
                         name={'info'}
-                        styles={{ position: 'static' }} />
+                        styles={{ position: 'fixed' }} />
                 </View>
             </TouchableOpacity>
 
