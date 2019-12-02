@@ -55,7 +55,6 @@ export default function MapScreen({ navigation }) {
   }
 
   function handleMarkerPress(event) {
-    console.log(JSON.stringify(markerListRef) + '\n');
     for (var i = 0; i < markerListRef.current.length; i++) {
       if (markerListRef.current[i].coordinate.latitude == event.nativeEvent.coordinate.latitude && 
           markerListRef.current[i].coordinate.longitude == event.nativeEvent.coordinate.longitude) {
