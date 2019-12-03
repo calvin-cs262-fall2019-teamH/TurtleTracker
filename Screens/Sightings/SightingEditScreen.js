@@ -50,11 +50,11 @@ export default function SightingEditScreen({ navigation }) {
             });
     }
 
-    function editSightingById(id) {
+    function editSightingById(id, turtleId) {
         return fetch(`https://turtletrackerbackend.herokuapp.com/sighting/${id}`, {
             method: 'PUT', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                turtleId: id,
+                turtleId,
                 time: moment(date).format(),
                 location,
                 latitude: sighting.latitude,
@@ -145,7 +145,7 @@ export default function SightingEditScreen({ navigation }) {
             />
             <CameraGallery />
             {isEdit
-                ? <Button title="Submit" onPress={() => { editSightingById(turtle.id), navigation.state.params.refresh(), navigation.goBack() }} />
+                ? <Button title="Submit" onPress={() => { editSightingById(sighting.id, turtle.id), navigation.state.params.refresh(), navigation.goBack() }} />
                 : <Button title="Submit" onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }} />}
         </ScrollView>
     );
