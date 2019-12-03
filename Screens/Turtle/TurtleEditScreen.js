@@ -24,17 +24,19 @@ export default function TurtleEditScreen({ navigation }) {
             });
     }
 
-    async function createTurtle(number, mark, sex) {
-        const response = await fetch(`https://turtletrackerbackend.herokuapp.com/turtle`, {
+    function createTurtle(number, mark, sex) {
+        return fetch(`https://turtletrackerbackend.herokuapp.com/turtle`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                number: parseInt(number),
+                number,
                 mark,
                 sex
             })
+        })
+        .then(response => response.json())
+        .then(responseJson => {
+            navigation.navigate("SightingEdit", {turtleId: responseJson})
         });
-        const responseJson = await response.json();
-        return responseJson;
     }
 
     const radio_props = [
@@ -99,7 +101,7 @@ export default function TurtleEditScreen({ navigation }) {
             </View>
             {isEdit != undefined && isEdit == "true" ?
                 <Button title="Submit" onPress={() => { editTurtleById(turtleProps.id), navigation.state.params.refresh(), navigation.goBack() }} /> 
-                : <Button title="Submit" onPress={() => { navigation.navigate("SightingEdit", {turtleId: createTurtle(number, carapaceMark, sex)}) }} />}
+                : <Button title="Submit" onPress={() => createTurtle(number, carapaceMark, sex) } />}
         </ScrollView>
 
     );
