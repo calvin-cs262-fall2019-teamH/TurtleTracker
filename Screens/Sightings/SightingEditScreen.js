@@ -154,7 +154,8 @@ export default function SightingEditScreen({ navigation }) {
 
 // Sets the navigation options.
 SightingEditScreen.navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 'Edit Sighting' : 'Add Sighting', headerLeft: () => (
+    title: navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 'Edit Sighting' : 'Add Sighting',
+    headerLeft: () => (
         <IconButton
             size={20}
             onPress={() => navigation.goBack()}

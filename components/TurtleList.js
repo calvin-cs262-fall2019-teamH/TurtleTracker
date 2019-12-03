@@ -30,7 +30,7 @@ export default function TurtleList(props) {
           title="New Turtle"
           chevron
           bottomDivider
-          onPress={() => {props.navigation.navigate(props.onPressPage)}}
+          onPress={() => {props.navigation.navigate('TurtleEdit')}}
         />
         <Text style={{fontSize: 18, fontWeight: 'bold', paddingTop: 8, textAlign: 'center'}}>Existing Turtles</Text> 
       </View>: null }
