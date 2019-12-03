@@ -145,7 +145,7 @@ export default function SightingEditScreen({ navigation }) {
             />
             <CameraGallery />
             {isEdit
-                ? <Button title="Submit" onPress={() => { editSightingById(sighting.id), navigation.state.params.refresh(), navigation.goBack() }} />
+                ? <Button title="Submit" onPress={() => { editSightingById(turtle.id), navigation.state.params.refresh(), navigation.goBack() }} />
                 : <Button title="Submit" onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }} />}
         </ScrollView>
     );
