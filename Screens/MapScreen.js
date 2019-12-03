@@ -1,14 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import IconButton from '../components/IconButton';
 import TurtleMapView from '../components/TurtleMapView';
-import { StackActions, NavigationActions } from 'react-navigation';
 
 /*
 MapScreen.js contains the basic map screen with turtle sightings.
 */
 export default function MapScreen({ navigation }) {
+
+  const [latitude, onLatitudeChange] = useState(42.931870);
+  const [longitude, onLongitudeChange] = useState(-85.582130);
+  const [markerList, onMarkerListChange] = useState([]);
+  const markerListRef = useRef(markerList);
+
+  useEffect(() => {
+    markerListRef.current = markerList;
+  }, [markerList]);
+
+  useEffect(() => { getMarkers() }, [])
+
+  // accesses the user's location
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        onLatitudeChange(position.coords.latitude)
+        onLongitudeChange(position.coords.longitude)
+      },
+      { enableHighAccuracy: true, timeout: 30000, maximumAge: 2000 },
+    )
+  }, [])
 
   function getMarkers() {
     return fetch(`https://turtletrackerbackend.herokuapp.com/sighting`)
@@ -16,14 +37,14 @@ export default function MapScreen({ navigation }) {
       .then((responseJson) => {
         var markers = []
         for (var i = 0; i < responseJson.length; i++) {
-          turtleId = responseJson[i].turtle_id
           markers.push({
+            "turtleId": responseJson[i].turtle_id,
             "coordinate": {
               "latitude": responseJson[i].latitude,
               "longitude": responseJson[i].longitude
             },
             "cost": "a",
-            "onPress": () => navigation.navigate('TurtleView', { turtleId })
+            "onPress": (event) => handleMarkerPress(event)
           })
         }
         onMarkerListChange(markers)
@@ -33,9 +54,14 @@ export default function MapScreen({ navigation }) {
       });
   }
 
-  const [latitude, onLatitudeChange] = useState(42.931870);
-  const [longitude, onLongitudeChange] = useState(-85.582130);
-  const [markerList, onMarkerListChange] = useState([]);
+  function handleMarkerPress(event) {
+    for (var i = 0; i < markerListRef.current.length; i++) {
+      if (markerListRef.current[i].coordinate.latitude == event.nativeEvent.coordinate.latitude && 
+          markerListRef.current[i].coordinate.longitude == event.nativeEvent.coordinate.longitude) {
+            navigation.navigate('TurtleView', {turtleId: markerListRef.current[i].turtleId})
+          }
+    }
+  }
 
   // when the markers are placed
   function handlePress(event) {
@@ -50,19 +76,6 @@ export default function MapScreen({ navigation }) {
         }
       ])
   }
-
-  useEffect(() => { getMarkers() }, [])
-
-  // accesses the user's location
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        onLatitudeChange(position.coords.latitude)
-        onLongitudeChange(position.coords.longitude)
-      },
-      { enableHighAccuracy: true, timeout: 30000, maximumAge: 2000 },
-    )
-  }, [])
 
   // builds the map to the user's location
   return (
