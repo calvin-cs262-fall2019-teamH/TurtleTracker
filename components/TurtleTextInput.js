@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         // borderColor:'#c2c2c2',
     },
     baseText: {
-        height: 22,
+        height: 28,
         borderColor: 'gray',
         borderWidth: .25,
         paddingLeft: 6,

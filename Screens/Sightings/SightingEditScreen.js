@@ -1,11 +1,11 @@
+import * as Permissions from 'expo-permissions';
+import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, ScrollView } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleTextInput from '../../components/TurtleTextInput';
 import CameraGallery from '../../components/CameraGallery';
 import TurtleMapView from '../../components/TurtleMapView';
-import * as Permissions from 'expo-permissions';
-import moment from 'moment';
 import IconButton from '../../components/IconButton';
 
 /*
@@ -42,7 +42,7 @@ export default function SightingEditScreen({ navigation }) {
             .then((response) => response.json())
             .then((responseJson) => {
                 setTurtle(responseJson[0]);
-                setTurtleNumber(id.toString());
+                setTurtleNumber(responseJson[0].turtle_number.toString());
                 navigation.setParams({ turtle: responseJson[0] });
             })
             .catch((error) => {
@@ -54,7 +54,7 @@ export default function SightingEditScreen({ navigation }) {
         return fetch(`https://turtletrackerbackend.herokuapp.com/sighting/${id}`, {
             method: 'PUT', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                turtleId: parseInt(turtleNumber),
+                turtleId: id,
                 time: moment(date).format(),
                 location,
                 latitude: sighting.latitude,
@@ -68,20 +68,20 @@ export default function SightingEditScreen({ navigation }) {
             });
     }
 
-    function getLocationAndCreateSighting() {
+    function getLocationAndCreateSighting(turtleId) {
         navigator.geolocation.getCurrentPosition(
             position => {
-                createSighting(position.coords.latitude, position.coords.longitude)
+                createSighting(turtleId, position.coords.latitude, position.coords.longitude)
             },
             { enableHighAccuracy: true, timeout: 30000, maximumAge: 2000 },
         )
     }
 
-    function createSighting(latitude, longitude) {
+    function createSighting(turtleId, latitude, longitude) {
         return fetch(`https://turtletrackerbackend.herokuapp.com/sighting`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                turtleId: parseInt(turtleNumber),
+                turtleId,
                 time: moment(date).format(),
                 location,
                 latitude,
@@ -121,7 +121,6 @@ export default function SightingEditScreen({ navigation }) {
 
     return (
         <ScrollView>
-            <CameraGallery />
             <View style={{ padding: 8 }}>
                 <TurtleText titleText="Mark: " baseText={turtle.mark} />
                 {isEdit
@@ -144,9 +143,10 @@ export default function SightingEditScreen({ navigation }) {
                 markers={markerList}
                 pointerEvents="none"
             />
+            <CameraGallery />
             {isEdit
                 ? <Button title="Submit" onPress={() => { editSightingById(sighting.id), navigation.state.params.refresh(), navigation.goBack() }} />
-                : <Button title="Submit" onPress={() => { getLocationAndCreateSighting(), navigation.navigate("TurtleView", { turtleId: turtle.id }) }} />}
+                : <Button title="Submit" onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }} />}
         </ScrollView>
     );
 
@@ -156,9 +156,9 @@ export default function SightingEditScreen({ navigation }) {
 SightingEditScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 'Edit Sighting' : 'Add Sighting', headerLeft: () => (
         <IconButton
-            size = {20} 
+            size={20}
             onPress={() => navigation.goBack()}
-            name = {'navigate-before'}
-            styles = {{paddingLeft: 7}} />
+            name={'navigate-before'}
+            styles={{ paddingLeft: 7 }} />
     ),
 });
