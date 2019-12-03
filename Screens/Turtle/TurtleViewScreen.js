@@ -165,19 +165,6 @@ TurtleViewScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('turtle') == null ? '' : navigation.getParam('turtle').mark,
     headerRight: () => (
         <IconButton
-<<<<<<< HEAD
-        size = {20} 
-        onPress={() => navigation.navigate('TurtleEdit', )}
-        name = {'edit'}
-        styles = {{right: '10%', paddingRight: 10}} />
-    ),
-    headerLeft: () => (
-        <IconButton
-        size = {20} 
-        onPress={() => navigation.goBack()}
-        name = {'navigate-before'}
-        styles = {{paddingLeft: 7}} />
-=======
             size = {20} 
             onPress={() => navigation.navigate('TurtleEdit', {
                 edit: "true",
@@ -195,6 +182,5 @@ TurtleViewScreen.navigationOptions = ({ navigation }) => ({
             onPress={() => navigation.goBack()}
             name = {'navigate-before'}
             styles = {{paddingTop: 2, paddingLeft: 15}} />
->>>>>>> 7064b2e39269dbfcf374656cedee9855074f55a0
     ),
 });
