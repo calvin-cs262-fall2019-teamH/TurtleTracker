@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     },
     icon: {
         color: "white",
+        
     },
     opacity: {
         backgroundColor: "green",
