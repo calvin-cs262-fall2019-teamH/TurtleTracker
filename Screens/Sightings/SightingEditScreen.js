@@ -145,8 +145,18 @@ export default function SightingEditScreen({ navigation }) {
             />
             <CameraGallery />
             {isEdit
-                ? <Button title="Submit" onPress={() => { editSightingById(sighting.id), navigation.state.params.refresh(), navigation.goBack() }} />
-                : <Button title="Submit" onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }} />}
+                ? <IconButton
+                size = {35} 
+                onPress={() => { editSightingById(sighting.id), navigation.state.params.refresh(), navigation.goBack() }}
+                name = {'add-box'}
+                styles = {{bottom: 10, alignSelf: 'center', position: 'relative', paddingTop: 10}} />
+                : <IconButton
+                size = {35} 
+                onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }}
+                name = {'add-box'}
+                styles = {{bottom: 10, alignSelf: 'center', position: 'relative', paddingTop: 10}} />
+                //: <Button title="Submit" onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }} />
+            }
         </ScrollView>
     );
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Image, StyleSheet, View, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import IconButton from '../components/IconButton';
 
 export default class CameraGallery extends Component {
 
@@ -68,17 +69,20 @@ export default class CameraGallery extends Component {
         </ScrollView>
 
       <View style={styles.takePicButtons}>
-        <Button 
-         title="take a new picture"
-         onPress={this.takeImage}
-         color = '#00E600'
-         />
+        <IconButton
+          size = {35} 
+          onPress={this.takeImage}
+          name = {'add-a-photo'}
+          styles = {{alignSelf: 'center', position: 'relative', paddingTop: 5, paddingBottom: 5}} 
+          />
         
-        <Button
-          title="select from camera roll"
+        <IconButton
+          size = {35} 
           onPress={this.pickImage}
-          color = '#00B300'
-        />
+          name = {'perm-media'}
+          styles = {{alignSelf: 'center', position: 'relative', paddingTop: 5, paddingBottom: 5}} 
+          />
+
       </View>
       </View>
     );
