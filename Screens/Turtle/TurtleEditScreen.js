@@ -57,9 +57,17 @@ export default function TurtleEditScreen({ navigation }) {
         recentLength = navigation.getParam('recentLength');
         initialSexIsFemale = turtleProps.sex == 'male' ? 0 : 1 // 1 = female
         useEffect(() => {
-            setNumber(turtleProps.turtle_number.toString()), 
-            setCarapaceMark(turtleProps.mark),
-            setSex(turtleProps.sex)
+            if (turtleProps != null) {
+                if (turtleProps.turtle_number != null) {
+                    setNumber(turtleProps.turtle_number.toString())
+                }
+                if (turtleProps.mark != null) {
+                    setCarapaceMark(turtleProps.mark)
+                }
+                if (turtleProps.sex != null) {
+                    setSex(turtleProps.sex)
+                }
+            }
         }, [])
         // TODO: Removed this functionality now because we aren't able to edit the original date currently.
         // const [originalDateEdit, setOriginalDate] = useState(originalDate.toLocaleDateString());
@@ -98,10 +106,10 @@ export default function TurtleEditScreen({ navigation }) {
                     </View>
                     {/* <TurtleTextInput titleText='Carapace Length: ' onChangeText={length => setLength(length)} value={length} placeholder="Most Recent Carapace Measurement"/> */}
                 </View>
-            </View>
             {isEdit != undefined && isEdit == "true" ?
-                <Button title="Submit" onPress={() => { editTurtleById(turtleProps.id), navigation.state.params.refresh(), navigation.goBack() }} /> 
+                <Button title="Submit" onPress={() => { editTurtleById(turtleProps.id), navigation.goBack(), navigation.state.params.refreshTurtleView() }} /> 
                 : <Button title="Submit" onPress={() => createTurtle(number, carapaceMark, sex) } />}
+            </View>
         </ScrollView>
 
     );
