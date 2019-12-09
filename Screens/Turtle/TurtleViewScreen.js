@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as Haptics from 'expo-haptics';
@@ -105,13 +105,6 @@ export default function TurtleViewScreen({ navigation }) {
             });
     }
 
-    // Update the data
-    function refresh() {
-        turtleId = navigation.getParam('turtleId');
-        getTurtleById(turtleId);
-        getSightingByTurtleId(turtleId);
-    }
-
     turtleId = navigation.getParam('turtleId');
     const tableHead = ['Sighting #', 'Date', 'Location', 'Length']
     const [tableTitle, onTableTitleChange] = useState(['']);
@@ -122,15 +115,33 @@ export default function TurtleViewScreen({ navigation }) {
     const [recentDate, onRecentDateChange] = useState(new Date(0));
     const [recentLength, onRecentLengthChange] = useState(0);
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    function refresh() {
+        turtleId = navigation.getParam('turtleId');
+        getTurtleById(turtleId);
+        getSightingByTurtleId(turtleId);
+    }
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        refresh();
+        setRefreshing(false);
+    }, [refreshing]);
 
     useEffect(() => {
         getTurtleById(turtleId)
         getSightingByTurtleId(turtleId)
-        navigation.setParams({ refresh })
+        navigation.setParams({refreshTurtleView: refresh})
     }, []);
 
     return (
-        <ScrollView style={{ padding: 7 }}>
+        <ScrollView 
+            style={{ padding: 7 }}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <View style={{ flexDirection: 'row' }}>
                 {/* { turtleProps.pictures.length > 0 ?
                     <Image style={{width: 150, height: 150}} source={{uri: turtleProps.pictures[0]}}/>
@@ -201,7 +212,7 @@ TurtleViewScreen.navigationOptions = ({ navigation }) => ({
                 edit: "true",
                 turtle: navigation.getParam('turtle'), originalDate: navigation.getParam('originalDate'),
                 recentDate: navigation.getParam('recentDate'), recentLength: navigation.getParam('recentLength'),
-                refresh: navigation.getParam('refresh'),
+                refreshTurtleView: navigation.getParam('refreshTurtleView'),
             })}
             name={'edit'}
             styles={{ right: '10%', paddingRight: 15, paddingTop: 2 }}

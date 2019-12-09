@@ -12,7 +12,6 @@ import IconButton from '../../components/IconButton';
 SightingEditScreen is for editing the information of a specific citing.
 */
 export default function SightingEditScreen({ navigation }) {
-    // TODO: Fix not being able to add a turtle.
     tempId = navigation.getParam('turtleId') != undefined ? navigation.getParam('turtleId') : 1
 
     const [turtle, setTurtle] = useState({});
@@ -25,13 +24,24 @@ export default function SightingEditScreen({ navigation }) {
     const [markerList, setMarkerList] = useState([]);
 
     sighting = navigation.getParam('sighting');
+    isEdit = navigation.getParam('edit') != undefined && navigation.getParam('edit')
     useEffect(() => {
-        if (sighting != undefined && sighting != {}) {
-            setLength(sighting.carapace_length.toString());
-            setDate(new Date(Date.parse(sighting.time_seen)));
-            setLocation(sighting.turtle_location);
-            setNotes(sighting.notes);
-            setMarkerList(navigation.getParam('markerList'));
+        if (isEdit && sighting != null) {
+            if (sighting.carapace_length != null) {
+                setLength(sighting.carapace_length.toString());
+            }
+            if (sighting.time_seen != null) {
+                setDate(new Date(Date.parse(sighting.time_seen)));
+            }
+            if (sighting.turtle_location != null) {
+                setLocation(sighting.turtle_location);
+            }
+            if (sighting.notes != null) {
+                setNotes(sighting.notes);
+            }
+            if (navigation.getParam('markerList') != null) {
+                setMarkerList(navigation.getParam('markerList'));
+            }
         }
     }, []);
 
@@ -117,8 +127,6 @@ export default function SightingEditScreen({ navigation }) {
     getCameraPermission()
     getCameraRollPermission()
 
-    isEdit = navigation.getParam('edit') != undefined && navigation.getParam('edit')
-
     return (
         <ScrollView>
             <View style={{ padding: 8 }}>
@@ -145,8 +153,13 @@ export default function SightingEditScreen({ navigation }) {
             />
             <CameraGallery />
             {isEdit
-                ? <Button title="Submit" onPress={() => { editSightingById(sighting.id, turtle.id), navigation.state.params.refresh(), navigation.goBack() }} />
-                : <Button title="Submit" onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }} />}
+                ? <Button title="Submit" onPress={() => { editSightingById(sighting.id, turtle.id), navigation.goBack(), navigation.state.params.refreshSightingView() }} />
+                : <Button title="Submit" onPress={() => { 
+                    getLocationAndCreateSighting(turtle.id);
+                    navigation.navigate("TurtleView", { turtleId: turtle.id });
+                    if (navigation.state.params.refreshTurtleView != undefined) {
+                        navigation.state.params.refreshTurtleView();
+                    } }} />}
         </ScrollView>
     );
 
