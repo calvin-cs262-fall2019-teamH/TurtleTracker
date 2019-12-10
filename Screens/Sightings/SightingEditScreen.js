@@ -1,12 +1,25 @@
 import * as Permissions from 'expo-permissions';
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, ScrollView } from 'react-native';
+import { View, Button, Text, TextInput, ScrollView, StyleSheet } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleTextInput from '../../components/TurtleTextInput';
 import CameraGallery from '../../components/CameraGallery';
 import TurtleMapView from '../../components/TurtleMapView';
 import IconButton from '../../components/IconButton';
+
+/*
+Define a couple useful styles
+*/
+const styles = StyleSheet.create({
+    container: {
+        borderColor: 'green',
+        borderWidth: 5, 
+        width: '100%', 
+        padding: 5
+    },
+
+});
 
 /*
 SightingEditScreen is for editing the information of a specific citing.
@@ -153,20 +166,17 @@ export default function SightingEditScreen({ navigation }) {
             />
             <CameraGallery />
             {isEdit
-                ? <IconButton
-                size = {35} 
-                onPress={() => { editSightingById(sighting.id), navigation.state.params.refresh(), navigation.goBack() }}
-                name = {'add-box'}
-                styles = {{bottom: 10, alignSelf: 'center', position: 'relative', paddingTop: 10}} />
-                : <IconButton
-                size = {35} 
-                onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }}
-                name = {'add-box'}
-                styles = {{bottom: 10, alignSelf: 'center', position: 'relative', paddingTop: 10}} />
-                //: <Button title="Submit" onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }} />
+                ? <View style={styles.container}>  
+                    <Button title="Submit" onPress={() => { editSightingById(sighting.id), navigation.state.params.refresh(), navigation.goBack() }} /> 
+                </View>
+                : <View style={styles.container}> 
+                    <Button color="green" title="Submit" onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }} />
+                </View>
             }
         </ScrollView>
+
     );
+
 
 }
 
