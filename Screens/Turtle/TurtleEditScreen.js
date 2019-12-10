@@ -5,6 +5,8 @@ import TurtleText from '../../components/TurtleText';
 import TurtleTextInput from '../../components/TurtleTextInput';
 import moment from 'moment';
 import IconButton from '../../components/IconButton';
+import {  OutlinedTextField } from 'react-native-material-textfield';
+
 
 /*
     TurtleEditScreen allows for editing content of one turtle
@@ -84,11 +86,11 @@ export default function TurtleEditScreen({ navigation }) {
                         <Image style={{width: 150, height: 150}} source={{uri: turtleProps.pictures[0]}}/>
                         : null
                     } */}
-                <View style={{ justifyContent: 'space-evenly', paddingLeft: 5 }}>
-                    <TurtleTextInput titleText='Turtle Number: ' onChangeText={number => setNumber(number)} value={number} placeholder="#" />
+                <View style={{ justifyContent: 'center', flex: 1 }}>
+                    <OutlinedTextField label='Turtle Number:' onChangeText={number => setNumber(number)} value={number} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)" />
                     {/* <TurtleTextInput titleText='Date Found: ' onChangeText={originalDateEdit => setOriginalDate(originalDateEdit)} value={originalDateEdit} placeholder="Original Sighting Date"/> */}
                     {/* <TurtleTextInput titleText='Date Last Seen: ' onChangeText={recentDateEdit => setRecentDate(recentDateEdit)} value={recentDateEdit} placeholder="Most Recent Sighting Date"/> */}
-                    <TurtleTextInput titleText='Mark: ' onChangeText={newMark => setCarapaceMark(newMark)} value={carapaceMark} placeholder="Turtle Mark" />
+                    <OutlinedTextField label="Mark: " onChangeText={newMark => setCarapaceMark(newMark)} value={carapaceMark} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)"/>
                     <Text style={{
                         fontSize: 20,
                         fontWeight: 'bold',
