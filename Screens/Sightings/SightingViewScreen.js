@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Button, Image, ScrollView } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Button, Image, ScrollView, RefreshControl } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleMapView from '../../components/TurtleMapView';
 import IconButton from '../../components/IconButton';
@@ -43,13 +43,6 @@ export default function SightingViewScreen({ navigation }) {
             });
     }
 
-    function refresh() {
-        sightingId = navigation.getParam('sightingId');
-        turtleId = navigation.getParam('turtleId');
-        getSightingById(sightingId);
-        getTurtleById(turtleId);
-    }
-
     sightingId = navigation.getParam('sightingId');
     turtleId = navigation.getParam('turtleId');
     const [length, setLength] = useState();
@@ -61,10 +54,30 @@ export default function SightingViewScreen({ navigation }) {
     const [markerList, setMarkerList] = useState([]);
     useEffect(() => { getSightingById(sightingId) }, []);
     useEffect(() => { getTurtleById(turtleId) }, []);
-    useEffect(() => { navigation.setParams({refresh}) }, []);
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    function refresh() {
+        sightingId = navigation.getParam('sightingId');
+        turtleId = navigation.getParam('turtleId');
+        getSightingById(sightingId);
+        getTurtleById(turtleId);
+    }
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        refresh();
+        setRefreshing(false);
+    }, [refreshing]);
+    useEffect(() => {navigation.setParams({refreshSightingView: refresh});}, []);
 
     return (
-        <ScrollView style={{ padding: 10 }}>
+        <ScrollView 
+            style={{ padding: 10 }}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <Image />
             <View style={{ justifyContent: 'space-evenly' }}>
                 {/* TODO: Replace sightingId with the number sighting for the specific turtle. */}
@@ -93,8 +106,9 @@ SightingViewScreen.navigationOptions = ({ navigation }) => ({
             onPress={() => navigation.navigate('SightingEdit', 
                 {sighting: navigation.getParam('sighting'), 
                 markerList: navigation.getParam('markerList'), 
+                turtleId: navigation.getParam('turtleId'),
+                refreshSightingView: navigation.getParam('refreshSightingView'),
                 edit: true,
-                refresh: navigation.getParam('refresh'),
             })}
             name = {'edit'} 
             styles = {{right: '10%', paddingRight: 15, paddingTop: 2}}
@@ -103,7 +117,12 @@ SightingViewScreen.navigationOptions = ({ navigation }) => ({
     headerLeft: () => (
         <IconButton
             size = {20} 
-            onPress={() => navigation.goBack()}
+            onPress={() => {
+                navigation.goBack();
+                if (navigation.state.params.refreshTurtleView != undefined) {
+                    navigation.state.params.refreshTurtleView();
+                }
+            }}
             name = {'navigate-before'}
             styles = {{paddingTop: 2, paddingLeft: 15}} />
     ),
