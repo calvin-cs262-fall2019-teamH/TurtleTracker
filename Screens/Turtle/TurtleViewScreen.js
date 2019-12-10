@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as Haptics from 'expo-haptics';
 import moment from 'moment';
 import IconButton from '../../components/IconButton';
@@ -21,14 +22,17 @@ export default function TurtleViewScreen({ navigation }) {
                 onPress={() => _navigate_sighting(navParams)}
                 onPressIn={() => Haptics.impactAsync('medium')}
             >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                    <Text>{value}</Text>
-                    <IconButton
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{marginLeft:10}}>{value}</Text>
+                    {/* <IconButton
                         disabled={true}
                         size={10}
                         onPress={() => {} }
-                        name={'info'}
-                        styles={{ position: 'static' }} />
+                        name={'info'} /> */}
+                    <View style={styles.iconContainer} >
+                        <Icon name={'info'} size={10}  style={{color:'white'}}/>
+                    </View>
+                    
                 </View>
             </TouchableOpacity>
 
@@ -101,13 +105,6 @@ export default function TurtleViewScreen({ navigation }) {
             });
     }
 
-    // Update the data
-    function refresh() {
-        turtleId = navigation.getParam('turtleId');
-        getTurtleById(turtleId);
-        getSightingByTurtleId(turtleId);
-    }
-
     turtleId = navigation.getParam('turtleId');
     const tableHead = ['Sighting #', 'Date', 'Location', 'Length']
     const [tableTitle, onTableTitleChange] = useState(['']);
@@ -118,15 +115,33 @@ export default function TurtleViewScreen({ navigation }) {
     const [recentDate, onRecentDateChange] = useState(new Date(0));
     const [recentLength, onRecentLengthChange] = useState(0);
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    function refresh() {
+        turtleId = navigation.getParam('turtleId');
+        getTurtleById(turtleId);
+        getSightingByTurtleId(turtleId);
+    }
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        refresh();
+        setRefreshing(false);
+    }, [refreshing]);
 
     useEffect(() => {
         getTurtleById(turtleId)
         getSightingByTurtleId(turtleId)
-        navigation.setParams({ refresh })
+        navigation.setParams({refreshTurtleView: refresh})
     }, []);
 
     return (
-        <ScrollView style={{ padding: 7 }}>
+        <ScrollView 
+            style={{ padding: 7 }}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <View style={{ flexDirection: 'row' }}>
                 {/* { turtleProps.pictures.length > 0 ?
                     <Image style={{width: 150, height: 150}} source={{uri: turtleProps.pictures[0]}}/>
@@ -173,7 +188,18 @@ const styles = StyleSheet.create({
     row: { height: 28 },
     text: { textAlign: 'center' },
     btn: { width: 58, height: 18, marginLeft: 15, backgroundColor: '#c8e1ff', borderRadius: 2 },
-    btnText: { textAlign: 'center' }
+    btnText: { textAlign: 'center' },
+    iconContainer:{
+        marginLeft:'auto',
+        marginRight:10,
+        backgroundColor: "green",
+        borderRadius: 100,
+        padding: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+    }
 });
 
 // Sets the navigation options.
@@ -186,7 +212,7 @@ TurtleViewScreen.navigationOptions = ({ navigation }) => ({
                 edit: "true",
                 turtle: navigation.getParam('turtle'), originalDate: navigation.getParam('originalDate'),
                 recentDate: navigation.getParam('recentDate'), recentLength: navigation.getParam('recentLength'),
-                refresh: navigation.getParam('refresh'),
+                refreshTurtleView: navigation.getParam('refreshTurtleView'),
             })}
             name={'edit'}
             styles={{ right: '10%', paddingRight: 15, paddingTop: 2 }}

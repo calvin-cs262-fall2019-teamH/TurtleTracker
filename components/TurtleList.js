@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { ScrollView, View, Text } from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import { ScrollView, View, Text, RefreshControl } from 'react-native';
 import TurtleListItem from './TurtleListItem'
 import { ListItem } from 'react-native-elements';
 
@@ -19,10 +19,21 @@ export default function TurtleList(props) {
       });
     }
 
+    const onRefresh = useCallback(() => {
+      setRefreshing(true);
+      getTurtles();
+      setRefreshing(false);
+    }, [refreshing]);
+
     const [turtleList, onTurtleListChange] = useState([])
+    const [refreshing, setRefreshing] = useState(false)
     useEffect(() => {getTurtles()}, []);
     return (
-      <ScrollView style = {props.style}>
+      <ScrollView 
+        style = {props.style}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       { props.navigation.state.routeName == "SelectTurtle" ? 
       <View>
         <ListItem
@@ -30,7 +41,7 @@ export default function TurtleList(props) {
           title="New Turtle"
           chevron
           bottomDivider
-          onPress={() => {props.navigation.navigate(props.onPressPage)}}
+          onPress={() => {props.navigation.navigate('TurtleEdit')}}
         />
         <Text style={{fontSize: 18, fontWeight: 'bold', paddingTop: 8, textAlign: 'center'}}>Existing Turtles</Text> 
       </View>: null }

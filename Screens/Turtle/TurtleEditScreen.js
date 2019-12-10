@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, Image, Button } from 'react-native';
 import RadioForm from 'react-native-simple-radio-button';
 import TurtleText from '../../components/TurtleText';
@@ -24,24 +24,57 @@ export default function TurtleEditScreen({ navigation }) {
             });
     }
 
+    function createTurtle(number, mark, sex) {
+        return fetch(`https://turtletrackerbackend.herokuapp.com/turtle`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                number,
+                mark,
+                sex
+            })
+        })
+        .then(response => response.json())
+        .then(responseJson => {
+            navigation.navigate("SightingEdit", {turtleId: responseJson})
+        });
+    }
+
     const radio_props = [
         { label: 'Male', value: 'male' },
         { label: 'Female', value: 'female' }
     ];
 
-    turtleProps = navigation.getParam('turtle');
-    originalDate = navigation.getParam('originalDate');
-    recentDate = navigation.getParam('recentDate');
-    recentLength = navigation.getParam('recentLength');
-    const initialSexIsFemale = turtleProps.sex == 'male' ? 0 : 1 // 1 = female
+    const [number, setNumber] = useState('');
+    const [carapaceMark, setCarapaceMark] = useState('');
+    const [sex, setSex] = useState('male');
 
-    const [number, setNumber] = useState(turtleProps.turtle_number.toString());
-    // TODO: Removed this functionality now because we aren't able to edit the original date currently.
-    // const [originalDateEdit, setOriginalDate] = useState(originalDate.toLocaleDateString());
-    // const [recentDateEdit, setRecentDate] = useState(recentDate.toLocaleDateString());
-    // const [length, setLength] = useState(recentLength.toString());
-    const [carapaceMark, setCarapaceMark] = useState(turtleProps.mark);
-    const [sex, setSex] = useState(turtleProps.sex);
+    initialSexIsFemale = 0;
+    isEdit = navigation.getParam('edit') != undefined && navigation.getParam('edit') 
+    if (isEdit) {
+        turtleProps = navigation.getParam('turtle');
+        originalDate = navigation.getParam('originalDate');
+        recentDate = navigation.getParam('recentDate');
+        recentLength = navigation.getParam('recentLength');
+        initialSexIsFemale = turtleProps.sex == 'male' ? 0 : 1 // 1 = female
+        useEffect(() => {
+            if (turtleProps != null) {
+                if (turtleProps.turtle_number != null) {
+                    setNumber(turtleProps.turtle_number.toString())
+                }
+                if (turtleProps.mark != null) {
+                    setCarapaceMark(turtleProps.mark)
+                }
+                if (turtleProps.sex != null) {
+                    setSex(turtleProps.sex)
+                }
+            }
+        }, [])
+        // TODO: Removed this functionality now because we aren't able to edit the original date currently.
+        // const [originalDateEdit, setOriginalDate] = useState(originalDate.toLocaleDateString());
+        // const [recentDateEdit, setRecentDate] = useState(recentDate.toLocaleDateString());
+        // const [length, setLength] = useState(recentLength.toString());
+    }
+    
      
     return (
 
@@ -73,9 +106,10 @@ export default function TurtleEditScreen({ navigation }) {
                     </View>
                     {/* <TurtleTextInput titleText='Carapace Length: ' onChangeText={length => setLength(length)} value={length} placeholder="Most Recent Carapace Measurement"/> */}
                 </View>
+            {isEdit != undefined && isEdit == "true" ?
+                <Button title="Submit" onPress={() => { editTurtleById(turtleProps.id), navigation.goBack(), navigation.state.params.refreshTurtleView() }} /> 
+                : <Button title="Submit" onPress={() => createTurtle(number, carapaceMark, sex) } />}
             </View>
-            {navigation.getParam('edit') != undefined && navigation.getParam('edit') == "true" ?
-                <Button title="Submit" onPress={() => { editTurtleById(turtleProps.id), navigation.state.params.refresh(), navigation.goBack() }} /> : <Button title="Submit" onPress={() => navigation.navigate("TurtleView")} />}
         </ScrollView>
 
     );
@@ -83,6 +117,7 @@ export default function TurtleEditScreen({ navigation }) {
 
 // Sets the navigation options.
 TurtleEditScreen.navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 'Edit Turtle' : 'Add Turtle',
     headerLeft: () => (
         <IconButton
             size={20}
