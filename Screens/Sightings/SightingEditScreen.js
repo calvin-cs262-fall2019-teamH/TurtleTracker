@@ -7,6 +7,8 @@ import TurtleTextInput from '../../components/TurtleTextInput';
 import CameraGallery from '../../components/CameraGallery';
 import TurtleMapView from '../../components/TurtleMapView';
 import IconButton from '../../components/IconButton';
+import { OutlinedTextField } from 'react-native-material-textfield';
+
 
 /*
 SightingEditScreen is for editing the information of a specific citing.
@@ -131,18 +133,21 @@ export default function SightingEditScreen({ navigation }) {
         <ScrollView>
             <View style={{ padding: 8 }}>
                 <TurtleText titleText="Mark: " baseText={turtle.mark} />
-                {isEdit
-                    ? <TurtleTextInput titleText='Turtle Number: ' onChangeText={turtleNumber => setTurtleNumber(turtleNumber)} value={turtleNumber} placeholder="#" />
-                    : <TurtleText titleText='Turtle Number: ' baseText={turtleNumber} />
-                }
+                    {isEdit 
+                     ? <TurtleTextInput titleText='Turtle Number: ' onChangeText={turtleNumber => setTurtleNumber(turtleNumber)} value={turtleNumber} placeholder="#" />
+                     : <TurtleText titleText='Turtle Number: ' baseText={turtleNumber}  />
+                     }
+                {/* used solely for spacing */}
+                <Text>   </Text>
 
-                <TurtleTextInput titleText="Date: " onChangeText={date => setDate(date)} value={moment(date).format('l')} placeholder='Sighting Date' />
-                <TurtleTextInput titleText='Location: ' onChangeText={location => setLocation(location)} value={location} placeholder="Turtle Location" />
-                <TurtleTextInput titleText='Length: ' onChangeText={length => setLength(length)} value={`${length}`} placeholder="Turtle Length" />
-                <TurtleTextInput titleText='Notes: ' onChangeText={notes => setNotes(notes)} value={notes} placeholder="Sighting Notes" />
+                {/* text fields to be filled in by user */}
+                <OutlinedTextField label='Date:' onChangeText={date => setDate(date)} value={moment(date).format('l')} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)"  contentInset={{input: 10}}/>
+                <OutlinedTextField label='Location: ' onChangeText={location => setLocation(location)} value={location} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)" /> 
+                <OutlinedTextField label='Length: ' onChangeText={length => setLength(length)} value={`${length}`} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)"  />
+                <OutlinedTextField label='Notes: ' onChangeText={notes => setNotes(notes)} value={notes}  multiline={true} characterRestriction={140} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)" /> 
             </View>
             {/* for the image:
-                https://facebook.github.io/react-native/docs/cameraroll.html  */}
+                https://facebook.github.io/react-native/docs/cameraroll.html  */} 
             {/* date picker has android and ios versions on reacts website, but someone combined them here. 
                 will spend time later setting this up
                 https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker */}
