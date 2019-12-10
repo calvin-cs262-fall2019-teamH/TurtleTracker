@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Button, Image, ScrollView, RefreshControl } from 'react-native';
+import { View, Image, ScrollView, RefreshControl } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleMapView from '../../components/TurtleMapView';
 import IconButton from '../../components/IconButton';
