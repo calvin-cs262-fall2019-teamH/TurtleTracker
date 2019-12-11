@@ -90,7 +90,9 @@ export default function MapScreen({ navigation }) {
         }}
         showsUserLocation={true}
         followsUserLocation={true}
-        showsMyLocationButton={true}
+        scrollEnabled={true}
+        showsMyLocationButton={false}
+        
       //onLongPress={handlePress}
       />
       <IconButton

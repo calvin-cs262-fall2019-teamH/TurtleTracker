@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native';
+import { View, Text, Button, Image, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Platform } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as Haptics from 'expo-haptics';
@@ -206,23 +206,53 @@ const styles = StyleSheet.create({
 TurtleViewScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('turtle') == null ? '' : navigation.getParam('turtle').mark,
     headerRight: () => (
-        <IconButton
-            size={20}
-            onPress={() => navigation.navigate('TurtleEdit', {
-                edit: "true",
-                turtle: navigation.getParam('turtle'), originalDate: navigation.getParam('originalDate'),
-                recentDate: navigation.getParam('recentDate'), recentLength: navigation.getParam('recentLength'),
-                refreshTurtleView: navigation.getParam('refreshTurtleView'),
-            })}
-            name={'edit'}
-            styles={{ right: '10%', paddingRight: 15, paddingTop: 2 }}
-        />
+
+    //react-native-platform chooses which button to load based off of device's OS
+    Component = Platform.select({
+        ios: <IconButton
+                size={20}
+                onPress={() => navigation.navigate('TurtleEdit', {
+                    edit: "true",
+                    turtle: navigation.getParam('turtle'), originalDate: navigation.getParam('originalDate'),
+                    recentDate: navigation.getParam('recentDate'), recentLength: navigation.getParam('recentLength'),
+                    refreshTurtleView: navigation.getParam('refreshTurtleView'),
+                })}
+                name={'edit'}
+                styles={{ right: '10%', paddingRight: 15, paddingTop: 2 }}
+            />,
+        android: <Icon.Button
+                    size={20}
+                    onPress={() => navigation.navigate('TurtleEdit', {
+                        edit: "true",
+                        turtle: navigation.getParam('turtle'), originalDate: navigation.getParam('originalDate'),
+                        recentDate: navigation.getParam('recentDate'), recentLength: navigation.getParam('recentLength'),
+                        refresh: navigation.getParam('refresh'),
+                    })}
+                    name={'edit'}
+                    iconStyle={{ right: '10%',  paddingTop: 2, paddingLeft: 10 }}
+                    backgroundColor="green"
+                    color = "white"
+                />,
+        })
     ),
     headerLeft: () => (
-        <IconButton
-            size={20}
-            onPress={() => navigation.goBack()}
-            name={'navigate-before'}
-            styles={{ paddingTop: 2, paddingLeft: 15 }} />
+
+    //react-native-platform chooses which button to load based off of device's OS
+    Component = Platform.select({
+        ios: <IconButton
+                size={20}
+                onPress={() => navigation.goBack()}
+                name={'navigate-before'}
+                styles={{ paddingTop: 2, paddingLeft: 15 }} 
+            />,
+        android: <Icon.Button
+                    size={20}
+                    onPress={() => navigation.goBack()}
+                    name={'navigate-before'}
+                    iconStyle = {{paddingLeft: 7}}
+                    backgroundColor="green"
+                    color = "white" 
+                />,
+        })
     ),
 });
