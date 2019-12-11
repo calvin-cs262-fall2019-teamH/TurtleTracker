@@ -95,7 +95,17 @@ export default class SettingsScreen extends React.Component {
                 <Text></Text>
                 <Text>Tapping on the Turtles tab will show the list of seen turtles.</Text>
                 <Text></Text>
-
+                <Text style={{fontWeight: 'bold'}}>Section 6: View Sightings for Turtle</Text>
+                <Text></Text>
+                <Text>Imagine you want to view a sighting for the turtle.</Text>
+                <Text></Text>
+                <Text>To view a sighting for a specific turtle:</Text>
+                <Text></Text>
+                <Text>Step One: Navigate to the Turtles tab to find the list of turtles</Text>
+                <Text>Step Two: Find the turtle you wish to view sightings for on the list of turtles</Text>
+                <Text>Step Three: Tap on the turtle to find sighting information about the turtle</Text>
+                <Text>Step Four: To find additional information about a specific turtle turtle sighting, tap the ‘i’ button on the left hand side of the sighting row.</Text>
+                <Text></Text>
             </ScrollView>
         );
     }
