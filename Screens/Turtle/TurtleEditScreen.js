@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, Image, Button } from 'react-native';
+import { View, ScrollView, Text, Image, Button, Platform } from 'react-native';
 import RadioForm from 'react-native-simple-radio-button';
 import TurtleText from '../../components/TurtleText';
 import TurtleTextInput from '../../components/TurtleTextInput';
 import moment from 'moment';
 import IconButton from '../../components/IconButton';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {  OutlinedTextField } from 'react-native-material-textfield';
 
 
@@ -79,9 +80,8 @@ export default function TurtleEditScreen({ navigation }) {
     
      
     return (
-
         <ScrollView style={{ padding: 5 }}>
-            <View style={{ flexDirection: 'row', padding: 5 }}>
+            <View style={{ flexDirection: 'column', padding: 5 }}>
                 {/* { turtleProps.pictures.length > 0 ?
                         <Image style={{width: 150, height: 150}} source={{uri: turtleProps.pictures[0]}}/>
                         : null
@@ -121,10 +121,23 @@ export default function TurtleEditScreen({ navigation }) {
 TurtleEditScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 'Edit Turtle' : 'Add Turtle',
     headerLeft: () => (
-        <IconButton
-            size={20}
-            onPress={() => navigation.goBack()}
-            name={'navigate-before'}
-            styles={{ paddingTop: 2, paddingLeft: 15 }} />
+
+    //react-native-platform chooses which button to load based off of device's OS
+    Component = Platform.select({
+        ios: <IconButton
+                size={20}
+                onPress={() => navigation.goBack()}
+                name={'navigate-before'}
+                styles={{ paddingTop: 2, paddingLeft: 15 }} 
+            />,
+        android: <Icon.Button
+                    size={20}
+                    onPress={() => navigation.goBack()}
+                    name={'navigate-before'}
+                    iconStyle = {{paddingLeft: 7}}  
+                    backgroundColor="green"
+                    color = "white"
+            />,
+    })
     ),
 });
