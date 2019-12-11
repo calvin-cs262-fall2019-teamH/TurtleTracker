@@ -1,13 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, Image, Button, Platform } from 'react-native';
+import { View, ScrollView, Text, Image, Button, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import RadioForm from 'react-native-simple-radio-button';
 import TurtleText from '../../components/TurtleText';
 import TurtleTextInput from '../../components/TurtleTextInput';
 import moment from 'moment';
 import IconButton from '../../components/IconButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {  OutlinedTextField } from 'react-native-material-textfield';
+import { OutlinedTextField } from 'react-native-material-textfield';
 
+/*
+Define a couple useful styles
+*/
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        paddingBottom: 7,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        borderRadius: 4,
+    },
+    button: {
+        backgroundColor: 'green',
+        borderRadius: 4,
+        height: 40,
+        width: 150,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+});
 
 /*
     TurtleEditScreen allows for editing content of one turtle
@@ -36,10 +63,10 @@ export default function TurtleEditScreen({ navigation }) {
                 sex
             })
         })
-        .then(response => response.json())
-        .then(responseJson => {
-            navigation.navigate("SightingEdit", {turtleId: responseJson})
-        });
+            .then(response => response.json())
+            .then(responseJson => {
+                navigation.navigate("SightingEdit", { turtleId: responseJson })
+            });
     }
 
     const radio_props = [
@@ -52,7 +79,7 @@ export default function TurtleEditScreen({ navigation }) {
     const [sex, setSex] = useState('male');
 
     initialSexIsFemale = 0;
-    isEdit = navigation.getParam('edit') != undefined && navigation.getParam('edit') 
+    isEdit = navigation.getParam('edit') != undefined && navigation.getParam('edit')
     if (isEdit) {
         turtleProps = navigation.getParam('turtle');
         originalDate = navigation.getParam('originalDate');
@@ -77,8 +104,8 @@ export default function TurtleEditScreen({ navigation }) {
         // const [recentDateEdit, setRecentDate] = useState(recentDate.toLocaleDateString());
         // const [length, setLength] = useState(recentLength.toString());
     }
-    
-     
+
+
     return (
         <ScrollView style={{ padding: 5 }}>
             <View style={{ flexDirection: 'column', padding: 5 }}>
@@ -90,7 +117,7 @@ export default function TurtleEditScreen({ navigation }) {
                     <OutlinedTextField label='Turtle Number:' onChangeText={number => setNumber(number)} value={number} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)" />
                     {/* <TurtleTextInput titleText='Date Found: ' onChangeText={originalDateEdit => setOriginalDate(originalDateEdit)} value={originalDateEdit} placeholder="Original Sighting Date"/> */}
                     {/* <TurtleTextInput titleText='Date Last Seen: ' onChangeText={recentDateEdit => setRecentDate(recentDateEdit)} value={recentDateEdit} placeholder="Most Recent Sighting Date"/> */}
-                    <OutlinedTextField label="Mark: " onChangeText={newMark => setCarapaceMark(newMark)} value={carapaceMark} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)"/>
+                    <OutlinedTextField label="Mark: " onChangeText={newMark => setCarapaceMark(newMark)} value={carapaceMark} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)" />
                     <Text style={{
                         fontSize: 20,
                         fontWeight: 'bold',
@@ -108,9 +135,25 @@ export default function TurtleEditScreen({ navigation }) {
                     </View>
                     {/* <TurtleTextInput titleText='Carapace Length: ' onChangeText={length => setLength(length)} value={length} placeholder="Most Recent Carapace Measurement"/> */}
                 </View>
-            {isEdit != undefined && isEdit == "true" ?
-                <Button title="Submit" onPress={() => { editTurtleById(turtleProps.id), navigation.goBack(), navigation.state.params.refreshTurtleView() }} /> 
-                : <Button title="Submit" onPress={() => createTurtle(number, carapaceMark, sex) } />}
+                <View style={styles.container}>
+                    {isEdit != undefined && isEdit == "true" ?
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => {
+                                editTurtleById(turtleProps.id),
+                                    navigation.goBack(),
+                                    navigation.state.params.refreshTurtleView()
+                            }}
+                        >
+                            <Text style={styles.buttonText}>{"SUBMIT"}</Text>
+                        </TouchableOpacity>
+                        : <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => createTurtle(number, carapaceMark, sex)}
+                        >
+                            <Text style={styles.buttonText}>{"SUBMIT"}</Text>
+                        </TouchableOpacity>}
+                </View>
             </View>
         </ScrollView>
 
@@ -122,22 +165,22 @@ TurtleEditScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 'Edit Turtle' : 'Add Turtle',
     headerLeft: () => (
 
-    //react-native-platform chooses which button to load based off of device's OS
-    Component = Platform.select({
-        ios: <IconButton
+        //react-native-platform chooses which button to load based off of device's OS
+        Component = Platform.select({
+            ios: <IconButton
                 size={20}
                 onPress={() => navigation.goBack()}
                 name={'navigate-before'}
-                styles={{ paddingTop: 2, paddingLeft: 15 }} 
+                styles={{ paddingTop: 2, paddingLeft: 15 }}
             />,
-        android: <Icon.Button
-                    size={20}
-                    onPress={() => navigation.goBack()}
-                    name={'navigate-before'}
-                    iconStyle = {{paddingLeft: 7}}  
-                    backgroundColor="green"
-                    color = "white"
+            android: <Icon.Button
+                size={20}
+                onPress={() => navigation.goBack()}
+                name={'navigate-before'}
+                iconStyle={{ paddingLeft: 7 }}
+                backgroundColor="green"
+                color="white"
             />,
-    })
+        })
     ),
 });
