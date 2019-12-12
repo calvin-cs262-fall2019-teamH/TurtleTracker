@@ -1,26 +1,41 @@
 import * as Permissions from 'expo-permissions';
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
-import { View, Button, Text, TextInput, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TextInput, ScrollView, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleTextInput from '../../components/TurtleTextInput';
 import CameraGallery from '../../components/CameraGallery';
 import TurtleMapView from '../../components/TurtleMapView';
 import IconButton from '../../components/IconButton';
 import { OutlinedTextField } from 'react-native-material-textfield';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 /*
 Define a couple useful styles
 */
 const styles = StyleSheet.create({
     container: {
-        borderColor: 'green',
-        borderWidth: 5, 
-        width: '100%', 
-        padding: 5
+        alignItems: 'center',
+        paddingBottom: 7,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        borderRadius: 4,
     },
-
+    button: {
+        backgroundColor: 'green',
+        borderRadius: 4,
+        height: 40,
+        width: 150,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
 });
 
 /*
@@ -146,21 +161,21 @@ export default function SightingEditScreen({ navigation }) {
         <ScrollView>
             <View style={{ padding: 8 }}>
                 <TurtleText titleText="Mark: " baseText={turtle.mark} />
-                    {isEdit 
-                     ? <TurtleTextInput titleText='Turtle Number: ' onChangeText={turtleNumber => setTurtleNumber(turtleNumber)} value={turtleNumber} placeholder="#" />
-                     : <TurtleText titleText='Turtle Number: ' baseText={turtleNumber}  />
-                     }
+                {isEdit
+                    ? <TurtleTextInput titleText='Turtle Number: ' onChangeText={turtleNumber => setTurtleNumber(turtleNumber)} value={turtleNumber} placeholder="#" />
+                    : <TurtleText titleText='Turtle Number: ' baseText={turtleNumber} />
+                }
                 {/* used solely for spacing */}
                 <Text>   </Text>
 
                 {/* text fields to be filled in by user */}
-                <OutlinedTextField label='Date:' onChangeText={date => setDate(date)} value={moment(date).format('l')} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)"  contentInset={{input: 10}}/>
-                <OutlinedTextField label='Location: ' onChangeText={location => setLocation(location)} value={location} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)" /> 
-                <OutlinedTextField label='Length: ' onChangeText={length => setLength(length)} value={`${length}`} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)"  />
-                <OutlinedTextField label='Notes: ' onChangeText={notes => setNotes(notes)} value={notes}  multiline={true} characterRestriction={140} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)" /> 
+                <OutlinedTextField label='Date:' onChangeText={date => setDate(date)} value={moment(date).format('l')} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)" contentInset={{ input: 10 }} />
+                <OutlinedTextField label='Location: ' onChangeText={location => setLocation(location)} value={location} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)" />
+                <OutlinedTextField label='Length: ' onChangeText={length => setLength(length)} value={`${length}`} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)" />
+                <OutlinedTextField label='Notes: ' onChangeText={notes => setNotes(notes)} value={notes} multiline={true} characterRestriction={140} fontSize={20} labelFontSize={16} tintColor="rgb(34,139,34)" />
             </View>
             {/* for the image:
-                https://facebook.github.io/react-native/docs/cameraroll.html  */} 
+                https://facebook.github.io/react-native/docs/cameraroll.html  */}
             {/* date picker has android and ios versions on reacts website, but someone combined them here. 
                 will spend time later setting this up
                 https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker */}
@@ -170,18 +185,29 @@ export default function SightingEditScreen({ navigation }) {
                 pointerEvents="none"
             />
             <CameraGallery turtleId={turtle.id}/>
-            {isEdit
-                ? <View style={styles.container}>  
-                    <Button title="Submit" onPress={() => { editSightingById(sighting.id), navigation.state.params.refresh(), navigation.goBack() }} /> 
-                </View>
-                : <View style={styles.container}> 
-                    <Button color="green" title="Submit" onPress={() => { getLocationAndCreateSighting(turtle.id), navigation.navigate("TurtleView", { turtleId: turtle.id }) }} />
-                </View>
-            }
+            <View style={styles.container}>
+                {isEdit
+                    ?
+                    <TouchableOpacity style={styles.button} onPress={() => {
+                        editSightingById(sighting.id, turtle.id),
+                        navigation.goBack(),
+                        navigation.state.params.refreshSightingView()
+                    }} >
+                        <Text style={styles.buttonText}>{"SUBMIT"}</Text>
+                    </TouchableOpacity>
+                    :
+                    <TouchableOpacity style={styles.button} onPress={() => {
+                        getLocationAndCreateSighting(turtle.id);
+                        navigation.navigate("TurtleView", { turtleId: turtle.id });
+                        if (navigation.state.params.refreshTurtleView != undefined) {
+                            navigation.state.params.refreshTurtleView();
+                        }
+                    }}>
+                        <Text style={styles.buttonText}>{"SUBMIT"}</Text>
+                    </TouchableOpacity>}
+            </View>
         </ScrollView>
-
     );
-
 
 }
 
@@ -189,10 +215,23 @@ export default function SightingEditScreen({ navigation }) {
 SightingEditScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('edit') != undefined && navigation.getParam('edit') ? 'Edit Sighting' : 'Add Sighting',
     headerLeft: () => (
-        <IconButton
-            size={20}
-            onPress={() => navigation.goBack()}
-            name={'navigate-before'}
-            styles={{ paddingLeft: 7 }} />
-    ),
+
+        //react-native-platform chooses which button to load based off of device's OS
+        Component = Platform.select({
+            ios: <IconButton
+                size={20}
+                onPress={() => navigation.goBack()}
+                name={'navigate-before'}
+                styles={{ paddingLeft: 7 }}
+            />,
+            android: <Icon.Button
+                size={20}
+                onPress={() => navigation.goBack()}
+                name={'navigate-before'}
+                iconStyle={{ paddingLeft: 7 }}
+                backgroundColor="green"
+                color="white"
+            />,
+        })
+    )
 });

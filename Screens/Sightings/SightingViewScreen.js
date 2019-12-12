@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Image, ScrollView, RefreshControl } from 'react-native';
+import { View, Button, Image, ScrollView, RefreshControl, Platform } from 'react-native';
 import TurtleText from '../../components/TurtleText';
 import TurtleMapView from '../../components/TurtleMapView';
 import IconButton from '../../components/IconButton';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
 
 /*
@@ -101,29 +102,64 @@ export default function SightingViewScreen({ navigation }) {
 SightingViewScreen.navigationOptions = ({ navigation }) => ({
     title: 'Sighting',
     headerRight: () => (
-        <IconButton
-            size = {20} 
-            onPress={() => navigation.navigate('SightingEdit', 
-                {sighting: navigation.getParam('sighting'), 
-                markerList: navigation.getParam('markerList'), 
-                turtleId: navigation.getParam('turtleId'),
-                refreshSightingView: navigation.getParam('refreshSightingView'),
-                edit: true,
-            })}
-            name = {'edit'} 
-            styles = {{right: '10%', paddingRight: 15, paddingTop: 2}}
-        />
+
+        //react-native-platform chooses which button to load based off of device's OS
+        Component = Platform.select({
+            ios: <IconButton
+                    size = {20} 
+                    onPress={() => navigation.navigate('SightingEdit', 
+                        {sighting: navigation.getParam('sighting'), 
+                        markerList: navigation.getParam('markerList'), 
+                        turtleId: navigation.getParam('turtleId'),
+                        refreshSightingView: navigation.getParam('refreshSightingView'),
+                        edit: true,
+                        })}
+                    name = {'edit'} 
+                    styles = {{right: '10%', paddingRight: 15, paddingTop: 2}}
+                />,
+        android: <Icon.Button
+                    size = {20} 
+                    onPress={() => navigation.navigate('SightingEdit', 
+                        {sighting: navigation.getParam('sighting'), 
+                        markerList: navigation.getParam('markerList'), 
+                        edit: true,
+                        refresh: navigation.getParam('refresh'),
+                    })}
+                    name = {'edit'} 
+                    iconStyle={{ right: '10%', paddingRight: 15, paddingTop: 2 }}
+                    backgroundColor="green"
+                    color = "white"
+                />,
+        })
     ),
     headerLeft: () => (
-        <IconButton
-            size = {20} 
-            onPress={() => {
-                navigation.goBack();
-                if (navigation.state.params.refreshTurtleView != undefined) {
-                    navigation.state.params.refreshTurtleView();
-                }
-            }}
-            name = {'navigate-before'}
-            styles = {{paddingTop: 2, paddingLeft: 15}} />
+
+        //react-native-platform chooses which button to load based off of device's OS
+        Component = Platform.select({
+            ios: <IconButton
+                    size = {20} 
+                    onPress={() => {
+                        navigation.goBack();
+                        if (navigation.state.params.refreshTurtleView != undefined) {
+                            navigation.state.params.refreshTurtleView();
+                        }
+                    }}
+                    name = {'navigate-before'}
+                    styles = {{paddingTop: 2, paddingLeft: 15}} 
+                />,
+            android: <Icon.Button
+                        size = {20} 
+                        onPress={() => { 
+                            navigation.goBack();
+                            if (navigation.state.params.refreshTurtleView != undefined) {
+                                navigation.state.params.refreshTurtleView();
+                            }
+                        }}
+                        name = {'navigate-before'}
+                        iconStyle = {{paddingLeft: 7}}                        
+                        backgroundColor="green"
+                        color = "white"
+                    />,
+        }) 
     ),
 });
