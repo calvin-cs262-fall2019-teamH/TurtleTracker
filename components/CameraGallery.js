@@ -14,7 +14,7 @@ export default class CameraGallery extends Component {
   takeImage= async () => {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsEditing: false,
     });
   
   // replaces the questionmark placeholder image and appends new image to image_array
@@ -35,7 +35,7 @@ export default class CameraGallery extends Component {
   pickImage= async () => { 
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true
+      allowsEditing: false
      });
 
      // replaces the questionmark placeholder image and appends new image to image_array
