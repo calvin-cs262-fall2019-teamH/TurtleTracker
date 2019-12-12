@@ -14,8 +14,12 @@ export default function TurtleList(props) {
       .then((response) => response.json())
       .then(async (responseJson) => {
         for (var i = 0; i < responseJson.length; i++) {
-          var url = await getPhoto(responseJson[i].id)
-          responseJson[i].pictures = [url]
+          try {
+            var url = await getPhoto(responseJson[i].id)
+            responseJson[i].pictures = [url]
+          } catch (e) {
+            console.log(e)
+          }
         }
         onTurtleListChange(responseJson);
       })

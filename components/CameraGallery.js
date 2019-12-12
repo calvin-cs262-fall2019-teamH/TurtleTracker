@@ -49,8 +49,12 @@ export default class CameraGallery extends Component {
     fetch(uri)
     .then((response) => response.blob())
     .then((responseBlob) => {
-      var ref = firebase.storage().ref().child("images/" + imageName);
-      ref.put(responseBlob);
+      try {
+        var ref = firebase.storage().ref().child("images/" + imageName);
+        ref.put(responseBlob);
+      } catch (e) {
+        console.log(e);
+      }
     })
   };
   
