@@ -169,7 +169,7 @@ export default function SightingEditScreen({ navigation }) {
                 markers={markerList}
                 pointerEvents="none"
             />
-            <CameraGallery />
+            <CameraGallery turtleId={turtle.id}/>
             {isEdit
                 ? <View style={styles.container}>  
                     <Button title="Submit" onPress={() => { editSightingById(sighting.id), navigation.state.params.refresh(), navigation.goBack() }} /> 
