@@ -184,7 +184,7 @@ export default function SightingEditScreen({ navigation }) {
                 markers={markerList}
                 pointerEvents="none"
             />
-            <CameraGallery />
+            <CameraGallery turtleId={turtle.id}/>
             <View style={styles.container}>
                 {isEdit
                     ?

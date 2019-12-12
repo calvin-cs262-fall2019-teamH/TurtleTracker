@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { Button, Image, StyleSheet, View, ScrollView } from 'react-native';
+import { Button, Platform, Image, StyleSheet, View, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import IconButton from '../components/IconButton';
+import * as firebase from 'firebase';
 
 export default class CameraGallery extends Component {
 
-  // creates the image array and question mark placeholder image
-  state = {
-    image_array: ['https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg'],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      image_array: this.props.images == null ? [{uri: 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg'}] : this.props.images,
+    };
+  }
 
   // takes an image using the camera and appends it to the image_array
   takeImage= async () => {
@@ -16,42 +19,40 @@ export default class CameraGallery extends Component {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
     });
-  
-  // replaces the questionmark placeholder image and appends new image to image_array
-  if ((!result.cancelled) && (this.state.image_array[0] == 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg')) {
-    this.state.image_array.splice(0, 1);  
-    this.setState(prevState => ({
-      image_array: [...prevState.image_array, result.uri]
-  }))}
+     this.saveImage(result);
+    };
 
-  // appends the new image to the 
-  else if (!result.cancelled) {
-    this.setState(prevState => ({
-      image_array: [...prevState.image_array, result.uri]
-  }))}
-};
-
-// retrieves an image from a gallery
+  // retrieves an image from a gallery
   pickImage= async () => { 
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true
      });
+     this.saveImage(result);
+  }
 
-     // replaces the questionmark placeholder image and appends new image to image_array
-     if ((!result.cancelled) && (this.state.image_array[0] == 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg')) {
-      this.state.image_array.splice(0, 1);  
-        this.setState(prevState => ({
-          image_array: [...prevState.image_array, result.uri]
-      }))}
+  saveImage = (result) => {
+    if (!result.cancelled) {
+      
+      if (this.state.image_array[0].uri == 'https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1405/tackgalichstudio140500025/28036032-question-mark-symbol-on-gray-background.jpg') {
+        this.state.image_array.splice(0, 1);  
+      }
+    
+      this.setState(prevState => ({
+        image_array: [...prevState.image_array, result]
+      }))
+      this.uploadPhoto(result.uri, `${this.props.turtleId}`)
+    }
+  }
 
-      // appends the new image to the 
-      else if (!result.cancelled) {
-        this.setState(prevState => ({
-          image_array: [...prevState.image_array, result.uri]
-      }))}
-    };
-
+  uploadPhoto = (uri, imageName) => {
+    fetch(uri)
+    .then((response) => response.blob())
+    .then((responseBlob) => {
+      var ref = firebase.storage().ref().child("images/" + imageName);
+      ref.put(responseBlob);
+    })
+  };
   
   render() {
     let { image_array } = this.state;
@@ -60,12 +61,12 @@ export default class CameraGallery extends Component {
     return (
       <View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer}>
-          <Image source={{uri: image_array[0], width: 200, height: 200}} style={styles.imageStyle}/>
-          <Image source={{uri: image_array[1], width: 200, height: 200}} style={styles.imageStyle}/>
-          <Image source={{uri: image_array[2], width: 200, height: 200}} style={styles.imageStyle}/>
-          <Image source={{uri: image_array[3], width: 200, height: 200}} style={styles.imageStyle}/>
-          <Image source={{uri: image_array[4], width: 200, height: 200}} style={styles.imageStyle}/>
-          <Image source={{uri: image_array[5], width: 200, height: 200}} style={styles.imageStyle}/> 
+          <Image source={{uri: image_array[0] != null ? image_array[0].uri : null, width: 200, height: 200}} style={styles.imageStyle}/>
+          <Image source={{uri: image_array[1] != null ? image_array[1].uri : null, width: 200, height: 200}} style={styles.imageStyle}/>
+          <Image source={{uri: image_array[2] != null ? image_array[2].uri : null, width: 200, height: 200}} style={styles.imageStyle}/>
+          <Image source={{uri: image_array[3] != null ? image_array[3].uri : null, width: 200, height: 200}} style={styles.imageStyle}/>
+          <Image source={{uri: image_array[4] != null ? image_array[4].uri : null, width: 200, height: 200}} style={styles.imageStyle}/>
+          <Image source={{uri: image_array[5] != null ? image_array[5].uri : null, width: 200, height: 200}} style={styles.imageStyle}/> 
         </ScrollView>
 
       <View style={styles.takePicButtons}>
