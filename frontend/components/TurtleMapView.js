@@ -13,12 +13,19 @@ export default function TurtleMapView(props) {
                 mapType="hybrid"
                 style={{ flex: 1 }}
                 provider="google"
-                region={{
+                region={props.latitude != undefined && props.longitude != undefined ? {
+                    latitude: props.latitude,
+                    longitude: props.longitude,
+                    latitudeDelta: 0.008,
+                    longitudeDelta: 0.008
+                }:
+                {
                     latitude: 42.931870,
                     longitude: -85.582130,
                     latitudeDelta: 0.008,
                     longitudeDelta: 0.008
-                }}
+                }
+                }
                 scrollEnabled={false}
                 {...props}>
                 {props.markers.map((marker, i) => {
