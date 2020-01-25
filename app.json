@@ -4,20 +4,12 @@
     "slug": "TurtleTracker",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "ios": {
-      "bundleIdentifier": "com.knighthaven.turtletracker",
-      "supportsTablet": true
-    },
-    "android": {
-      "permissions": ["ACCESS_FINE_LOCATION"],
-      "package": "com.knighthaven.turtletracker"
-    },
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "0.1.0",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -30,6 +22,12 @@
     },
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "permissions": ["ACCESS_FINE_LOCATION"]
+    }
   }
 }
